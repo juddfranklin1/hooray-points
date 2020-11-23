@@ -4,6 +4,7 @@
     <div class="py-2 px-4 border-2 border-gray-400 absolute top-0 right-0">
         <router-link
             to="/new-action"
+            :user="users"
             v-slot="{ href, route, navigate, isActive, isExactActive }"
             >
             <a class="text-blue-400" :active="isActive" :href="href" @click="navigate"
@@ -18,6 +19,7 @@
     <div class="mt-6 mb-4">
         <router-link
             to="/new-action"
+            :users="users"
             v-slot="{ href, route, navigate, isActive, isExactActive }"
             >
             <a class="border-2 border-gray-400 py-2 px-4 text-blue-400" :active="isActive" :href="href" @click="navigate"
@@ -33,7 +35,8 @@ import { mapState, mapActions } from 'vuex';
 export default {
   name: 'ActionList',
   props: {
-      'actions': Array
+      'actions': Array,
+      'users': Array
   },
   components: {
       ActionListItem

@@ -4,21 +4,22 @@
     <dl>
         <RewardListItem v-for="reward in rewards" :reward="reward" v-bind:key="'reward-' + reward.id"></RewardListItem>
     </dl>
-    <UserAddRewardForm :rewards="rewards"></UserAddRewardForm>
+    <RewardForm :users="users"></RewardForm>
   </div>
 </template>
 <script>
 import RewardListItem from './RewardListItem.vue';
-import UserAddRewardForm from '../Users/UserAddRewardForm.vue';
+import RewardForm from './RewardForm.vue';
 
 export default {
   name: 'RewardList',
   props: {
-      'rewards': Array
+      'rewards': Array,
+      'users': Array,
   },
   components: {
       RewardListItem,
-      UserAddRewardForm
+      RewardForm
   }
 };
 </script>

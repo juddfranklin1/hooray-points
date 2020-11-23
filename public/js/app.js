@@ -2014,12 +2014,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ActionList',
   props: {
-    'actions': Array
+    'actions': Array,
+    'users': Array
   },
   components: {
     ActionListItem: _ActionListItem_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -2215,7 +2218,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _RewardListItem_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RewardListItem.vue */ "./resources/js/views/Rewards/RewardListItem.vue");
-/* harmony import */ var _Users_UserAddRewardForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Users/UserAddRewardForm.vue */ "./resources/js/views/Users/UserAddRewardForm.vue");
+/* harmony import */ var _RewardForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RewardForm.vue */ "./resources/js/views/Rewards/RewardForm.vue");
 //
 //
 //
@@ -2230,11 +2233,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'RewardList',
   props: {
-    'rewards': Array
+    'rewards': Array,
+    'users': Array
   },
   components: {
     RewardListItem: _RewardListItem_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    UserAddRewardForm: _Users_UserAddRewardForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    RewardForm: _RewardForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
@@ -3251,7 +3255,7 @@ var render = function() {
       },
       [
         _c("router-link", {
-          attrs: { to: "/new-action" },
+          attrs: { to: "/new-action", user: _vm.users },
           scopedSlots: _vm._u([
             {
               key: "default",
@@ -3298,7 +3302,7 @@ var render = function() {
       { staticClass: "mt-6 mb-4" },
       [
         _c("router-link", {
-          attrs: { to: "/new-action" },
+          attrs: { to: "/new-action", users: _vm.users },
           scopedSlots: _vm._u([
             {
               key: "default",
@@ -3643,7 +3647,7 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("UserAddRewardForm", { attrs: { rewards: _vm.rewards } })
+      _c("RewardForm", { attrs: { users: _vm.users } })
     ],
     1
   )
@@ -4263,21 +4267,29 @@ var render = function() {
             )
           ]),
           _vm._v(" |\n      "),
-          _c("router-link", { attrs: { to: { name: "actions" } } }, [
-            _c(
-              "span",
-              { staticClass: "hover:no-underline underline text-blue-400" },
-              [_vm._v("Actions")]
-            )
-          ]),
+          _c(
+            "router-link",
+            { attrs: { users: _vm.users, to: { name: "actions" } } },
+            [
+              _c(
+                "span",
+                { staticClass: "hover:no-underline underline text-blue-400" },
+                [_vm._v("Actions")]
+              )
+            ]
+          ),
           _vm._v(" |\n      "),
-          _c("router-link", { attrs: { to: { name: "rewards" } } }, [
-            _c(
-              "span",
-              { staticClass: "hover:no-underline underline text-blue-400" },
-              [_vm._v("Rewards")]
-            )
-          ])
+          _c(
+            "router-link",
+            { attrs: { users: _vm.users, to: { name: "rewards" } } },
+            [
+              _c(
+                "span",
+                { staticClass: "hover:no-underline underline text-blue-400" },
+                [_vm._v("Rewards")]
+              )
+            ]
+          )
         ],
         1
       ),
