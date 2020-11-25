@@ -1,61 +1,51 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Hooray! Points!
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## It is time to get excited to do good things!
 
-## About Laravel
+Using the power of Laravel, Vuejs, TailwindCSS, and associated technologies, I am creating a system for helping my family get motivated to do things that they otherwise would consider tedious, difficult, or otherwise dragging on their already depleted energies. It is, after all, the year 2020.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## details
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This is a normal, boring old Laravel project. Quite simple at the moment. The logic is only Users, Actions (good or bad things a person can do), and Rewards (things a person can get for their points).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+If you want to install it yourself, you can go ahead and run the normal boring old Laravel setup process:
 
-## Learning Laravel
+### requirements:
+- Composer
+- Node and npm (or yarn)
+- A local server environment (I use Laravel Valet, but you can use homestead, vagrant, *AMP, good old php artisan serve, etc.)
+- PHP 7.3
+    - BCMath PHP Extension
+    - Ctype PHP Extension
+    - Fileinfo PHP Extension
+    - JSON PHP Extension
+    - Mbstring PHP Extension
+    - OpenSSL PHP Extension
+    - PDO PHP Extension
+    - Tokenizer PHP Extension
+    - XML PHP Extension
+- Relational Db server (I use PostgreSQL locally)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Steps:
+1. clone
+In a terminal window run
+2. `composer install`
+3. `npm install` (or `yarn install`)
+Then
+4. create local database
+5. create an `.env` file and update it with your desired db credentials
+Back in a terminal, run
+6. `php artisan migrate` or if you want faker data (and potentially some from my family), please run `php artisan migrate --seed`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
+### To do:
+- Improve UX
+    - considering using a Vue Component library
+- Flesh out the CRUD capabilities for Actions, Users, Rewards
+- Integration of User permissions and Laravel Sanctum authentication
+    - 2 roles: Parent, Child
+- Improved use of Action assignment and Reward assignment (so that people can see the actions that are tailored to them)
+- Improved history logging - a calendar display of actions taken and rewards redeemed
+- Make this a phone-ready SPA so that I can keep track of and update point totals from anywhere
+- Create ability to set goals and track progress towards those goals.
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
