@@ -10,16 +10,20 @@
 <script>
 import RewardListItem from './RewardListItem.vue';
 import RewardForm from './RewardForm.vue';
+import { mapState, mapActions } from 'vuex';
 
 export default {
-  name: 'RewardList',
-  props: {
-      'rewards': Array,
-      'users': Array,
-  },
-  components: {
-      RewardListItem,
-      RewardForm
-  }
+    name: 'RewardList',
+    computed: {
+        ...mapState({
+            users: state => state.user.users,
+            actions: state => state.action.actions,
+            rewards: state => state.reward.rewards,
+        }),
+    },
+    components: {
+        RewardListItem,
+        RewardForm
+    }
 };
 </script>

@@ -33,13 +33,16 @@ import ActionListItem from './ActionListItem.vue';
 import { mapState, mapActions } from 'vuex';
 
 export default {
-  name: 'ActionList',
-  props: {
-      'actions': Array,
-      'users': Array
-  },
-  components: {
-      ActionListItem
-  }
+    name: 'ActionList',
+    computed: {
+        ...mapState({
+            users: state => state.user.users,
+            actions: state => state.action.actions,
+            rewards: state => state.reward.rewards,
+        }),
+    },
+    components: {
+        ActionListItem
+    }
 };
 </script>

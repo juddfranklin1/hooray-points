@@ -14,7 +14,7 @@ class ActionController extends Controller
      */
     public function index()
     {
-        //
+        return Action::all();
     }
 
     /**
@@ -39,6 +39,7 @@ class ActionController extends Controller
         $action->name = $request->name;
         $action->description = $request->description;
         $action->value = $request->value;
+        $action->user_id = $request->user_id;
         $action->save();
         return $action;
     }

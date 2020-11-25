@@ -14,7 +14,7 @@ class RewardController extends Controller
      */
     public function index()
     {
-        //
+        return Reward::all();
     }
 
     /**
@@ -35,7 +35,13 @@ class RewardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reward = new Reward;
+        $reward->cost = $request->cost;
+        $reward->title = $request->title;
+        $reward->description = $request->description;
+        $reward->user_id = $request->user_id;
+        $reward->save();
+        return $reward;
     }
 
     /**

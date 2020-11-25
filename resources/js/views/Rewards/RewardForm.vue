@@ -9,7 +9,7 @@
             <label class="text-lg pt-4" for="reward_cost">Cost</label>
             <input class="border-2 border-gray-200" type="number" name="cost" id="reward_cost">
             <label class="text-lg pt-4" for="reward_user">Assigned User (if any)</label>
-            <select name="user" class="border-2 border-gray-200" id="reward_user">
+            <select name="user_id" class="border-2 border-gray-200" id="reward_user">
                 <option value="">unassigned</option>
                 <option v-for="user in users" :value="user.id" v-bind:key="'user-' + user.id">{{ user.name }}</option>
             </select>
@@ -29,11 +29,12 @@ export default {
     methods: {
         createReward: function($e) {
             const data = {};
-            data.name = $e.target.name.value;
+            data.title = $e.target.title.value;
+            data.user_id = $e.target.user_id.value;
             data.description = $e.target.description.value;
             data.cost = $e.target.cost.value;
             Axios.post('/api/reward', data)
-                .then(result => console.log(result.data), error => console.log(error));
+                .then(response => this.$store.commit('addReward', response.data), error => console.log(error));
         }
     }
 };

@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function index (Request $request) {
+        return User::with(['rewards','actions'])->get();
+    }
+
+    public function store (Request $request) {
+        //
+    }
+
     public function show (Request $request, $id) {
         return User::with('actions')->findOrFail($id);
     }

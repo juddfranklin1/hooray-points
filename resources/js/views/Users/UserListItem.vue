@@ -12,7 +12,7 @@
     </h3>
     <ul v-if="currentUser.actions.length > 0">
         <li v-for="(action, index) in currentUser.actions" v-bind:key="'user-'+ currentUser.id + '-action-' + action.id + '-' + index">
-            <b>{{ action.pivot.human_date }}</b>: {{ action.name }} ({{ action.value }} points)
+            <b>{{ action.pivot.human_date }}</b>: {{ action.name }} ({{ action.value }} points) x {{ action.pivot.multiplier }}
         </li>
     </ul>
     <UserAddActionForm @update-user="updateUser" :actions="actions" :user="currentUser"></UserAddActionForm>

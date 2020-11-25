@@ -1,8 +1,10 @@
+import store from './store/'
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { createStore } from 'vuex';
+import Vuex from 'vuex';
 
 Vue.use(VueRouter)
+Vue.use(Vuex)
 
 import App from './views/app.vue';
 import ActionList from './views/Actions/ActionList.vue';
@@ -12,16 +14,6 @@ import SingleUser from './views/Users/SingleUser.vue';
 import SingleAction from './views/Actions/SingleAction.vue';
 import RewardList from './views/Rewards/RewardList.vue';
 import RewardForm from './views/Rewards/RewardForm.vue';
-
-// const store = createStore({
-//     state() {
-//         return {
-//             actions: 'stuff',
-//             users: 'things',
-//             rewards: 'other things'
-//         }
-//     }
-// });
 
 const routes = [
     {
@@ -69,14 +61,13 @@ const routes = [
 ]
 
 const router = new VueRouter({
-    routes // short for `routes: routes`
+    routes
 });
 
 const app = new Vue({
     el: '#app',
     components: { App },
     router,
+    store,
 });
-
-// app.use(store);
 
