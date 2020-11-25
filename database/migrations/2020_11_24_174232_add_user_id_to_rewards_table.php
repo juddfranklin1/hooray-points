@@ -14,7 +14,7 @@ class AddUserIdToRewardsTable extends Migration
     public function up()
     {
         Schema::table('rewards', function (Blueprint $table) {
-            $table->integer('user_id')->nullable();
+            $table->integer('assignee_id')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddUserIdToRewardsTable extends Migration
     public function down()
     {
         Schema::table('rewards', function (Blueprint $table) {
-            $table->dropColumn('user_id');
+            $table->dropColumn('assignee_id');
         });
     }
 }

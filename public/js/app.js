@@ -1959,13 +1959,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     createAction: function createAction($e) {
+      var _this = this;
+
       var data = {};
       data.name = $e.target.name.value;
       data.description = $e.target.description.value;
       data.value = $e.target.value.value;
       data.user = $e.target.user.value;
+      console.log('event');
+      console.log($e.target);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/action', data).then(function (result) {
-        return console.log(result.data);
+        _this.$store.commit('addAction', response.data);
+
+        $e.target.reset();
       }, function (error) {
         return console.log(error);
       });
@@ -2053,6 +2059,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2210,11 +2234,13 @@ __webpack_require__.r(__webpack_exports__);
 
       var data = {};
       data.title = $e.target.title.value;
-      data.user_id = $e.target.user_id.value;
+      data.assignee_id = $e.target.assignee_id.value;
       data.description = $e.target.description.value;
       data.cost = $e.target.cost.value;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/reward', data).then(function (response) {
-        return _this.$store.commit('addReward', response.data);
+        _this.$store.commit('addReward', response.data);
+
+        $e.target.reset();
       }, function (error) {
         return console.log(error);
       });
@@ -2292,6 +2318,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'RewardListItem',
   props: {
@@ -2310,11 +2340,19 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _UserListItem_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserListItem.vue */ "./resources/js/views/Users/UserListItem.vue");
-/* harmony import */ var _UserAddActionForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserAddActionForm.vue */ "./resources/js/views/Users/UserAddActionForm.vue");
-/* harmony import */ var _UserAddRewardForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UserAddRewardForm.vue */ "./resources/js/views/Users/UserAddRewardForm.vue");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/ */ "./resources/js/store/index.js");
+/* harmony import */ var _UserListItem_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UserListItem.vue */ "./resources/js/views/Users/UserListItem.vue");
+/* harmony import */ var _UserAddActionForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UserAddActionForm.vue */ "./resources/js/views/Users/UserAddActionForm.vue");
+/* harmony import */ var _UserAddRewardForm_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UserAddRewardForm.vue */ "./resources/js/views/Users/UserAddRewardForm.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2379,6 +2417,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 
 
 
@@ -2405,7 +2445,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loading = true;
       var fetchedId = this.$route.params.id; // replace `getPost` with your data fetching util / API wrapper
 
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/user/' + fetchedId).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_5___default.a.get('/api/user/' + fetchedId).then(function (response) {
         _this.loading = false;
         _this.currentUser = response.data;
       }, function (error) {
@@ -2417,10 +2457,21 @@ __webpack_require__.r(__webpack_exports__);
       this.currentUser = newUser;
     }
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    users: function users(state) {
+      return state.user.users;
+    },
+    actions: function actions(state) {
+      return state.action.actions;
+    },
+    rewards: function rewards(state) {
+      return state.reward.rewards;
+    }
+  })),
   components: {
-    UserListItem: _UserListItem_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    UserAddActionForm: _UserAddActionForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    UserAddRewardForm: _UserAddRewardForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    UserListItem: _UserListItem_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    UserAddActionForm: _UserAddActionForm_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    UserAddRewardForm: _UserAddRewardForm_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 });
 
@@ -2435,8 +2486,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/ */ "./resources/js/store/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2450,11 +2509,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'UserAddActionForm',
   props: {
-    user: Object,
-    actions: Array
+    user: Object
   },
   emits: ['update-user'],
   methods: {
@@ -2464,7 +2524,7 @@ __webpack_require__.r(__webpack_exports__);
       var actionSelect = $e.target.querySelector('#pick_an_action');
       var multiplier = $e.target.querySelector('#action_count');
       var userId = this.currentUser.id;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/api/user/' + userId + '/addAction/' + actionSelect.value, {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.put('/api/user/' + userId + '/addAction/' + actionSelect.value, {
         multiplier: multiplier.value
       }).then(function (response) {
         _this.currentUser = response.data;
@@ -2475,6 +2535,17 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    users: function users(state) {
+      return state.user.users;
+    },
+    actions: function actions(state) {
+      return state.action.actions;
+    },
+    rewards: function rewards(state) {
+      return state.reward.rewards;
+    }
+  })),
   data: function data() {
     return {
       currentUser: this.user
@@ -2493,8 +2564,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/ */ "./resources/js/store/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2522,11 +2601,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'UserAddRewardForm',
   props: {
-    user: Object,
-    rewards: Array
+    user: Object
   },
   emits: ['update-user'],
   methods: {
@@ -2536,7 +2616,7 @@ __webpack_require__.r(__webpack_exports__);
       var rewardSelect = $e.target.querySelector('#pick_a_reward');
       var multiplier = $e.target.querySelector('#reward_count');
       var userId = this.currentUser.id;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/api/user/' + userId + '/addReward/' + rewardSelect.value, {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.put('/api/user/' + userId + '/addReward/' + rewardSelect.value, {
         multiplier: multiplier.value
       }).then(function (response) {
         _this.currentUser = response.data;
@@ -2550,11 +2630,21 @@ __webpack_require__.r(__webpack_exports__);
       this.chosenReward = $e.target.value;
     }
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    users: function users(state) {
+      return state.user.users;
+    },
+    actions: function actions(state) {
+      return state.action.actions;
+    },
+    rewards: function rewards(state) {
+      return state.reward.rewards;
+    }
+  })),
   data: function data() {
     return {
       chosenReward: null,
-      currentUser: this.user,
-      allRewards: this.rewards
+      currentUser: this.user
     };
   }
 });
@@ -2623,9 +2713,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _UserAddActionForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserAddActionForm.vue */ "./resources/js/views/Users/UserAddActionForm.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _store___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../store/ */ "./resources/js/store/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _UserAddActionForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UserAddActionForm.vue */ "./resources/js/views/Users/UserAddActionForm.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2646,23 +2744,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    UserAddActionForm: _UserAddActionForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    UserAddActionForm: _UserAddActionForm_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   name: 'UserListItem',
   props: {
-    user: Object,
-    actions: Array,
-    rewards: Array
+    user: Object
   },
   data: function data() {
     return {
       currentUser: this.user
     };
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    users: function users(state) {
+      return state.user.users;
+    },
+    actions: function actions(state) {
+      return state.action.actions;
+    },
+    rewards: function rewards(state) {
+      return state.reward.rewards;
+    }
+  })),
   methods: {
     updateUser: function updateUser(newUser) {
       this.currentUser = newUser;
@@ -2703,6 +2812,11 @@ var default_layout = "default";
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    'usersProp': Array,
+    'actionsProp': Array,
+    'rewardsProp': Array
+  },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
     users: function users(state) {
       return state.user.users;
@@ -2715,9 +2829,15 @@ var default_layout = "default";
     }
   })),
   created: function created() {
-    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchUsers');
-    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchActions');
-    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchRewards');
+    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchUsers', {
+      users: this.usersProp
+    });
+    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchActions', {
+      actions: this.actionsProp
+    });
+    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchRewards', {
+      rewards: this.rewardsProp
+    });
   }
 });
 
@@ -3230,7 +3350,7 @@ var render = function() {
         _vm._v(" "),
         _c("input", {
           staticClass: "border-2 border-gray-200",
-          attrs: { type: "text", name: "name", id: "action_name" }
+          attrs: { required: "", type: "text", name: "name", id: "action_name" }
         }),
         _vm._v(" "),
         _c(
@@ -3252,7 +3372,12 @@ var render = function() {
         _vm._v(" "),
         _c("input", {
           staticClass: "border-2 border-gray-200",
-          attrs: { type: "number", name: "value", id: "action_value" }
+          attrs: {
+            required: "",
+            type: "number",
+            name: "value",
+            id: "action_value"
+          }
         }),
         _vm._v(" "),
         _c(
@@ -3425,10 +3550,57 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("p", [
-    _c("b", [_vm._v(_vm._s(_vm.action.name))]),
-    _vm._v(" (" + _vm._s(_vm.action.value) + " points)\n")
-  ])
+  return _c(
+    "div",
+    {
+      staticClass: "flex flex-col flex-wrap mb-4 py-4 px-2",
+      class: _vm.action.value < 0 ? "bg-red-100" : "bg-green-100"
+    },
+    [
+      _vm.action.value > 0
+        ? _c("b", { staticClass: "text-green-700 font-bold uppercase" }, [
+            _vm._v("\n        Incentive\n        ")
+          ])
+        : _c("b", { staticClass: "text-red-700 font-bold uppercase" }, [
+            _vm._v("\n            Penalty\n        ")
+          ]),
+      _vm._v(" "),
+      _c("dt", { staticClass: "pr-3" }, [
+        _c("b", { staticClass: "text-xl" }, [_vm._v(_vm._s(_vm.action.name))])
+      ]),
+      _vm._v(" "),
+      _c("dd", [_vm._v("worth " + _vm._s(_vm.action.value) + " points")]),
+      _vm._v(" "),
+      _vm.action.assignee
+        ? _c(
+            "span",
+            [
+              _vm.action.value > 0
+                ? [
+                    _vm._v(
+                      "\n            This is something that " +
+                        _vm._s(_vm.action.assignee.name) +
+                        " should try to do.\n            "
+                    )
+                  ]
+                : [
+                    _vm._v(
+                      "\n                This is something that " +
+                        _vm._s(_vm.action.assignee.name) +
+                        " should try not to do.\n            "
+                    )
+                  ]
+            ],
+            2
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("p", { staticClass: "w-full" }, [
+        _c("b", { staticClass: "font-bold" }, [_vm._v("Description: ")]),
+        _vm._v(_vm._s(_vm.action.description))
+      ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -3525,9 +3697,7 @@ var render = function() {
                 )
               : _vm._e(),
             _vm._v(" "),
-            _c("UserAddActionForm", {
-              attrs: { user: _vm.user, actions: this.$attrs.actions }
-            }),
+            _c("UserAddActionForm", { attrs: { user: _vm.user } }),
             _vm._v(" "),
             _c("h3", { staticClass: "text-xl pt-6 pb-4" }, [
               _vm._v("Reward History")
@@ -3615,7 +3785,12 @@ var render = function() {
         _vm._v(" "),
         _c("input", {
           staticClass: "border-2 border-gray-200",
-          attrs: { type: "text", name: "title", id: "reward_title" }
+          attrs: {
+            required: "",
+            type: "text",
+            name: "title",
+            id: "reward_title"
+          }
         }),
         _vm._v(" "),
         _c(
@@ -3637,7 +3812,12 @@ var render = function() {
         _vm._v(" "),
         _c("input", {
           staticClass: "border-2 border-gray-200",
-          attrs: { type: "number", name: "cost", id: "reward_cost" }
+          attrs: {
+            required: "",
+            type: "number",
+            name: "cost",
+            id: "reward_cost"
+          }
         }),
         _vm._v(" "),
         _c(
@@ -3650,7 +3830,7 @@ var render = function() {
           "select",
           {
             staticClass: "border-2 border-gray-200",
-            attrs: { name: "user_id", id: "reward_user" }
+            attrs: { name: "assignee_id", id: "reward_user" }
           },
           [
             _c("option", { attrs: { value: "" } }, [_vm._v("unassigned")]),
@@ -3744,10 +3924,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("dt", [_c("b", [_vm._v(_vm._s(_vm.reward.title))])]),
+  return _c("div", { staticClass: "flex flex-col flex-wrap mb-4" }, [
+    _c("dt", { staticClass: "pr-3" }, [
+      _c("b", { staticClass: "text-xl" }, [_vm._v(_vm._s(_vm.reward.title))])
+    ]),
     _vm._v(" "),
-    _c("dd", [_vm._v(_vm._s(_vm.reward.cost) + " points")])
+    _c("dd", [_vm._v("worth " + _vm._s(_vm.reward.cost) + " points")]),
+    _vm._v(" "),
+    _vm.reward.assignee
+      ? _c("span", [
+          _vm._v(
+            "\n        This is a special reward to be earned by " +
+              _vm._s(_vm.reward.assignee.name) +
+              "\n    "
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("p", { staticClass: "w-full" }, [
+      _c("b", { staticClass: "font-bold" }, [_vm._v("Description: ")]),
+      _vm._v(_vm._s(_vm.reward.description))
+    ])
   ])
 }
 var staticRenderFns = []
@@ -3869,7 +4066,7 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _c("UserAddActionForm", {
-                attrs: { user: _vm.currentUser, actions: this.$attrs.actions },
+                attrs: { user: _vm.currentUser },
                 on: { "update-user": _vm.updateUser }
               })
             ],
@@ -3934,7 +4131,7 @@ var render = function() {
                 : _c("p", [_vm._v("No rewards claimed yet.")]),
               _vm._v(" "),
               _c("UserAddRewardForm", {
-                attrs: { user: _vm.currentUser, rewards: this.$attrs.rewards },
+                attrs: { user: _vm.currentUser },
                 on: { "update-user": _vm.updateUser }
               })
             ],
@@ -4096,7 +4293,7 @@ var render = function() {
           staticClass: "px-4 mb-2 py-2 border-2",
           attrs: { name: "pick_a_reward", id: "pick_a_reward" }
         },
-        _vm._l(_vm.allRewards, function(rewardOpt) {
+        _vm._l(_vm.rewards, function(rewardOpt) {
           return _c(
             "option",
             {
@@ -4293,7 +4490,7 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _c("UserAddActionForm", {
-        attrs: { actions: _vm.actions, user: _vm.currentUser },
+        attrs: { user: _vm.currentUser },
         on: { "update-user": _vm.updateUser }
       })
     ],
@@ -20961,8 +21158,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   actions: {
-    fetchActions: function fetchActions(_ref) {
+    fetchActions: function fetchActions(_ref, _ref2) {
       var commit = _ref.commit;
+      var actions = _ref2.actions;
+
+      if (actions) {
+        return commit('setActions', actions);
+      }
+
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/actions').then(function (response) {
         return commit('setActions', response.data);
       });
@@ -20971,6 +21174,9 @@ __webpack_require__.r(__webpack_exports__);
   mutations: {
     setActions: function setActions(state, actions) {
       state.actions = actions;
+    },
+    addAction: function addAction(state, action) {
+      state.actions.push(action);
     }
   }
 });
@@ -21036,8 +21242,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   actions: {
-    fetchRewards: function fetchRewards(_ref) {
+    fetchRewards: function fetchRewards(_ref, _ref2) {
       var commit = _ref.commit;
+      var rewards = _ref2.rewards;
+
+      if (rewards) {
+        return commit('setRewards', rewards);
+      }
+
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/rewards').then(function (response) {
         return commit('setRewards', response.data);
       });
@@ -21048,6 +21260,8 @@ __webpack_require__.r(__webpack_exports__);
       state.rewards = rewards;
     },
     addReward: function addReward(state, reward) {
+      // test
+      console.log(state, reward);
       state.rewards.push(reward);
     }
   }
@@ -21082,8 +21296,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   actions: {
-    fetchUsers: function fetchUsers(_ref) {
+    fetchUsers: function fetchUsers(_ref, _ref2) {
       var commit = _ref.commit;
+      var users = _ref2.users;
+
+      if (users) {
+        return commit('setUsers', users);
+      }
+
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/users').then(function (response) {
         return commit('setUsers', response.data);
       });
@@ -21092,6 +21312,16 @@ __webpack_require__.r(__webpack_exports__);
   mutations: {
     setUsers: function setUsers(state, users) {
       state.users = users;
+    },
+    addActionToUser: function addActionToUser(_ref3, action) {// get the user, add the action
+
+      var state = _ref3.state,
+          commit = _ref3.commit;
+    },
+    addRewardToUser: function addRewardToUser(_ref4, reward) {// get the user, add the reward
+
+      var state = _ref4.state,
+          commit = _ref4.commit;
     }
   }
 });

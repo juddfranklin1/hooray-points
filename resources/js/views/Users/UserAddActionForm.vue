@@ -11,13 +11,15 @@
     </form>
 </template>
 <script>
+
+import { mapState } from 'vuex';
+import store from '../../store/';
 import Axios from 'axios';
 
 export default {
     name: 'UserAddActionForm',
     props: {
-        user: Object,
-        actions: Array
+        user: Object
     },
     emits: [
         'update-user'
@@ -35,6 +37,13 @@ export default {
                     },
                     error => console.log(error));
         }
+    },
+    computed: {
+        ...mapState({
+            users: state => state.user.users,
+            actions: state => state.action.actions,
+            rewards: state => state.reward.rewards,
+        }),
     },
     data() {
         return {

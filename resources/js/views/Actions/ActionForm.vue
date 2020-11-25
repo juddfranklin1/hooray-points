@@ -3,11 +3,11 @@
         <h2 class="text-3xl">Create a new action</h2>
         <div class="flex flex-col">
             <label class="text-lg pt-4" for="action_name">Name</label>
-            <input class="border-2 border-gray-200" type="text" name="name" id="action_name">
+            <input required class="border-2 border-gray-200" type="text" name="name" id="action_name">
             <label class="text-lg pt-4" for="action_description">Description</label>
             <textarea class="border-2 border-gray-200" name="description" id="action_description"></textarea>
             <label class="text-lg pt-4" for="action_value">Value</label>
-            <input class="border-2 border-gray-200" type="number" name="value" id="action_value">
+            <input required class="border-2 border-gray-200" type="number" name="value" id="action_value">
             <label class="text-lg pt-4" for="action_user">Assigned User (if any)</label>
             <select name="user" class="border-2 border-gray-200" id="action_user">
                 <option value="">unassigned</option>
@@ -33,8 +33,13 @@ export default {
             data.description = $e.target.description.value;
             data.value = $e.target.value.value;
             data.user = $e.target.user.value;
+            console.log('event');
+            console.log($e.target);
             Axios.post('/api/action', data)
-                .then(result => console.log(result.data), error => console.log(error));
+                .then(result => {
+                    this.$store.commit('addAction', response.data);
+                    $e.target.reset();
+                }, error => console.log(error));
         }
     }
 };

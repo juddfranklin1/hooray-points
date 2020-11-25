@@ -15,6 +15,11 @@ import { mapState } from 'vuex';
 import store from '../store/';
 
 export default {
+    props: {
+        'usersProp': Array,
+        'actionsProp': Array,
+        'rewardsProp': Array
+    },
   computed: {
     ...mapState({
         users: state => state.user.users,
@@ -23,9 +28,9 @@ export default {
     }),
   },
   created() {
-    store.dispatch('fetchUsers');
-    store.dispatch('fetchActions');
-    store.dispatch('fetchRewards');
+    store.dispatch('fetchUsers', { users: this.usersProp });
+    store.dispatch('fetchActions', { actions: this.actionsProp });
+    store.dispatch('fetchRewards', { rewards: this.rewardsProp });
   },
 };
 </script>

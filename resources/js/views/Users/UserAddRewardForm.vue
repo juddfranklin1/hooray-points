@@ -4,7 +4,7 @@
         <label for="pick_an_action" class="mt-3 text-lg">What reward does {{ currentUser.name }} choose?</label>
         <select class="px-4 mb-2 py-2 border-2" name="pick_a_reward" id="pick_a_reward">
             <option
-                v-for="rewardOpt in allRewards"
+                v-for="rewardOpt in rewards"
                 v-bind:key="'reward-option-' + rewardOpt.id"
                 :value="rewardOpt.id"
                 v-bind:disabled="user.point_total < rewardOpt.cost"
@@ -25,13 +25,15 @@
     </form>
 </template>
 <script>
+
+import { mapState } from 'vuex';
+import store from '../../store/';
 import Axios from 'axios';
 
 export default {
     name: 'UserAddRewardForm',
     props: {
-        user: Object,
-        rewards: Array
+        user: Object
     },
     emits: [
         'update-user'
@@ -55,11 +57,17 @@ export default {
             this.chosenReward = $e.target.value;
         }
     },
+    computed: {
+        ...mapState({
+            users: state => state.user.users,
+            actions: state => state.action.actions,
+            rewards: state => state.reward.rewards,
+        }),
+    },
     data() {
         return {
             chosenReward: null,
             currentUser: this.user,
-            allRewards: this.rewards
         }
     }
 }

@@ -12,7 +12,10 @@ export default {
         }
     },
     actions: {
-        fetchActions({ commit }) {
+        fetchActions({ commit }, { actions }) {
+            if (actions) {
+                return commit('setActions', actions);
+            }
             return Axios.get('api/actions')
                 .then(response => commit('setActions', response.data))
         }
@@ -20,6 +23,9 @@ export default {
     mutations: {
         setActions(state, actions) {
             state.actions = actions;
-        }
+        },
+        addAction(state, action) {
+            state.actions.push(action);
+        },
     }
 };

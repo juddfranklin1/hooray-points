@@ -14,7 +14,7 @@ class ActionController extends Controller
      */
     public function index()
     {
-        return Action::all();
+        return Action::all()->load('assignee');
     }
 
     /**
@@ -39,7 +39,7 @@ class ActionController extends Controller
         $action->name = $request->name;
         $action->description = $request->description;
         $action->value = $request->value;
-        $action->user_id = $request->user_id;
+        $action->assignee_id = $request->assignee_id;
         $action->save();
         return $action;
     }
@@ -80,7 +80,7 @@ class ActionController extends Controller
         //$request->name = $action->name;
         //$request->description = $action->description;
         //$request->value = $action->value;
-        //$request->user_id = $action->user_id;
+        //$request->assignee_id = $action->assignee_id;
     }
 
     /**

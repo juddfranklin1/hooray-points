@@ -18,7 +18,7 @@ class CreateActionsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->integer('value');
-            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('assignee_id')->nullable();
             $table->timestamps();
         });
     }

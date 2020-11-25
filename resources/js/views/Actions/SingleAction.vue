@@ -26,7 +26,7 @@
         </li>
       </ul>
 
-      <UserAddActionForm :user="user" :actions="this.$attrs.actions"></UserAddActionForm>
+      <UserAddActionForm :user="user"></UserAddActionForm>
 
       <h3 class="text-xl pt-6 pb-4">Reward History</h3>
 

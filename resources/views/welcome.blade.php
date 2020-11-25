@@ -40,7 +40,7 @@
 
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                     <div id="app">
-                        <app :users="{{ $users }}" :actions="{{ $actions }}" :rewards="{{ $rewards }}"></app>
+                        <app :users-prop="{{ $users }}" :actions-prop="{{ $actions }}" :rewards-prop="{{ $rewards }}"></app>
                     </div>
                 </div>
 

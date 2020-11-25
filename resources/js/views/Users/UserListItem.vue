@@ -15,10 +15,12 @@
             <b>{{ action.pivot.human_date }}</b>: {{ action.name }} ({{ action.value }} points) x {{ action.pivot.multiplier }}
         </li>
     </ul>
-    <UserAddActionForm @update-user="updateUser" :actions="actions" :user="currentUser"></UserAddActionForm>
+    <UserAddActionForm @update-user="updateUser" :user="currentUser"></UserAddActionForm>
 </div>
 </template>
 <script>
+import { mapState } from 'vuex';
+import store from '../../store/';
 import Axios from 'axios';
 import UserAddActionForm from './UserAddActionForm.vue';
 
@@ -26,14 +28,19 @@ export default {
   components: { UserAddActionForm },
     name: 'UserListItem',
     props: {
-        user: Object,
-        actions: Array,
-        rewards: Array
+        user: Object
     },
     data() {
         return {
             currentUser: this.user
         }
+    },
+    computed: {
+        ...mapState({
+            users: state => state.user.users,
+            actions: state => state.action.actions,
+            rewards: state => state.reward.rewards,
+        }),
     },
     methods: {
         updateUser: function(newUser) {

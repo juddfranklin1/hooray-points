@@ -14,7 +14,7 @@ class RewardController extends Controller
      */
     public function index()
     {
-        return Reward::all();
+        return Reward::all()->load('assignee');
     }
 
     /**
@@ -39,9 +39,9 @@ class RewardController extends Controller
         $reward->cost = $request->cost;
         $reward->title = $request->title;
         $reward->description = $request->description;
-        $reward->user_id = $request->user_id;
+        $reward->assignee_id = $request->assignee_id;
         $reward->save();
-        return $reward;
+        return $reward->load('assignee');
     }
 
     /**

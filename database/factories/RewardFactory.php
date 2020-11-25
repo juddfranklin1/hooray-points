@@ -25,6 +25,7 @@ class RewardFactory extends Factory
             'title'         => implode(' ', $this->faker->words()),
             'description'   => $this->faker->text(),
             'cost'          => $this->faker->numberBetween(2, 300),
+            'assignee_id'   => $this->faker->numberBetween(1,4)
         ];
     }
 }

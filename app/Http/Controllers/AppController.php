@@ -9,8 +9,8 @@ class AppController extends Controller
 {
     public function index (Request $request) {
         $users = User::with('actions')->get()->toJson();
-        $actions = Action::all()->toJson();
-        $rewards = Reward::all()->toJson();
+        $actions = Action::with('assignee')->get()->toJson();
+        $rewards = Reward::with('assignee')->get()->toJson();
         return view('welcome',compact('users', 'actions', 'rewards'));
     }
 }

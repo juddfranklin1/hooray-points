@@ -36,7 +36,7 @@
                 </li>
             </ul>
 
-          <UserAddActionForm @update-user="updateUser" :user="currentUser" :actions="this.$attrs.actions"></UserAddActionForm>
+          <UserAddActionForm @update-user="updateUser" :user="currentUser"></UserAddActionForm>
         </div>
     </div>
     <div class="md:w-1/3 w-full mx-4">
@@ -56,13 +56,16 @@
                 </li>
             </ul>
             <p v-else>No rewards claimed yet.</p>
-            <UserAddRewardForm @update-user="updateUser" :user="currentUser" :rewards="this.$attrs.rewards"></UserAddRewardForm>
+            <UserAddRewardForm @update-user="updateUser" :user="currentUser"></UserAddRewardForm>
         </div>
 
     </div>
   </div>
 </template>
 <script>
+
+import { mapState } from 'vuex';
+import store from '../../store/';
 import UserListItem from './UserListItem.vue';
 import UserAddActionForm from './UserAddActionForm.vue';
 import UserAddRewardForm from './UserAddRewardForm.vue';
@@ -101,10 +104,17 @@ export default {
         this.currentUser = newUser;
     }
   },
-  components: {
-      UserListItem,
-      UserAddActionForm,
-      UserAddRewardForm,
+    computed: {
+        ...mapState({
+            users: state => state.user.users,
+            actions: state => state.action.actions,
+            rewards: state => state.reward.rewards,
+        }),
+    },
+    components: {
+        UserListItem,
+        UserAddActionForm,
+        UserAddRewardForm,
   }
 };
 </script>

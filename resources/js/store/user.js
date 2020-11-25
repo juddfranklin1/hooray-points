@@ -12,7 +12,10 @@ export default {
         }
     },
     actions: {
-        fetchUsers({ commit }) {
+        fetchUsers({ commit }, { users }) {
+            if (users) {
+                return commit('setUsers', users);
+            }
             return Axios.get('api/users')
                 .then(response => commit('setUsers', response.data))
         }
@@ -20,6 +23,14 @@ export default {
     mutations: {
         setUsers(state, users) {
             state.users = users;
-        }
+        },
+        addActionToUser ({ state, commit }, action) {
+            // get the user, add the action
+        },
+
+        addRewardToUser ({ state, commit }, reward) {
+            // get the user, add the reward
+
+        },
     }
 };

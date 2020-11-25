@@ -25,7 +25,7 @@ class ActionFactory extends Factory
             'name'          => implode(' ', $this->faker->words()),
             'description'   => $this->faker->text(),
             'value'         => $this->faker->numberBetween(-10, 100),
-
+            'assignee_id'   => $this->faker->numberBetween(1,4)
         ];
     }
 }

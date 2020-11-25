@@ -3,13 +3,13 @@
         <h2 class="text-3xl">Create a new reward</h2>
         <div class="flex flex-col">
             <label class="text-lg pt-4" for="reward_title">Title</label>
-            <input class="border-2 border-gray-200" type="text" name="title" id="reward_title">
+            <input required class="border-2 border-gray-200" type="text" name="title" id="reward_title">
             <label class="text-lg pt-4" for="reward_description">Description</label>
             <textarea class="border-2 border-gray-200" name="description" id="reward_description"></textarea>
             <label class="text-lg pt-4" for="reward_cost">Cost</label>
-            <input class="border-2 border-gray-200" type="number" name="cost" id="reward_cost">
+            <input required class="border-2 border-gray-200" type="number" name="cost" id="reward_cost">
             <label class="text-lg pt-4" for="reward_user">Assigned User (if any)</label>
-            <select name="user_id" class="border-2 border-gray-200" id="reward_user">
+            <select name="assignee_id" class="border-2 border-gray-200" id="reward_user">
                 <option value="">unassigned</option>
                 <option v-for="user in users" :value="user.id" v-bind:key="'user-' + user.id">{{ user.name }}</option>
             </select>
@@ -30,11 +30,14 @@ export default {
         createReward: function($e) {
             const data = {};
             data.title = $e.target.title.value;
-            data.user_id = $e.target.user_id.value;
+            data.assignee_id = $e.target.assignee_id.value;
             data.description = $e.target.description.value;
             data.cost = $e.target.cost.value;
             Axios.post('/api/reward', data)
-                .then(response => this.$store.commit('addReward', response.data), error => console.log(error));
+                .then(response => {
+                    this.$store.commit('addReward', response.data);
+                    $e.target.reset();
+                }, error => console.log(error));
         }
     }
 };

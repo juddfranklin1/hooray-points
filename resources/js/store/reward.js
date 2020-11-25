@@ -12,7 +12,10 @@ export default {
         }
     },
     actions: {
-        fetchRewards({ commit }) {
+        fetchRewards({ commit }, { rewards }) {
+            if (rewards) {
+                return commit('setRewards', rewards);
+            }
             return Axios.get('api/rewards')
                 .then(response => commit('setRewards', response.data))
         }
@@ -22,6 +25,8 @@ export default {
             state.rewards = rewards;
         },
         addReward(state, reward) {
+            // test
+            console.log(state, reward);
             state.rewards.push(reward);
         },
     }
