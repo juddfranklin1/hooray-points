@@ -6,7 +6,9 @@ Using the power of Laravel, Vuejs, TailwindCSS, and associated technologies, I a
 
 ## details
 
-This is a normal, boring old Laravel project. Quite simple at the moment. The logic is only Users, Actions (good or bad things a person can do), and Rewards (things a person can get for their points).
+Now featuring: [VueTailwind](https://github.com/alfonsobries/vue-tailwind)! Using this component library has quickly taken the UX of the site to the next level.
+
+At the moment, this is a simple Laravel project. The Models are currently only Users, Actions (good or bad things a person can do), and Rewards (things a person can get for their points).
 
 If you want to install it yourself, you can go ahead and run the normal boring old Laravel setup process:
 

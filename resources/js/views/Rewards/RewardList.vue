@@ -1,6 +1,6 @@
 <template>
-  <div class="py-4">
-    <h2 class="text-2xl py-4">Rewards</h2>
+  <div class="my-4 py-3 relative">
+    <h1 class="primary-headline">Rewards</h1>
     <dl>
         <RewardListItem v-for="reward in rewards" :reward="reward" v-bind:key="'reward-' + reward.id"></RewardListItem>
     </dl>

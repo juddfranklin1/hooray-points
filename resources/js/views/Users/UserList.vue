@@ -1,6 +1,6 @@
 <template>
-  <div class="px-4 py-4">
-    <h2 class="text-xl hover:bg-red-700 hover:text-white font-bold">Users</h2>
+  <div class="my-4 py-3 relative">
+    <h1 class="primary-headline">Users</h1>
      <div>
         <ul>
             <li v-for="user in users" v-bind:key="'user-' + user.id">

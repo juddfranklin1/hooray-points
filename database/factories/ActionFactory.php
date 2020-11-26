@@ -21,10 +21,16 @@ class ActionFactory extends Factory
      */
     public function definition()
     {
+        $value = $this->faker->numberBetween(-10, 100);
+        if($value === 0) {// Force all items to have a positive or negative value
+            $value = -10;
+        } elseif ($value > 0 && $value % 3 === 0) {// move some items into the negative in order to have more penalties
+            $value = -($value);
+        }
         return [
             'name'          => implode(' ', $this->faker->words()),
             'description'   => $this->faker->text(),
-            'value'         => $this->faker->numberBetween(-10, 100),
+            'value'         => $value,
             'assignee_id'   => $this->faker->numberBetween(1,4)
         ];
     }

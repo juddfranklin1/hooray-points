@@ -2,66 +2,28 @@ import store from './store/'
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
+import VueTailwind from 'vue-tailwind'// Component Library
+import vueTailwindSettings from './vueTailwind.js'
 
 Vue.use(VueRouter)
 Vue.use(Vuex)
+Vue.use(VueTailwind, vueTailwindSettings)
+
 
 import App from './views/app.vue';
-import ActionList from './views/Actions/ActionList.vue';
-import ActionForm from './views/Actions/ActionForm.vue';
-import UserList from './views/Users/UserList.vue';
-import SingleUser from './views/Users/SingleUser.vue';
-import SingleAction from './views/Actions/SingleAction.vue';
-import RewardList from './views/Rewards/RewardList.vue';
-import RewardForm from './views/Rewards/RewardForm.vue';
-
-const routes = [
-    {
-        path: '/user/:id',
-        name: 'user',
-        component: SingleUser,
-        props: true
-    },
-    {
-        path: '/users',
-        name: 'users',
-        component: UserList,
-        props: true
-    },
-    {
-        path: '/action/:id',
-        name: 'action',
-        component: SingleAction,
-        props: true
-    },
-    {
-        path: '/actions',
-        name: 'actions',
-        component: ActionList,
-        props: true
-    },
-    {
-        path: '/new-action',
-        name: 'new-action',
-        component: ActionForm,
-        props: true
-    },
-    {
-        path: '/rewards',
-        name: 'rewards',
-        component: RewardList,
-        props: true
-    },
-    {
-        path: '/new-reward',
-        name: 'new-reward',
-        component: RewardForm,
-        props: true
-    }
-]
+import routes from './router/routes.js'
 
 const router = new VueRouter({
-    routes
+    routes,
+    mode: 'history',
+    scrollBehavior (to, from, savedPosition) {
+        if (to.hash) {
+          return {
+            selector: to.hash
+            // , offset: { x: 0, y: 10 }
+          }
+        }
+    }
 });
 
 const app = new Vue({

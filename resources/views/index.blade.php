@@ -18,7 +18,7 @@
         </style>
     </head>
     <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+        <div class="relative pt-4 min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
@@ -34,14 +34,8 @@
             @endif
 
             <div class="min-w-full mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                    <h1>Hooray! The Franklin Family Point System!</h1>
-                </div>
-
-                <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                    <div id="app">
-                        <app :users-prop="{{ $users }}" :actions-prop="{{ $actions }}" :rewards-prop="{{ $rewards }}"></app>
-                    </div>
+                <div id="app">
+                    <app :users-prop="{{ $users }}" :actions-prop="{{ $actions }}" :rewards-prop="{{ $rewards }}"></app>
                 </div>
 
                 <div class="flex justify-center mt-4 sm:items-center sm:justify-between">

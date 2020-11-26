@@ -14,4 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AppController::class, 'index' ]);
+Route::get('{all}', [AppController::class, 'index' ])
+->where(['all' => '.*']);// This is to facilitate history mode in vue router

@@ -11,6 +11,6 @@ class AppController extends Controller
         $users = User::with('actions')->get()->toJson();
         $actions = Action::with('assignee')->get()->toJson();
         $rewards = Reward::with('assignee')->get()->toJson();
-        return view('welcome',compact('users', 'actions', 'rewards'));
+        return view('index',compact('users', 'actions', 'rewards'));
     }
 }

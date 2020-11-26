@@ -1,10 +1,24 @@
 <template>
   <div class="px-4 py-4 w-full">
-    <p>
-        <router-link :to="{ name: 'users' }"><span class="hover:no-underline underline text-blue-400">Users</span></router-link> |
-        <router-link :to="{ name: 'actions' }"><span class="hover:no-underline underline text-blue-400">Actions</span></router-link> |
-        <router-link :to="{ name: 'rewards' }"><span class="hover:no-underline underline text-blue-400">Rewards</span></router-link>
-    </p>
+    <ul class="flex">
+        <!-- Need a better way to handle top-level links without relying upon "children array" -->
+        <router-link
+            v-for="routeListing in routes"
+            :to="{ name: routeListing.name }"
+            v-if="routeListing.path.indexOf(':') === -1"
+            v-bind:key="routeListing.path"
+            v-slot="{ href, route, navigate, isExactActive }"
+        >
+            <li class="mr-3">
+                <a
+                    :href="href"
+                    @click="navigate"
+                    :isExactActive="isExactActive"
+                    class="p-3"
+                    v-bind:class="isExactActive ? 'no-underline text-blue-700 bg-gray-200' : 'hover:bg-gray-200 text-blue-400 bg-gray-50'">{{ route.name }}</a>
+            </li>
+        </router-link>
+    </ul>
     <router-view></router-view>
   </div>
 </template>
@@ -13,6 +27,7 @@ const default_layout = "default";
 
 import { mapState } from 'vuex';
 import store from '../store/';
+import routes from '../router/routes.js'
 
 export default {
     props: {
@@ -20,17 +35,28 @@ export default {
         'actionsProp': Array,
         'rewardsProp': Array
     },
-  computed: {
-    ...mapState({
-        users: state => state.user.users,
-        rewards: state => state.reward.rewards,
-        actions: state => state.action.actions,
-    }),
-  },
-  created() {
-    store.dispatch('fetchUsers', { users: this.usersProp });
-    store.dispatch('fetchActions', { actions: this.actionsProp });
-    store.dispatch('fetchRewards', { rewards: this.rewardsProp });
-  },
+    computed: {
+        ...mapState({
+            users: state => state.user.users,
+            rewards: state => state.reward.rewards,
+            actions: state => state.action.actions,
+        })
+    },
+    created() {
+        store.dispatch('fetchUsers', { users: this.usersProp });
+        store.dispatch('fetchActions', { actions: this.actionsProp });
+        store.dispatch('fetchRewards', { rewards: this.rewardsProp });
+    },
+    data() {
+        return {
+            routes
+        }
+    }
 };
 </script>
+<style lang="scss" scoped>
+.router-link-active {
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>

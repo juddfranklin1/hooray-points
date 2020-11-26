@@ -7,7 +7,7 @@
         </select>
         <label for="action_count" class="mt-3 text-lg">How Many Times did {{ currentUser.name }} do it?</label>
         <input class="mb-2 border-2 py-2 px-4" type="number" name="multiplier" id="action_count" min="1" value="1">
-        <button class="px-4 py-2 border-2 hover:bg-gray-200 hover:text-green-400 border-gray-200" type="submit">Add</button>
+        <t-button classes="px-4 py-2" type="submit">Add</t-button>
     </form>
 </template>
 <script>
