@@ -1931,6 +1931,22 @@ module.exports = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1952,10 +1968,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ActionForm',
-  props: {
-    'users': Array
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+    users: function users(state) {
+      return state.user.users;
+    }
+  })),
+  mounted: function mounted() {
+    this.$refs.modal.show();
   },
   methods: {
     createAction: function createAction($e) {
@@ -1975,6 +1997,12 @@ __webpack_require__.r(__webpack_exports__);
       }, function (error) {
         return console.log(error);
       });
+    },
+    onClose: function onClose($e) {
+      // Force reroute back to main actions page from "new-action" route. This ensures that the modal works seamlessly on the actions page, and is tied to the url
+      if (this.$route.name == 'new-action') {
+        this.$router.push('actions');
+      }
     }
   }
 });
@@ -1998,6 +2026,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -2100,6 +2129,16 @@ __webpack_require__.r(__webpack_exports__);
   name: 'ActionListItem',
   props: {
     action: Object
+  },
+  methods: {
+    'alert': function alert(message) {
+      window.alert(message);
+    },
+    'deleteAction': function deleteAction(action) {
+      this.$store.dispatch('deleteAction', {
+        action: action
+      });
+    }
   }
 });
 
@@ -2315,11 +2354,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'RewardForm',
   props: {
     'users': Array
+  },
+  mounted: function mounted() {
+    this.$refs.modal.show();
   },
   methods: {
     createReward: function createReward($e) {
@@ -2337,6 +2388,12 @@ __webpack_require__.r(__webpack_exports__);
       }, function (error) {
         return console.log(error);
       });
+    },
+    onClose: function onClose($e) {
+      // Force reroute back to main actions page from "new-action" route. This ensures that the modal works seamlessly on the actions page, and is tied to the url
+      if (this.$route.name == 'new-reward') {
+        this.$router.push('rewards');
+      }
     }
   }
 });
@@ -2361,6 +2418,16 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2415,10 +2482,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'RewardListItem',
   props: {
     reward: Object
+  },
+  methods: {
+    'alert': function alert(message) {
+      window.alert(message);
+    },
+    'deleteReward': function deleteReward(reward) {
+      this.$store.dispatch('deleteReward', {
+        reward: reward
+      });
+    }
   }
 });
 
@@ -3010,6 +3111,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 var default_layout = "default";
 
 
@@ -3083,6 +3185,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, ".primary-headline {\n  font-size: 1.875rem;\n  line-height: 2.25rem;\n  margin-top: 1rem;\n  margin-bottom: 1rem;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Rewards/RewardList.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Rewards/RewardList.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".action-button {\n  --tw-border-opacity: 1;\n  border-color: rgba(156, 163, 175, var(--tw-border-opacity));\n}\n.action-button:hover {\n  --tw-border-opacity: 1;\n  border-color: rgba(55, 65, 81, var(--tw-border-opacity));\n}\n.action-button {\n  border-width: 2px;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 1rem;\n  padding-right: 1rem;\n  --tw-text-opacity: 1;\n  color: rgba(96, 165, 250, var(--tw-text-opacity));\n}\n.action-button:hover {\n  --tw-text-opacity: 1;\n  color: rgba(29, 78, 216, var(--tw-text-opacity));\n}\n", ""]);
 
 // exports
 
@@ -3641,6 +3762,36 @@ options.transform = transform
 options.insertInto = undefined;
 
 var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Rewards/RewardList.vue?vue&type=style&index=0&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/Rewards/RewardList.vue?vue&type=style&index=0&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--7-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./RewardList.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Rewards/RewardList.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -4278,94 +4429,130 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "form",
+    "t-modal",
     {
-      staticClass: "my-4",
-      attrs: { action: "new-action", method: "post" },
+      ref: "modal",
       on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.createAction($event)
+        closed: _vm.onClose,
+        "update-user": function($event) {
+          return _vm.$refs.modal.hide()
         }
-      }
+      },
+      scopedSlots: _vm._u([
+        {
+          key: "header",
+          fn: function() {
+            return [
+              _vm._v("\n        What do you want to assign points to?\n    ")
+            ]
+          },
+          proxy: true
+        }
+      ])
     },
     [
-      _c("h2", { staticClass: "text-3xl" }, [_vm._v("Create a new action")]),
       _vm._v(" "),
-      _c("div", { staticClass: "flex flex-col" }, [
-        _c(
-          "label",
-          { staticClass: "text-lg pt-4", attrs: { for: "action_name" } },
-          [_vm._v("Name")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "border-2 border-gray-200",
-          attrs: { required: "", type: "text", name: "name", id: "action_name" }
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          { staticClass: "text-lg pt-4", attrs: { for: "action_description" } },
-          [_vm._v("Description")]
-        ),
-        _vm._v(" "),
-        _c("textarea", {
-          staticClass: "border-2 border-gray-200",
-          attrs: { name: "description", id: "action_description" }
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          { staticClass: "text-lg pt-4", attrs: { for: "action_value" } },
-          [_vm._v("Value")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "border-2 border-gray-200",
-          attrs: {
-            required: "",
-            type: "number",
-            name: "value",
-            id: "action_value"
+      _c(
+        "form",
+        {
+          staticClass: "my-4",
+          attrs: { action: "new-action", method: "post" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.createAction($event)
+            }
           }
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          { staticClass: "text-lg pt-4", attrs: { for: "action_user" } },
-          [_vm._v("Assigned User (if any)")]
-        ),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            staticClass: "border-2 border-gray-200",
-            attrs: { name: "user", id: "action_user" }
-          },
-          [
-            _c("option", { attrs: { value: "" } }, [_vm._v("unassigned")]),
+        },
+        [
+          _c("h2", { staticClass: "text-3xl" }, [
+            _vm._v("Create a new action")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex flex-col" }, [
+            _c(
+              "label",
+              { staticClass: "text-lg pt-4", attrs: { for: "action_name" } },
+              [_vm._v("Name")]
+            ),
             _vm._v(" "),
-            _vm._l(_vm.users, function(user) {
-              return _c(
-                "option",
-                { key: "user-" + user.id, domProps: { value: user.id } },
-                [_vm._v(_vm._s(user.name))]
-              )
-            })
-          ],
-          2
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "border-2 border-gray-200 py-2 px-4 my-4",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Create")]
-        )
-      ])
+            _c("input", {
+              staticClass: "border-2 border-gray-200",
+              attrs: {
+                required: "",
+                type: "text",
+                name: "name",
+                id: "action_name"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "text-lg pt-4",
+                attrs: { for: "action_description" }
+              },
+              [_vm._v("Description")]
+            ),
+            _vm._v(" "),
+            _c("textarea", {
+              staticClass: "border-2 border-gray-200",
+              attrs: { name: "description", id: "action_description" }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "text-lg pt-4", attrs: { for: "action_value" } },
+              [_vm._v("Value")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "border-2 border-gray-200",
+              attrs: {
+                required: "",
+                type: "number",
+                name: "value",
+                id: "action_value"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "text-lg pt-4", attrs: { for: "action_user" } },
+              [_vm._v("Assigned User (if any)")]
+            ),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                staticClass: "border-2 border-gray-200",
+                attrs: { name: "user", id: "action_user" }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("unassigned")]),
+                _vm._v(" "),
+                _vm._l(_vm.users, function(user) {
+                  return _c(
+                    "option",
+                    { key: "user-" + user.id, domProps: { value: user.id } },
+                    [_vm._v(_vm._s(user.name))]
+                  )
+                })
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "border-2 border-gray-200 py-2 px-4 my-4",
+                attrs: { type: "submit" }
+              },
+              [_vm._v("Create")]
+            )
+          ])
+        ]
+      )
     ]
   )
 }
@@ -4391,92 +4578,92 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "my-4 py-3 relative" }, [
-    _c("h1", { staticClass: "primary-headline" }, [_vm._v("Actions")]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "py-2 px-4 border-2 border-gray-400 absolute top-0 right-0"
-      },
-      [
-        _c("router-link", {
-          attrs: { to: "/new-action", user: _vm.users },
-          scopedSlots: _vm._u([
-            {
-              key: "default",
-              fn: function(ref) {
-                var href = ref.href
-                var route = ref.route
-                var navigate = ref.navigate
-                var isActive = ref.isActive
-                var isExactActive = ref.isExactActive
-                return [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "text-blue-400",
-                      attrs: { active: isActive, href: href },
-                      on: { click: navigate }
-                    },
-                    [_vm._v("New Action")]
-                  )
-                ]
+  return _c(
+    "div",
+    { staticClass: "my-4 py-3 relative" },
+    [
+      _c("h1", { staticClass: "primary-headline" }, [_vm._v("Actions")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "absolute top-0 right-0" },
+        [
+          _c("router-link", {
+            attrs: { to: "/new-action", users: _vm.users },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(ref) {
+                  var href = ref.href
+                  var navigate = ref.navigate
+                  var isActive = ref.isActive
+                  return [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "action-button",
+                        attrs: { active: isActive, href: href },
+                        on: { click: navigate }
+                      },
+                      [_vm._v("New Action")]
+                    )
+                  ]
+                }
               }
-            }
-          ])
-        })
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "ul",
-      { staticClass: "max-w-4xl" },
-      _vm._l(_vm.actions, function(action) {
-        return _c("ActionListItem", {
-          key: "action-" + action.id,
-          attrs: { action: action }
-        })
-      }),
-      1
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "mt-6 mb-4" },
-      [
-        _c("router-link", {
-          attrs: { to: "/new-action", users: _vm.users },
-          scopedSlots: _vm._u([
-            {
-              key: "default",
-              fn: function(ref) {
-                var href = ref.href
-                var route = ref.route
-                var navigate = ref.navigate
-                var isActive = ref.isActive
-                var isExactActive = ref.isExactActive
-                return [
-                  _c(
-                    "a",
-                    {
-                      staticClass:
-                        "border-2 border-gray-400 py-2 px-4 text-blue-400",
-                      attrs: { active: isActive, href: href },
-                      on: { click: navigate }
-                    },
-                    [_vm._v("New Action")]
-                  )
-                ]
+            ])
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("router-view"),
+      _vm._v(" "),
+      _c(
+        "ul",
+        { staticClass: "max-w-4xl" },
+        _vm._l(_vm.actions, function(action) {
+          return _c("ActionListItem", {
+            key: "action-" + action.id,
+            attrs: { action: action }
+          })
+        }),
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "mt-6 mb-4" },
+        [
+          _c("router-link", {
+            attrs: { to: "/new-action", users: _vm.users },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(ref) {
+                  var href = ref.href
+                  var navigate = ref.navigate
+                  var isActive = ref.isActive
+                  return [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "action-button",
+                        attrs: { active: isActive, href: href },
+                        on: { click: navigate }
+                      },
+                      [_vm._v("New Action")]
+                    )
+                  ]
+                }
               }
-            }
-          ])
-        })
-      ],
-      1
-    )
-  ])
+            ])
+          })
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -4521,7 +4708,7 @@ var render = function() {
                         {
                           staticClass: "text-green-700 mb-3 font-bold uppercase"
                         },
-                        [_vm._v("\n            Incentive\n            ")]
+                        [_vm._v("\n                Score\n            ")]
                       )
                     : _c(
                         "b",
@@ -4540,13 +4727,33 @@ var render = function() {
                     "div",
                     { staticClass: "flex justify-between" },
                     [
-                      _c("t-button", { attrs: { type: "button" } }, [
-                        _vm._v("\n                Edit\n            ")
-                      ]),
+                      _c(
+                        "t-button",
+                        {
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.alert(
+                                "functionality not implemented yet"
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("\n                Edit\n            ")]
+                      ),
                       _vm._v(" "),
-                      _c("t-button", { attrs: { type: "button" } }, [
-                        _vm._v("\n                Delete\n            ")
-                      ])
+                      _c(
+                        "t-button",
+                        {
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteAction(_vm.action)
+                            }
+                          }
+                        },
+                        [_vm._v("\n                Delete\n            ")]
+                      )
                     ],
                     1
                   )
@@ -4888,99 +5095,130 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "form",
+    "t-modal",
     {
-      staticClass: "my-4",
-      attrs: { action: "new-reward", method: "post" },
+      ref: "modal",
       on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.createReward($event)
+        closed: _vm.onClose,
+        "update-user": function($event) {
+          return _vm.$refs.modal.hide()
         }
-      }
+      },
+      scopedSlots: _vm._u([
+        {
+          key: "header",
+          fn: function() {
+            return [
+              _vm._v("\n        What reward do you want to set up?\n    ")
+            ]
+          },
+          proxy: true
+        }
+      ])
     },
     [
-      _c("h2", { staticClass: "text-3xl" }, [_vm._v("Create a new reward")]),
       _vm._v(" "),
-      _c("div", { staticClass: "flex flex-col" }, [
-        _c(
-          "label",
-          { staticClass: "text-lg pt-4", attrs: { for: "reward_title" } },
-          [_vm._v("Title")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "border-2 border-gray-200",
-          attrs: {
-            required: "",
-            type: "text",
-            name: "title",
-            id: "reward_title"
+      _c(
+        "form",
+        {
+          staticClass: "my-4",
+          attrs: { action: "new-reward", method: "post" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.createReward($event)
+            }
           }
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          { staticClass: "text-lg pt-4", attrs: { for: "reward_description" } },
-          [_vm._v("Description")]
-        ),
-        _vm._v(" "),
-        _c("textarea", {
-          staticClass: "border-2 border-gray-200",
-          attrs: { name: "description", id: "reward_description" }
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          { staticClass: "text-lg pt-4", attrs: { for: "reward_cost" } },
-          [_vm._v("Cost")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "border-2 border-gray-200",
-          attrs: {
-            required: "",
-            type: "number",
-            name: "cost",
-            id: "reward_cost"
-          }
-        }),
-        _vm._v(" "),
-        _c(
-          "label",
-          { staticClass: "text-lg pt-4", attrs: { for: "reward_user" } },
-          [_vm._v("Assigned User (if any)")]
-        ),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            staticClass: "border-2 border-gray-200",
-            attrs: { name: "assignee_id", id: "reward_user" }
-          },
-          [
-            _c("option", { attrs: { value: "" } }, [_vm._v("unassigned")]),
+        },
+        [
+          _c("h2", { staticClass: "text-3xl" }, [
+            _vm._v("Create a new reward")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "flex flex-col" }, [
+            _c(
+              "label",
+              { staticClass: "text-lg pt-4", attrs: { for: "reward_title" } },
+              [_vm._v("Title")]
+            ),
             _vm._v(" "),
-            _vm._l(_vm.users, function(user) {
-              return _c(
-                "option",
-                { key: "user-" + user.id, domProps: { value: user.id } },
-                [_vm._v(_vm._s(user.name))]
-              )
-            })
-          ],
-          2
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "border-2 border-gray-200 py-2 px-4 my-4",
-            attrs: { type: "submit" }
-          },
-          [_vm._v("Create")]
-        )
-      ])
+            _c("input", {
+              staticClass: "border-2 border-gray-200",
+              attrs: {
+                required: "",
+                type: "text",
+                name: "title",
+                id: "reward_title"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "text-lg pt-4",
+                attrs: { for: "reward_description" }
+              },
+              [_vm._v("Description")]
+            ),
+            _vm._v(" "),
+            _c("textarea", {
+              staticClass: "border-2 border-gray-200",
+              attrs: { name: "description", id: "reward_description" }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "text-lg pt-4", attrs: { for: "reward_cost" } },
+              [_vm._v("Cost")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "border-2 border-gray-200",
+              attrs: {
+                required: "",
+                type: "number",
+                name: "cost",
+                id: "reward_cost"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "text-lg pt-4", attrs: { for: "reward_user" } },
+              [_vm._v("Assigned User (if any)")]
+            ),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                staticClass: "border-2 border-gray-200",
+                attrs: { name: "assignee_id", id: "reward_user" }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("unassigned")]),
+                _vm._v(" "),
+                _vm._l(_vm.users, function(user) {
+                  return _c(
+                    "option",
+                    { key: "user-" + user.id, domProps: { value: user.id } },
+                    [_vm._v(_vm._s(user.name))]
+                  )
+                })
+              ],
+              2
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "border-2 border-gray-200 py-2 px-4 my-4",
+                attrs: { type: "submit" }
+              },
+              [_vm._v("Create")]
+            )
+          ])
+        ]
+      )
     ]
   )
 }
@@ -5013,7 +5251,42 @@ var render = function() {
       _c("h1", { staticClass: "primary-headline" }, [_vm._v("Rewards")]),
       _vm._v(" "),
       _c(
-        "dl",
+        "div",
+        { staticClass: "absolute top-0 right-0" },
+        [
+          _c("router-link", {
+            attrs: { to: "/new-reward", users: _vm.users },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(ref) {
+                  var href = ref.href
+                  var navigate = ref.navigate
+                  var isActive = ref.isActive
+                  return [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "action-button",
+                        attrs: { active: isActive, href: href },
+                        on: { click: navigate }
+                      },
+                      [_vm._v("New Reward")]
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("router-view"),
+      _vm._v(" "),
+      _c(
+        "ul",
+        { staticClass: "max-w-4xl" },
         _vm._l(_vm.rewards, function(reward) {
           return _c("RewardListItem", {
             key: "reward-" + reward.id,
@@ -5021,9 +5294,7 @@ var render = function() {
           })
         }),
         1
-      ),
-      _vm._v(" "),
-      _c("RewardForm", { attrs: { users: _vm.users } })
+      )
     ],
     1
   )
@@ -5050,28 +5321,131 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "flex flex-col flex-wrap mb-4" }, [
-    _c("dt", { staticClass: "pr-3" }, [
-      _c("b", { staticClass: "text-xl" }, [_vm._v(_vm._s(_vm.reward.title))])
-    ]),
-    _vm._v(" "),
-    _c("dd", [_vm._v("worth " + _vm._s(_vm.reward.cost) + " points")]),
-    _vm._v(" "),
-    _vm.reward.assignee
-      ? _c("span", [
-          _vm._v(
-            "\n        This is a special reward to be earned by " +
-              _vm._s(_vm.reward.assignee.name) +
-              "\n    "
-          )
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("p", { staticClass: "w-full" }, [
-      _c("b", { staticClass: "font-bold" }, [_vm._v("Description: ")]),
-      _vm._v(_vm._s(_vm.reward.description))
-    ])
-  ])
+  return _c(
+    "li",
+    {
+      staticClass:
+        "flex flex-col flex-wrap mb-4 py-4 px-2 justify-content-start"
+    },
+    [
+      _c(
+        "t-card",
+        {
+          scopedSlots: _vm._u([
+            {
+              key: "header",
+              fn: function() {
+                return [
+                  _vm.reward.cost > 0
+                    ? _c(
+                        "b",
+                        {
+                          staticClass: "text-green-700 mb-3 font-bold uppercase"
+                        },
+                        [
+                          _vm._v(
+                            "\n                Reward" +
+                              _vm._s(
+                                _vm.reward.assignee
+                                  ? " assigned to " + _vm.reward.assignee.name
+                                  : ""
+                              ) +
+                              "\n            "
+                          )
+                        ]
+                      )
+                    : _vm._e()
+                ]
+              },
+              proxy: true
+            },
+            {
+              key: "footer",
+              fn: function() {
+                return [
+                  _c(
+                    "div",
+                    { staticClass: "flex justify-between" },
+                    [
+                      _c(
+                        "t-button",
+                        {
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.alert(
+                                "functionality not implemented yet"
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("\n                Edit\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "t-button",
+                        {
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.deleteReward(_vm.reward)
+                            }
+                          }
+                        },
+                        [_vm._v("\n                Delete\n            ")]
+                      )
+                    ],
+                    1
+                  )
+                ]
+              },
+              proxy: true
+            }
+          ])
+        },
+        [
+          _vm._v(" "),
+          _c("dt", { staticClass: "pr-3" }, [
+            _c("b", { staticClass: "text-xl" }, [
+              _vm._v(_vm._s(_vm.reward.name))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("dd", [_vm._v("Costs " + _vm._s(_vm.reward.cost) + " points")]),
+          _vm._v(" "),
+          _vm.reward.assignee
+            ? _c(
+                "span",
+                [
+                  _vm.reward.cost > 0
+                    ? [
+                        _vm._v(
+                          "\n                This is a special reward to be earned by " +
+                            _vm._s(_vm.reward.assignee.name) +
+                            "\n            "
+                        )
+                      ]
+                    : [
+                        _vm._v(
+                          "\n                This is something that " +
+                            _vm._s(_vm.reward.assignee.name) +
+                            " should try not to do.\n            "
+                        )
+                      ]
+                ],
+                2
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("p", { staticClass: "w-full" }, [
+            _c("b", { staticClass: "font-bold" }, [_vm._v("Description: ")]),
+            _vm._v(_vm._s(_vm.reward.description))
+          ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -5836,6 +6210,7 @@ var render = function() {
                         var href = ref.href
                         var route = ref.route
                         var navigate = ref.navigate
+                        var isActive = ref.isActive
                         var isExactActive = ref.isExactActive
                         return [
                           _c("li", { staticClass: "mr-3" }, [
@@ -5845,9 +6220,12 @@ var render = function() {
                                 staticClass: "p-3",
                                 class: isExactActive
                                   ? "no-underline text-blue-700 bg-gray-200"
+                                  : isActive && route.name !== "home"
+                                  ? "no-underline text-blue-400 bg-gray-200"
                                   : "hover:bg-gray-200 text-blue-400 bg-gray-50",
                                 attrs: {
                                   href: href,
+                                  isActive: isActive,
                                   isExactActive: isExactActive
                                 },
                                 on: { click: navigate }
@@ -46721,6 +47099,13 @@ __webpack_require__.r(__webpack_exports__);
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/actions').then(function (response) {
         return commit('setActions', response.data);
       });
+    },
+    deleteAction: function deleteAction(_ref3, _ref4) {
+      var commit = _ref3.commit;
+      var action = _ref4.action;
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('api/actions/' + action.id).then(function (response) {
+        return commit('deleteAction', response.data);
+      });
     }
   },
   mutations: {
@@ -46729,6 +47114,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     addAction: function addAction(state, action) {
       state.actions.push(action);
+    },
+    deleteAction: function deleteAction(state, action) {
+      var deletedAction = state.actions.findIndex(function (item) {
+        return item.id === action;
+      });
+      state.actions.splice(deletedAction, 1);
     }
   }
 });
@@ -46805,6 +47196,13 @@ __webpack_require__.r(__webpack_exports__);
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('api/rewards').then(function (response) {
         return commit('setRewards', response.data);
       });
+    },
+    deleteReward: function deleteReward(_ref3, _ref4) {
+      var commit = _ref3.commit;
+      var reward = _ref4.reward;
+      return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('api/rewards/' + reward.id).then(function (response) {
+        return commit('deleteReward', response.data);
+      });
     }
   },
   mutations: {
@@ -46815,6 +47213,12 @@ __webpack_require__.r(__webpack_exports__);
       // test
       console.log(state, reward);
       state.rewards.push(reward);
+    },
+    deleteReward: function deleteReward(state, reward) {
+      var deletedReward = state.rewards.findIndex(function (item) {
+        return item.id === reward;
+      });
+      state.rewards.splice(deletedReward, 1);
     }
   }
 });
@@ -47323,7 +47727,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _RewardList_vue_vue_type_template_id_436f5092___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RewardList.vue?vue&type=template&id=436f5092& */ "./resources/js/views/Rewards/RewardList.vue?vue&type=template&id=436f5092&");
 /* harmony import */ var _RewardList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RewardList.vue?vue&type=script&lang=js& */ "./resources/js/views/Rewards/RewardList.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _RewardList_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RewardList.vue?vue&type=style&index=0&lang=css& */ "./resources/js/views/Rewards/RewardList.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -47331,7 +47737,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _RewardList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _RewardList_vue_vue_type_template_id_436f5092___WEBPACK_IMPORTED_MODULE_0__["render"],
   _RewardList_vue_vue_type_template_id_436f5092___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -47360,6 +47766,22 @@ component.options.__file = "resources/js/views/Rewards/RewardList.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RewardList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./RewardList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Rewards/RewardList.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RewardList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/Rewards/RewardList.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/views/Rewards/RewardList.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RewardList_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--7-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./RewardList.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/Rewards/RewardList.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RewardList_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RewardList_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RewardList_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RewardList_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
 
 /***/ }),
 

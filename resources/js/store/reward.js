@@ -18,6 +18,10 @@ export default {
             }
             return Axios.get('api/rewards')
                 .then(response => commit('setRewards', response.data))
+        },
+        deleteReward({ commit }, { reward }) {
+            return Axios.delete('api/rewards/' + reward.id)
+                .then(response => commit('deleteReward', response.data))
         }
     },
     mutations: {
@@ -28,6 +32,10 @@ export default {
             // test
             console.log(state, reward);
             state.rewards.push(reward);
+        },
+        deleteReward(state, reward) {
+            const deletedReward = state.rewards.findIndex(item => item.id === reward);
+            state.rewards.splice(deletedReward, 1);
         },
     }
 };

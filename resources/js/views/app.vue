@@ -7,15 +7,16 @@
             :to="{ name: routeListing.name }"
             v-if="routeListing.path.indexOf(':') === -1"
             v-bind:key="routeListing.path"
-            v-slot="{ href, route, navigate, isExactActive }"
+            v-slot="{ href, route, navigate, isActive, isExactActive }"
         >
             <li class="mr-3">
                 <a
                     :href="href"
                     @click="navigate"
+                    :isActive="isActive"
                     :isExactActive="isExactActive"
                     class="p-3"
-                    v-bind:class="isExactActive ? 'no-underline text-blue-700 bg-gray-200' : 'hover:bg-gray-200 text-blue-400 bg-gray-50'">{{ route.name }}</a>
+                    v-bind:class="isExactActive ? 'no-underline text-blue-700 bg-gray-200' : isActive && route.name !== 'home' ? 'no-underline text-blue-400 bg-gray-200' : 'hover:bg-gray-200 text-blue-400 bg-gray-50'">{{ route.name }}</a>
             </li>
         </router-link>
     </ul>

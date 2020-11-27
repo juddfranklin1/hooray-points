@@ -18,6 +18,10 @@ export default {
             }
             return Axios.get('api/actions')
                 .then(response => commit('setActions', response.data))
+        },
+        deleteAction({ commit }, { action }) {
+            return Axios.delete('api/actions/' + action.id)
+                .then(response => commit('deleteAction', response.data))
         }
     },
     mutations: {
@@ -26,6 +30,10 @@ export default {
         },
         addAction(state, action) {
             state.actions.push(action);
+        },
+        deleteAction(state, action) {
+            const deletedAction = state.actions.findIndex(item => item.id === action);
+            state.actions.splice(deletedAction, 1);
         },
     }
 };

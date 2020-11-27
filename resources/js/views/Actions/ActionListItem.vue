@@ -3,7 +3,7 @@
         <t-card>
             <template v-slot:header>
                 <b class="text-green-700 mb-3 font-bold uppercase" v-if="action.value > 0">
-                Incentive
+                    Score
                 </b>
                 <b class="text-red-700 font-bold uppercase" v-else>
                     Penalty
@@ -26,10 +26,10 @@
 
             <template v-slot:footer>
                 <div class="flex justify-between">
-                <t-button type="button">
+                <t-button type="button" @click="alert('functionality not implemented yet');">
                     Edit
                 </t-button>
-                <t-button type="button">
+                <t-button type="button" @click="deleteAction(action)">
                     Delete
                 </t-button>
                 </div>
@@ -38,10 +38,19 @@
     </li>
 </template>
 <script>
+
 export default {
     name: 'ActionListItem',
     props: {
         action: Object
-    }
+    },
+    methods: {
+        'alert': function(message){
+            window.alert(message);
+        },
+        'deleteAction': function(action){
+            this.$store.dispatch('deleteAction', { action });
+        }
+    },
 }
 </script>

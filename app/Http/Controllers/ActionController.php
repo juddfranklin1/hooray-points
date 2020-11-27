@@ -86,11 +86,13 @@ class ActionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Action  $action
+     * @param  $action - id passed into the path
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Action $action)
+    public function destroy($action)
     {
-        //
+        $actionItem = Action::find($action);
+        $actionItem->delete();
+        return $action;
     }
 }

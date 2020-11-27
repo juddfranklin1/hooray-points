@@ -52,18 +52,7 @@ class RewardController extends Controller
      */
     public function show(Reward $reward)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Reward  $reward
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Reward $reward)
-    {
-        //
+        return Reward::firstOrFail($reward);
     }
 
     /**
@@ -81,11 +70,13 @@ class RewardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Reward  $reward
+     * @param  $reward
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Reward $reward)
+    public function destroy($reward)
     {
-        //
+        $rewardItem = Reward::find($reward);
+        $rewardItem->delete();
+        return $reward;
     }
 }

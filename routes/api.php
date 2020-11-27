@@ -22,11 +22,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::put('/user/{user_id}/addAction/{action_id}', [UserController::class, 'addAction' ]);
 Route::put('/user/{user_id}/addReward/{reward_id}', [UserController::class, 'addReward' ]);
 Route::get('/actions', [ActionController::class, 'index' ]);
+Route::post('/actions', [ActionController::class, 'store' ]);
+Route::get('/actions/{id}', [ActionController::class, 'show' ]);
+Route::delete('/actions/{id}', [ActionController::class, 'destroy' ]);
+Route::post('/actions/{id}', [ActionController::class, 'update' ]);
+
 Route::get('/rewards', [RewardController::class, 'index' ]);
+Route::post('/rewards', [RewardController::class, 'store' ]);
+Route::get('/rewards/{id}', [RewardController::class, 'show' ]);
+Route::delete('/rewards/{id}', [RewardController::class, 'destroy' ]);
+
 Route::get('/users', [UserController::class, 'index' ]);
 Route::post('/user', [UserController::class, 'store' ]);
-Route::post('/action', [ActionController::class, 'store' ]);
-Route::post('/reward', [RewardController::class, 'store' ]);
-Route::get('/action/{id}', [ActionController::class, 'show' ]);
-Route::post('/action/{id}', [ActionController::class, 'update' ]);
 Route::get('/user/{id}', [UserController::class, 'show' ]);
