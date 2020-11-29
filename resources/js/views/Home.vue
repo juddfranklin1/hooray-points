@@ -1,3 +1,4 @@
+
 <template>
     <div class="my-4 py-3 relative flex flex-col">
         <h1 class="primary-headline">Welcome to Hooray!</h1>
@@ -27,16 +28,20 @@
                         {{ props.row.point_total }}
                     </td>
                     <td :class="props.tdClass">
-                        <t-button variant="secondary">Edit</t-button>
+                        <t-button variant="secondary" class="trigger-button" @click="alert('functionality not implemented yet');" type="button">Edit</t-button>
                     </td>
                 </tr>
             </template>
         </t-table>
+        <FullCalendar :options="calendarOptions" />
     </div>
 </template>
 <script>
 import { mapState } from 'vuex';
 import store from '../store/';
+import FullCalendar from '@fullcalendar/vue';
+import dayGridPlugin from '@fullcalendar/daygrid';
+
 
 export default {
     name: 'Home',
@@ -53,8 +58,51 @@ export default {
             }),
             actions: state => state.action.actions,
             rewards: state => state.reward.rewards,
+            userActions: state => state.userAction.userActions,
+            userRewards: state => state.userReward.userRewards,
         }),
     },
+    components: {
+        FullCalendar
+    },
+    data() {
+        const userActs = this.$store.state.userAction.userActions.map(userAct => {
+                        const timeWord = userAct.multiplier === 1 ? 'time' : 'times';
+                        return {
+                            title: userAct.user.name + ' did ' + userAct.action.name + ' ' + userAct.multiplier + ' ' + timeWord + '.',
+                            date: userAct.created_at,
+                            color: userAct.action.value < 0 ? 'red' : 'green'
+                        }
+                    });
+        const userRewards = this.$store.state.userReward.userRewards.map(userRew => {
+                        return {
+                            title: userRew.user.name + ' claimed ' + userRew.multiplier + ' of ' + userRew.reward.title,
+                            date: userRew.created_at,
+                            color: 'gold'
+                        }
+                    });
+        return {
+            calendarOptions: {
+                plugins: [dayGridPlugin],
+                initialView: 'dayGridMonth',
+                events: [...userActs,...userRewards]
+            }
+        }
+    },
+    methods: {
+        'alert': function(message){
+            this.$dialog.alert({
+                title: 'Sorry',
+                text: message,
+                icon: 'warning',
+                // variant: 'my-alert',
+                // ...More props
+            }).then((result) => {
+                //
+            })
+        },
+    }
+
 }
 </script>
 <style>

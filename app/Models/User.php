@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use App\Models\{ Action, ActionUser, RewardUser };
+use App\Models\{ Action, ActionUser, RewardUser, Team };
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -74,6 +75,10 @@ class User extends Authenticatable
             ->using(RewardUser::class)
             ->withPivot('created_at', 'multiplier')
             ->orderBy('reward_user.created_at');
+    }
+
+    public function teams() {
+        return $this->belongsToMany(Team::class);
     }
 
     public function getPointTotalAttribute() {

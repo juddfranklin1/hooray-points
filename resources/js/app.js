@@ -1,12 +1,11 @@
 import store from './store/'
+import Axios from 'axios';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Vuex from 'vuex';
-import VueTailwind from 'vue-tailwind'// Component Library
-import vueTailwindSettings from './vueTailwind.js'
+import VueTailwind from 'vue-tailwind';// Component Library
+import vueTailwindSettings from './vueTailwind.js';
 
 Vue.use(VueRouter)
-Vue.use(Vuex)
 Vue.use(VueTailwind, vueTailwindSettings)
 
 
@@ -26,9 +25,35 @@ const router = new VueRouter({
     }
 });
 
+router.beforeEach((to, from, next) => {
+    const loggedIn = localStorage.getItem('user')
+
+    if (to.matched.some(record => record.meta.auth) && !loggedIn) {
+      next('/login')
+      return
+    }
+    next()
+});
+
 const app = new Vue({
     el: '#app',
     components: { App },
+    created () {
+        const userInfo = localStorage.getItem('user')
+        if (userInfo) {
+          const userData = JSON.parse(userInfo)
+          this.$store.commit('setUserData', userData)
+        }
+        Axios.interceptors.response.use(
+          response => response,
+          error => {
+            if (error.response.status === 401) {
+              this.$store.dispatch('logout')
+            }
+            return Promise.reject(error)
+          }
+        )
+    },
     router,
     store,
 });

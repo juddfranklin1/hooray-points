@@ -31,6 +31,12 @@
             {{ error }}
             </div>
             <div v-if="currentUser" class="content">
+                <t-button
+                    @click="showActionForm=true"
+                    classes="trigger-button"
+                >
+                    {{ currentUser.name }} did something!
+                </t-button>
 
                 <ul v-if="currentUser.actions.length > 0">
                     <li v-for="(action, index) in currentUser.actions" v-bind:key="'user-'+ currentUser.id + '-action-' + action.id + '-' + index">
@@ -38,26 +44,20 @@
                     </li>
                 </ul>
 
-                <t-button
-                    @click="showActionForm=true"
-                    classes="text-white bg-blue-600 hover:bg-blue-500 focus:border-blue-700 active:bg-blue-700 text-sm font-medium border border-transparent px-3 py-2 rounded-md"
-                >
-                    {{ currentUser.name }} did something!
-                </t-button>
                 <t-modal
                     ref="modal"
                     v-model="showActionForm"
                     @update-user="$refs.modal.hide()"
                     >
                     <template v-slot:header>
-                        What did {{ currentUser.name }} Do?
+                        What did {{ currentUser.name }} do?
                     </template>
                     <UserAddActionForm @update-user="updateUser" :user="currentUser"></UserAddActionForm>
                 </t-modal>
             </div>
         </div>
         <div class="md:w-1/3 w-full mx-4">
-            <h3 class="text-xl pt-6 pb-4">Reward History</h3>
+            <h3 class="text-xl pt-6 pb-2">Reward History</h3>
 
             <div v-if="loading" class="loading">
             Loading...
@@ -66,14 +66,29 @@
             {{ error }}
             </div>
             <div v-if="currentUser" class="content">
+                <t-button
+                    @click="showRewardForm=true"
+                    classes="trigger-button"
+                >
+                    {{ currentUser.name }} wants to cash in!
+                </t-button>
 
-                <ul v-if="currentUser.rewards.length > 0">
+                <ul class="mt-4" v-if="currentUser.rewards.length > 0">
                     <li v-for="(reward, index) in currentUser.rewards" v-bind:key="'user-'+ currentUser.id + '-reward-' + reward.id + '-' + index">
                         <b>{{ reward.pivot.human_date }}</b>: {{ reward.title }} ({{ reward.cost }} points) x {{ reward.pivot.multiplier }}
                     </li>
                 </ul>
                 <p v-else>No rewards claimed yet.</p>
-                <UserAddRewardForm @update-user="updateUser" :user="currentUser"></UserAddRewardForm>
+                <t-modal
+                    ref="modal"
+                    v-model="showRewardForm"
+                    @update-user="$refs.modal.hide()"
+                    >
+                    <template v-slot:header>
+                        What does {{ currentUser.name }} want?
+                    </template>
+                    <UserAddRewardForm @update-user="updateUser" :user="currentUser"></UserAddRewardForm>
+                </t-modal>
             </div>
 
         </div>
@@ -95,6 +110,7 @@ export default {
             loading: false,
             currentUser: null,
             showActionForm: false,
+            showRewardForm: false,
             error: null
         }
     },

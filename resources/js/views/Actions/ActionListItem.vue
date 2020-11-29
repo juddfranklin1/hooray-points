@@ -46,7 +46,15 @@ export default {
     },
     methods: {
         'alert': function(message){
-            window.alert(message);
+            this.$dialog.alert({
+                title: 'Sorry',
+                text: message,
+                icon: 'warning',
+                // variant: 'my-alert',
+                // ...More props
+            }).then((result) => {
+            console.log(result)
+            })
         },
         'deleteAction': function(action){
             this.$store.dispatch('deleteAction', { action });

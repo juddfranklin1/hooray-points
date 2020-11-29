@@ -7,7 +7,7 @@
             :users="users"
             v-slot="{ href, navigate, isActive }"
             >
-            <a class="action-button" :active="isActive" :href="href" @click="navigate"
+            <a class="trigger-button" :active="isActive" :href="href" @click="navigate"
                 >New Action</a>
             </router-link>
     </div>
@@ -21,7 +21,7 @@
             :users="users"
             v-slot="{ href, navigate, isActive }"
             >
-            <a class="action-button" :active="isActive" :href="href" @click="navigate"
+            <a class="trigger-button" :active="isActive" :href="href" @click="navigate"
                 >New Action</a>
             </router-link>
     </div>

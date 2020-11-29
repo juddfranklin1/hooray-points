@@ -6,6 +6,7 @@ import SingleUser from '../views/Users/SingleUser.vue';
 import SingleAction from '../views/Actions/SingleAction.vue';
 import RewardList from '../views/Rewards/RewardList.vue';
 import RewardForm from '../views/Rewards/RewardForm.vue';
+import Login from '../views/Auth/Login.vue';
 
 export default [
     {
@@ -15,8 +16,17 @@ export default [
         props: true
     },
     {
+        path: '/login',
+        name: 'login',
+        component: Login
+        // component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue') - for lazy loading
+    },
+    {
         path: '/users',
         name: 'users',
+        meta: {
+            auth: true
+        },
         component: UserList,
         props: true,
         children: [
@@ -25,12 +35,18 @@ export default [
     {
         path: '/user/:id',
         name: 'user',
+        meta: {
+            auth: true
+        },
         component: SingleUser,
         props: true
     },
     {
         path: '/actions',
         name: 'actions',
+        meta: {
+            auth: true
+        },
         component: ActionList,
         props: true,
         children: [
@@ -51,6 +67,9 @@ export default [
     {
         path: '/rewards',
         name: 'rewards',
+        meta: {
+            auth: true
+        },
         component: RewardList,
         props: true,
         children: [
