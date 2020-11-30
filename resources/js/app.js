@@ -42,7 +42,7 @@ const app = new Vue({
         const userInfo = localStorage.getItem('user')
         if (userInfo) {
           const userData = JSON.parse(userInfo)
-          this.$store.commit('setUserData', userData)
+          this.$store.commit('setUser', userData)
         }
         Axios.interceptors.response.use(
           response => response,

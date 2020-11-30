@@ -5,13 +5,13 @@ export default {
       user: null
     },
     mutations: {
-      setUserData (state, userData) {
+      setUser (state, userData) {
         state.user = userData
         localStorage.setItem('user', JSON.stringify(userData))
         Axios.defaults.headers.common.Authorization = `Bearer ${userData.token}`
       },
 
-      clearUserData () {
+      clearUser () {
         localStorage.removeItem('user')
         location.reload()
       }
@@ -22,12 +22,12 @@ export default {
         return Axios
           .post('api/login', credentials)
           .then(({ data }) => {
-            commit('setUserData', data)
+            commit('setUser', data)
           })
       },
 
       logout ({ commit }) {
-        commit('clearUserData')
+        commit('clearUser')
       }
     },
 

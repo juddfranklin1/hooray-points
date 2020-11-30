@@ -14540,7 +14540,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -14995,6 +14994,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -15021,7 +15025,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     fetchData: function fetchData() {
       var _this = this;
 
-      this.error = this.user = null;
+      this.error = this.currentUser = null;
       this.loading = true;
       var fetchedId = this.$route.params.id; // replace `getPost` with your data fetching util / API wrapper
 
@@ -15051,6 +15055,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    user: function user(state) {
+      return state.auth.user;
+    },
     users: function users(state) {
       return state.user.users;
     },
@@ -35220,8 +35227,6 @@ var render = function() {
       }
     },
     [
-      _c("h3", { staticClass: "text-2xl pb-4" }, [_vm._v("Add an Action")]),
-      _vm._v(" "),
       _c(
         "label",
         { staticClass: "mt-3 text-lg", attrs: { for: "pick_an_action" } },
@@ -35672,8 +35677,13 @@ var render = function() {
   return _c("div", { staticClass: "px-4 py-4 flex flex-col" }, [
     _c("h1", { staticClass: "primary-headline" }, [
       _vm._v(
-        "User Overview" +
-          _vm._s(_vm.currentUser ? " - " + _vm.currentUser.name : "")
+        _vm._s(
+          _vm.user && _vm.currentUser && _vm.user.user.id === _vm.currentUser.id
+            ? "My Profile"
+            : _vm.currentUser
+            ? _vm.currentUser.name + " Overview"
+            : ""
+        )
       )
     ]),
     _vm._v(" "),
@@ -35745,7 +35755,11 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                  " +
-                        _vm._s(_vm.currentUser.name) +
+                        _vm._s(
+                          _vm.user && _vm.user.user.id === _vm.currentUser.id
+                            ? "I"
+                            : _vm.currentUser.name
+                        ) +
                         " did something!\n              "
                     )
                   ]
@@ -35782,7 +35796,7 @@ var render = function() {
                       }),
                       0
                     )
-                  : _vm._e(),
+                  : _c("p", [_vm._v("No actions completed yet.")]),
                 _vm._v(" "),
                 _c(
                   "t-modal",
@@ -35800,9 +35814,7 @@ var render = function() {
                           fn: function() {
                             return [
                               _vm._v(
-                                "\n                      What did " +
-                                  _vm._s(_vm.currentUser.name) +
-                                  " do?\n                  "
+                                "\n                      New Action Completion\n                  "
                               )
                             ]
                           },
@@ -35811,7 +35823,7 @@ var render = function() {
                       ],
                       null,
                       false,
-                      253786953
+                      249992260
                     ),
                     model: {
                       value: _vm.showActionForm,
@@ -35871,8 +35883,12 @@ var render = function() {
                   [
                     _vm._v(
                       "\n                  " +
-                        _vm._s(_vm.currentUser.name) +
-                        " wants to cash in!\n              "
+                        _vm._s(
+                          _vm.user && _vm.user.user.id === _vm.currentUser.id
+                            ? "I want to cash in!"
+                            : _vm.currentUser.name + " wants to cash in!"
+                        ) +
+                        "\n              "
                     )
                   ]
                 ),
@@ -77025,7 +77041,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_2___default.a({
 
     if (userInfo) {
       var userData = JSON.parse(userInfo);
-      this.$store.commit('setUserData', userData);
+      this.$store.commit('setUser', userData);
     }
 
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.interceptors.response.use(function (response) {
@@ -77253,12 +77269,12 @@ __webpack_require__.r(__webpack_exports__);
     user: null
   },
   mutations: {
-    setUserData: function setUserData(state, userData) {
+    setUser: function setUser(state, userData) {
       state.user = userData;
       localStorage.setItem('user', JSON.stringify(userData));
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.headers.common.Authorization = "Bearer ".concat(userData.token);
     },
-    clearUserData: function clearUserData() {
+    clearUser: function clearUser() {
       localStorage.removeItem('user');
       location.reload();
     }
@@ -77268,12 +77284,12 @@ __webpack_require__.r(__webpack_exports__);
       var commit = _ref.commit;
       return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/login', credentials).then(function (_ref2) {
         var data = _ref2.data;
-        commit('setUserData', data);
+        commit('setUser', data);
       });
     },
     logout: function logout(_ref3) {
       var commit = _ref3.commit;
-      commit('clearUserData');
+      commit('clearUser');
     }
   },
   getters: {

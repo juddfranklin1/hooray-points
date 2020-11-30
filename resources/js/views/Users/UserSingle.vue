@@ -1,6 +1,10 @@
 <template>
   <div class="px-4 py-4 flex flex-col">
-    <h1 class="primary-headline">User Overview{{ currentUser ? ' - ' + currentUser.name : '' }}</h1>
+    <h1 class="primary-headline">{{ user && currentUser && user.user.id === currentUser.id ?
+            "My Profile" :
+            currentUser ?
+                currentUser.name + ' Overview' :
+                '' }}</h1>
     <div class="flex lg:flex-row flex-col">
 
         <div class="md:w-1/3 w-full mx-4">
@@ -35,7 +39,7 @@
                     @click="showActionForm=true"
                     classes="trigger-button"
                 >
-                    {{ currentUser.name }} did something!
+                    {{ user && user.user.id === currentUser.id ? 'I' : currentUser.name }} did something!
                 </t-button>
 
                 <ul v-if="currentUser.actions.length > 0">
@@ -43,6 +47,7 @@
                         <b>{{ action.pivot.human_date }}</b>: {{ action.name }} ({{ action.value }} points) x {{ action.pivot.multiplier }}
                     </li>
                 </ul>
+                <p v-else>No actions completed yet.</p>
 
                 <t-modal
                     ref="modal"
@@ -50,7 +55,7 @@
                     @update-user="$refs.modal.hide()"
                     >
                     <template v-slot:header>
-                        What did {{ currentUser.name }} do?
+                        New Action Completion
                     </template>
                     <UserAddActionForm @update-user="updateUser" :user="currentUser"></UserAddActionForm>
                 </t-modal>
@@ -70,7 +75,7 @@
                     @click="showRewardForm=true"
                     classes="trigger-button"
                 >
-                    {{ currentUser.name }} wants to cash in!
+                    {{ user && user.user.id === currentUser.id ? 'I want to cash in!' : currentUser.name + ' wants to cash in!' }}
                 </t-button>
 
                 <ul class="mt-4" v-if="currentUser.rewards.length > 0">
@@ -122,7 +127,7 @@ export default {
     name: 'UserSingle',
     methods: {
         fetchData () {
-            this.error = this.user = null
+            this.error = this.currentUser = null
             this.loading = true
             const fetchedId = this.$route.params.id
             // replace `getPost` with your data fetching util / API wrapper
@@ -154,6 +159,7 @@ export default {
     },
     computed: {
         ...mapState({
+            user: state => state.auth.user,
             users: state => state.user.users,
             actions: state => state.action.actions,
             rewards: state => state.reward.rewards,

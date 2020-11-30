@@ -1,6 +1,5 @@
 <template>
     <form action="post" @submit.prevent="pickAction($event)" class="border-2 my-3 py-3 px-6 flex flex-col">
-        <h3 class="text-2xl pb-4">Add an Action</h3>
         <label for="pick_an_action" class="mt-3 text-lg">What did {{ currentUser.name }} do?</label>
         <select class="px-4 mb-2 py-2 border-2" name="pick_an_action" id="pick_an_action">
             <option v-for="actionOpt in actions" v-bind:key="'action-option-' + actionOpt.id" :value="actionOpt.id">{{ actionOpt.name }}: {{ actionOpt.value }}pts</option>
