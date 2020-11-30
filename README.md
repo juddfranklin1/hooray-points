@@ -2,7 +2,7 @@
 
 ## It is time to get excited to do good things!
 
-![#gamifyallthethings](https://imgflip.com/i/4oeff0)
+![#gamifyallthethings](https://i.imgflip.com/4oeff0.jpg)
 
 I am creating a points system for helping me and my family get and stay motivated. This is the app for that system.
 
