@@ -36120,12 +36120,12 @@ var render = function() {
                                     key: "default",
                                     fn: function(ref) {
                                       var hide = ref.hide
-                                      var blurHandler = ref.blurHandler
                                       return _c(
                                         "div",
                                         {
                                           staticClass:
-                                            "py-1 flex flex-col rounded-md shadow-xs"
+                                            "py-1 flex flex-col rounded-md shadow-xs",
+                                          on: { click: hide }
                                         },
                                         [
                                           _c("router-link", {
@@ -36139,7 +36139,6 @@ var render = function() {
                                                 }
                                               }
                                             },
-                                            on: { blur: blurHandler },
                                             scopedSlots: _vm._u(
                                               [
                                                 {

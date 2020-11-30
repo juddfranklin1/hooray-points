@@ -45,10 +45,10 @@
                                 </a>
                             </div>
                             <div
-                                slot-scope="{ hide, blurHandler }"
+                                slot-scope="{ hide }"
+                                @click="hide"
                                 class="py-1 flex flex-col rounded-md shadow-xs">
                                 <router-link
-                                    @blur="blurHandler"
                                     :to="{name: 'user', params: { id: $store.state.auth.user.user.id }}"
                                     v-slot="{ href, navigate, isActive }"
                                     >
