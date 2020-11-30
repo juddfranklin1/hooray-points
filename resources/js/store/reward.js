@@ -29,9 +29,13 @@ export default {
             state.rewards = rewards;
         },
         addReward(state, reward) {
-            // test
-            console.log(state, reward);
             state.rewards.push(reward);
+        },
+        updateReward(state, resultReward) {
+            state.rewards = [
+                ...state.rewards.map(reward => reward.id !== resultReward.id ? reward : {
+                    ...reward, ...resultReward
+                })]
         },
         deleteReward(state, reward) {
             const deletedReward = state.rewards.findIndex(item => item.id === reward);

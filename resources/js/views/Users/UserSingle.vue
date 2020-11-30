@@ -1,7 +1,7 @@
 <template>
   <div class="px-4 py-4 flex flex-col">
     <h1 class="primary-headline">User Overview{{ currentUser ? ' - ' + currentUser.name : '' }}</h1>
-    <div class="flex">
+    <div class="flex lg:flex-row flex-col">
 
         <div class="md:w-1/3 w-full mx-4">
             <div v-if="loading" class="loading">
@@ -119,7 +119,7 @@ export default {
         // already being observed
         this.fetchData()
     },
-    name: 'SingleUser',
+    name: 'UserSingle',
     methods: {
         fetchData () {
             this.error = this.user = null

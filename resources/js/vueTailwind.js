@@ -1,12 +1,11 @@
 export default {
     TButton: {// Button Styles
-        fixedClasses: 'mt-4 focus:outline-none focus:shadow-outline inline-flex items-center transition ease-in-out duration-150',
-        classes: 'text-white bg-blue-600 hover:bg-blue-500 focus:border-blue-700 active:bg-blue-700 text-sm font-medium border border-transparent px-3 py-2 rounded-md',
+        fixedClasses: 'focus:outline-none focus:shadow-outline inline-flex items-center transition ease-in-out duration-150',
+        classes: 'text-white bg-blue-600 hover:bg-blue-500 focus:border-blue-700 active:bg-blue-700 text-sm font-medium border border-transparent px-3 py-2',
         variants: {
-            error: 'text-white bg-red-600 hover:bg-red-500 focus:border-red-700  active:bg-red-700 text-sm font-medium border border-transparent px-3 py-2 rounded-md',
-            success: 'text-white bg-green-600 hover:bg-green-500 focus:border-green-700 active:bg-green-700 text-sm font-medium border border-transparent px-3 py-2 rounded-md',
-            funny: 'text-white bg-orange-600 hover:bg-orange-500 focus:border-orange-700 active:bg-orange-700 text-sm font-medium uppercase border-orange-200 px-4 py-2 border-2 rounded-full shadow',
-            link: 'underline text-orange-500 px-3 py-2 hover:bg-orange-100 rounded'
+            danger: 'text-white bg-red-600 hover:bg-red-500 focus:border-red-700  active:bg-red-700 text-sm font-medium border border-transparent px-3 py-2',
+            success: 'text-white bg-green-600 hover:bg-green-500 focus:border-green-700 active:bg-green-700 text-sm font-medium border border-transparent px-3 py-2',
+            link: 'underline text-orange-500 px-3 py-2 hover:bg-orange-100'
         }
     },
     /**
@@ -78,9 +77,9 @@ export default {
             wrapper: 'z-50 relative mx-auto my-0 max-w-lg mt-12',
             modal: 'bg-white shadow overflow-hidden relative',
             body: 'p-4',
-            header: 'p-4  text-sm font-semibold uppercase text-gray-700 bg-red-500',
+            header: 'p-4 pb-3 text-sm font-semibold uppercase text-gray-700 bg-red-500',
             footer: 'p-4 text-sm font-semibold uppercase text-gray-700',
-            close: 'absolute right-0 top-0 m-3 text-gray-700 hover:text-gray-600',
+            close: 'absolute right-0 top-0 p-4 mt-1 text-gray-700 hover:text-gray-600',
             closeIcon: 'h-5 w-5 fill-current'
         },
         classes: {
@@ -138,5 +137,48 @@ export default {
             body: 'p-4 text-sm text-gray-700'
           }
         }
-      }
+    },
+    /**
+     * Text Input Component
+     * Used In:
+     * ActionForm
+     */
+    TInput: {
+        classes: 'bg-white focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full leading-normal',
+        variants: {
+          error: 'text-red-600 bg-red-100 focus:outline-none focus:shadow-outline border border-red-300 py-2 px-4 block w-full leading-normal placeholder-red-300',
+          success: 'text-green-600 bg-green-100 focus:outline-none focus:shadow-outline border border-green-300 py-2 px-4 block w-full leading-normal placeholder-green-300',
+        }
+    },
+    /**
+     * Textarea Component
+     * Used In:
+     * ActionForm
+     */
+    TTextarea: {
+        classes: 'bg-white focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full leading-normal',
+        variants: {
+          error: 'text-red-600 bg-red-100 focus:outline-none focus:shadow-outline border border-red-300 py-2 px-4 block w-full leading-normal placeholder-red-300',
+          success: 'text-green-600 bg-green-100 focus:outline-none focus:shadow-outline border border-green-300 py-2 px-4 block w-full leading-normal placeholder-green-300',
+        }
+    },
+    /**
+     * Select Input Component
+     * Used In:
+     * ActionForm
+     */
+    TSelect: {
+        wrapped: true,
+        classes: {
+            wrapper: 'relative',
+            input: 'appearance-none bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full leading-normal',
+            arrowWrapper: 'pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700',
+            arrow: 'fill-current h-4 w-4',
+        },
+        fixedClasses: 'form-select',
+        variants: {
+          danger: 'border-red-300 bg-red-100',
+          success: 'border-green-300 bg-green-100'
+        }
+    },
 }

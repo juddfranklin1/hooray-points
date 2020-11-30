@@ -1,10 +1,8 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{ ActionController, RewardController, UserController };
+use App\Http\Controllers\{ ActionController, AuthenticationController, RewardController, UserController };
 
 /*
 |--------------------------------------------------------------------------
@@ -22,29 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Login
-Route::post('/login', function (Request $request) {
-    $data = $request->validate([
-        'email' => 'required|email',
-        'password' => 'required'
-    ]);
-
-    $user = User::where('email', $request->email)->first();
-
-    if (!$user || !Hash::check($request->password, $user->password)) {
-        return response([
-            'message' => ['These credentials do not match our records.']
-        ], 404);
-    }
-
-    $token = $user->createToken('my-app-token')->plainTextToken;
-
-    $response = [
-        'user' => $user,
-        'token' => $token
-    ];
-
-    return response($response, 201);
-});
+Route::post('/login', [AuthenticationController::class, 'login']);
 
 // Model Paths
 Route::get('/actions', [ActionController::class, 'index' ]);
@@ -57,6 +33,7 @@ Route::get('/rewards', [RewardController::class, 'index' ]);
 Route::post('/rewards', [RewardController::class, 'store' ]);
 Route::get('/rewards/{id}', [RewardController::class, 'show' ]);
 Route::delete('/rewards/{id}', [RewardController::class, 'destroy' ]);
+Route::post('/rewards/{id}', [RewardController::class, 'update' ]);
 
 Route::get('/users', [UserController::class, 'index' ]);
 Route::post('/user', [UserController::class, 'store' ]);

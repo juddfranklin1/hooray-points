@@ -4,24 +4,44 @@
         @closed="onClose"
         @update-user="$refs.modal.hide()"
     >
+        {{ action }}
         <template v-slot:header>
-            What do you want to assign points to?
+            <h2 class="text-3xl">{{ currentAction ? currentAction.name : 'New Action' }}</h2>
         </template>
-        <form action="new-action" class="my-4" @submit.prevent="createAction($event)" method="post">
-            <h2 class="text-3xl">Create a new action</h2>
+        <form action="new-action" class="my-4" @submit.prevent="onSubmit($event)" method="post">
             <div class="flex flex-col">
                 <label class="text-lg pt-4" for="action_name">Name</label>
-                <input required class="border-2 border-gray-200" type="text" name="name" id="action_name">
+                <t-input
+                    required
+                    :value="currentAction ? currentAction.name : ''"
+                    name="name" />
                 <label class="text-lg pt-4" for="action_description">Description</label>
-                <textarea class="border-2 border-gray-200" name="description" id="action_description"></textarea>
+                <t-textarea
+                    name="description"
+                    :value="currentAction ? currentAction.description : ''"
+                    id="action_description" />
                 <label class="text-lg pt-4" for="action_value">Value</label>
-                <input required class="border-2 border-gray-200" type="number" name="value" id="action_value">
+                <t-input
+                    required
+                    type="number"
+                    name="value"
+                    :value="currentAction ? currentAction.value : 1"
+                    id="action_value" />
                 <label class="text-lg pt-4" for="action_user">Assigned User (if any)</label>
-                <select name="user" class="border-2 border-gray-200" id="action_user">
-                    <option value="">unassigned</option>
-                    <option v-for="user in users" :value="user.id" v-bind:key="'user-' + user.id">{{ user.name }}</option>
-                </select>
-                <button class="border-2 border-gray-200 py-2 px-4 my-4" type="submit">Create</button>
+                <t-select
+                    name="assignee_id"
+                    :value="currentAction ? currentAction.assignee_id : null"
+                    :options="[
+                        {
+                            name: 'unassigned',
+                            id: null
+                        },
+                        ...users
+                    ]"
+                    value-attribute="id"
+                    text-attribute="name"
+                    id="action_user" />
+                <button class="border-2 border-gray-200 py-2 px-4 my-4" type="submit">{{ currentAction ? 'Update' : 'Create' }}</button>
             </div>
         </form>
     </t-modal>
@@ -29,37 +49,63 @@
 
 <script>
 import Axios from 'axios';
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
     name: 'ActionForm',
+    props: [
+        'action'
+    ],
+    emits: [
+        'action-submit'
+    ],
     computed: {
         ...mapState({
             users: state => state.user.users,
-        }),
+            actions: state => state.action.actions,
+        })
     },
     mounted(){
         this.$refs.modal.show();
     },
     methods: {
-        createAction: function($e) {
+        onSubmit: function($e) {
             const data = {};
             data.name = $e.target.name.value;
             data.description = $e.target.description.value;
             data.value = $e.target.value.value;
-            data.user = $e.target.user.value;
-            console.log('event');
-            console.log($e.target);
-            Axios.post('/api/action', data)
-                .then(result => {
-                    this.$store.commit('addAction', response.data);
-                    $e.target.reset();
-                }, error => console.log(error));
-        },
-        onClose: function($e) {// Force reroute back to main actions page from "new-action" route. This ensures that the modal works seamlessly on the actions page, and is tied to the url
-            if(this.$route.name == 'new-action'){
-                this.$router.push('actions');
+            data.assignee_id = $e.target.assignee_id.value;
+            if(!this.currentAction) {
+                Axios.post('/api/action', data)
+                    .then(result => {
+                        this.$store.commit('addAction', result.data);
+                        $e.target.reset();
+                        this.$emit('action-submit');
+                        this.$refs.modal.hide();
+                    }, error => console.log(error));
+            } else {
+                Axios.post('/api/actions/' + this.currentAction.id, data)
+                    .then(result => {
+                        this.$store.commit('updateAction', result.data);
+                        this.$emit('action-submit');
+                        this.$refs.modal.hide();
+                    }, error => console.log(error));
             }
+        },
+        getAction: function() {
+            return this.$store.getters.getActionById(Number.parseInt(this.$route.params.id))
+        },
+        // Force reroute back to main actions page from "edit-action" and "new-action" routes.
+        // This ensures that the modal works seamlessly on the actions page, and is tied to the url
+        onClose: function($e) {
+            if(this.$route.name == 'new-action' | this.$route.name === 'edit-action'){
+                this.$router.push('/actions');
+            }
+        }
+    },
+    data() {
+        return {
+            currentAction: this.getAction()
         }
     }
 };

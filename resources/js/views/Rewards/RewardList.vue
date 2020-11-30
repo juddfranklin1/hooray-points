@@ -1,16 +1,14 @@
 <template>
   <div class="my-4 py-3 relative">
     <h1 class="primary-headline">Rewards</h1>
-    <div class="absolute top-0 right-0">
-        <router-link
-            to="/new-reward"
-            :users="users"
-            v-slot="{ href, navigate, isActive }"
-            >
-            <a class="trigger-button" :active="isActive" :href="href" @click="navigate"
-                >New Reward</a>
-        </router-link>
-    </div>
+    <router-link
+        to="rewards/new"
+        :users="users"
+        v-slot="{ href, navigate, isActive }"
+        >
+        <a class="trigger-button" :active="isActive" :href="href" @click="navigate"
+            >New Reward</a>
+    </router-link>
     <router-view></router-view>
     <ul class="max-w-4xl">
         <RewardListItem v-for="reward in rewards" :reward="reward" v-bind:key="'reward-' + reward.id"></RewardListItem>

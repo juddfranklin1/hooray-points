@@ -35,7 +35,7 @@
 
             <div class="min-w-full mx-auto sm:px-6 lg:px-8">
                 <div id="app">
-                    <app :users-prop="{{ $users }}" :actions-prop="{{ $actions }}" :rewards-prop="{{ $rewards }}"></app>
+                    <app :users-prop="{{ $users }}" :actions-prop="{{ $actions }}" :rewards-prop="{{ $rewards }}" :user-actions-prop="{{ $userActions }}" :user-rewards-prop="{{ $userRewards }}"></app>
                 </div>
 
                 <div class="flex justify-center mt-4 sm:items-center sm:justify-between">

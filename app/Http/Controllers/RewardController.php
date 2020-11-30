@@ -14,7 +14,7 @@ class RewardController extends Controller
      */
     public function index()
     {
-        return Reward::all()->load('assignee');
+        return Reward::orderBy('id')->get()->load('assignee');
     }
 
     /**
@@ -62,9 +62,16 @@ class RewardController extends Controller
      * @param  \App\Models\Reward  $reward
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Reward $reward)
+    public function update(Request $request, $reward)
     {
-        //
+        $reward = Reward::findOrFail($reward);
+        // Accept request details and update the Reward accordingly.
+        $reward->title = $request->title;
+        $reward->description = $request->description;
+        $reward->cost = $request->cost;
+        $reward->assignee_id = $request->assignee_id ?? null;
+        $reward->save();
+        return $reward;
     }
 
     /**

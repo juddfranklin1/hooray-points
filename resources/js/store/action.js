@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { result, startCase } from "lodash";
 
 // actions
 export default {
@@ -30,6 +31,12 @@ export default {
         },
         addAction(state, action) {
             state.actions.push(action);
+        },
+        updateAction(state, resultAction) {
+            state.actions = [
+                ...state.actions.map(action => action.id !== resultAction.id ? action : {
+                    ...action, ...resultAction
+                })]
         },
         deleteAction(state, action) {
             const deletedAction = state.actions.findIndex(item => item.id === action);

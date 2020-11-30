@@ -26,12 +26,18 @@
 
             <template v-slot:footer>
                 <div class="flex justify-between">
-                <t-button type="button" @click="alert('functionality not implemented yet');">
-                    Edit
-                </t-button>
-                <t-button type="button" @click="deleteAction(action)">
-                    Delete
-                </t-button>
+                    <router-link
+                        :to="{ name: 'edit-action', params: { id: action.id }}"
+                        :users="users"
+                        :action="action"
+                        v-slot="{ href, navigate, isActive }"
+                        >
+                        <a class="trigger-button" :active="isActive" :href="href" @click="navigate"
+                            >Edit</a>
+                    </router-link>
+                    <t-button type="button" variant="danger" @click="deleteAction(action)">
+                        Delete
+                    </t-button>
                 </div>
             </template>
         </t-card>
@@ -42,7 +48,8 @@
 export default {
     name: 'ActionListItem',
     props: {
-        action: Object
+        action: Object,
+        users: Array
     },
     methods: {
         'alert': function(message){
@@ -50,8 +57,6 @@ export default {
                 title: 'Sorry',
                 text: message,
                 icon: 'warning',
-                // variant: 'my-alert',
-                // ...More props
             }).then((result) => {
             console.log(result)
             })

@@ -2,7 +2,7 @@ import Home from '../views/Home.vue';
 import ActionList from '../views/Actions/ActionList.vue';
 import ActionForm from '../views/Actions/ActionForm.vue';
 import UserList from '../views/Users/UserList.vue';
-import SingleUser from '../views/Users/SingleUser.vue';
+import UserSingle from '../views/Users/UserSingle.vue';
 import SingleAction from '../views/Actions/SingleAction.vue';
 import RewardList from '../views/Rewards/RewardList.vue';
 import RewardForm from '../views/Rewards/RewardForm.vue';
@@ -38,7 +38,7 @@ export default [
         meta: {
             auth: true
         },
-        component: SingleUser,
+        component: UserSingle,
         props: true
     },
     {
@@ -57,8 +57,14 @@ export default [
                 props: true
             },
             {
-                path: '/new-action',
+                path: 'new',
                 name: 'new-action',
+                component: ActionForm,
+                props: true
+            },
+            {
+                path: ':id/edit',
+                name: 'edit-action',
                 component: ActionForm,
                 props: true
             },
@@ -74,11 +80,18 @@ export default [
         props: true,
         children: [
             {
-                path: '/new-reward',
+                path: 'new',
                 name: 'new-reward',
                 component: RewardForm,
                 props: true
-            }
+            },
+            {
+                path: ':id/edit',
+                name: 'edit-reward',
+                component: RewardForm,
+                props: true
+            },
+
         ]
     },
 ];

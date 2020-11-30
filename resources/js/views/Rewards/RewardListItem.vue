@@ -8,7 +8,7 @@
             </template>
 
             <dt class="pr-3">
-                <b class="text-xl">{{ reward.name }}</b>
+                <b class="text-xl">{{ reward.title }}</b>
             </dt>
             <dd>Costs {{ reward.cost }} points</dd>
             <span v-if="reward.assignee">
@@ -23,10 +23,14 @@
 
             <template v-slot:footer>
                 <div class="flex justify-between">
-                <t-button type="button" @click="alert('functionality not implemented yet');">
-                    Edit
-                </t-button>
-                <t-button type="button" @click="deleteReward(reward)">
+                <router-link
+                    :to="{ name: 'edit-reward', params: { id: reward.id }}"
+                    v-slot="{ href, navigate, isActive }"
+                    >
+                    <a class="trigger-button" :active="isActive" :href="href" @click="navigate"
+                        >Edit</a>
+                </router-link>
+                <t-button type="button" variant="danger" @click="deleteReward(reward)">
                     Delete
                 </t-button>
                 </div>

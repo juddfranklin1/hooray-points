@@ -14,7 +14,7 @@ class ActionController extends Controller
      */
     public function index()
     {
-        return Action::all()->load('assignee');
+        return Action::orderBy('id')->get()->load('assignee');
     }
 
     /**
@@ -73,14 +73,16 @@ class ActionController extends Controller
      * @param  \App\Models\Action  $action
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Action $action)
+    public function update(Request $request, $action)
     {
+        $action = Action::findOrFail($action);
         // Accept request details and update the Action accordingly.
-
-        //$request->name = $action->name;
-        //$request->description = $action->description;
-        //$request->value = $action->value;
-        //$request->assignee_id = $action->assignee_id;
+        $action->name = $request->name;
+        $action->description = $request->description;
+        $action->value = $request->value;
+        $action->assignee_id = $request->assignee_id ?? null;
+        $action->save();
+        return $action;
     }
 
     /**
