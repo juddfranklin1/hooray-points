@@ -14172,6 +14172,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -34796,7 +34798,12 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
-      _c("FullCalendar", { attrs: { options: _vm.calendarOptions } })
+      _c(
+        "div",
+        { staticClass: "my-4" },
+        [_c("FullCalendar", { attrs: { options: _vm.calendarOptions } })],
+        1
+      )
     ],
     1
   )

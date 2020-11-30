@@ -33,7 +33,9 @@
                 </tr>
             </template>
         </t-table>
-        <FullCalendar :options="calendarOptions" />
+        <div class="my-4">
+            <FullCalendar :options="calendarOptions" />
+        </div>
     </div>
 </template>
 <script>
