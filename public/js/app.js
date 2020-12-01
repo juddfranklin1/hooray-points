@@ -15090,9 +15090,79 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _store___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store/ */ "./resources/js/store/index.js");
+/* harmony import */ var _components_Navbar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Navbar.vue */ "./resources/js/views/components/Navbar.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+var default_layout = "default";
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    'usersProp': Array,
+    'actionsProp': Array,
+    'rewardsProp': Array,
+    'userActionsProp': Array,
+    'userRewardsProp': Array
+  },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    user: 'auth.user',
+    users: 'user.users',
+    rewards: 'reward.rewards',
+    actions: 'action.actions',
+    userActions: 'userAction.userActions',
+    userRewards: 'userReward.userRewards'
+  })), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['isLoggedIn'])),
+  created: function created() {
+    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchUsers', {
+      users: this.usersProp
+    });
+    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchActions', {
+      actions: this.actionsProp
+    });
+    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchRewards', {
+      rewards: this.rewardsProp
+    });
+    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchUserActions', {
+      userActions: this.userActionsProp
+    });
+    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchUserRewards', {
+      userRewards: this.userRewardsProp
+    });
+  },
+  components: {
+    Navbar: _components_Navbar_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/components/Navbar.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/components/Navbar.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _store___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../store/ */ "./resources/js/store/index.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var vue_avatar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-avatar */ "./node_modules/vue-avatar/dist/vue-avatar.min.js");
 /* harmony import */ var vue_avatar__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_avatar__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../router/routes.js */ "./resources/js/router/routes.js");
+/* harmony import */ var _router_routes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../router/routes.js */ "./resources/js/router/routes.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -15177,59 +15247,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-var default_layout = "default";
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    'usersProp': Array,
-    'actionsProp': Array,
-    'rewardsProp': Array,
-    'userActionsProp': Array,
-    'userRewardsProp': Array
-  },
-  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
-    user: 'auth.user',
-    users: 'user.users',
-    rewards: 'reward.rewards',
-    actions: 'action.actions',
-    userActions: 'userAction.userActions',
-    userRewards: 'userReward.userRewards'
-  })), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['isLoggedIn'])),
-  created: function created() {
-    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchUsers', {
-      users: this.usersProp
-    });
-    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchActions', {
-      actions: this.actionsProp
-    });
-    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchRewards', {
-      rewards: this.rewardsProp
-    });
-    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchUserActions', {
-      userActions: this.userActionsProp
-    });
-    _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('fetchUserRewards', {
-      userRewards: this.userRewardsProp
-    });
+  name: 'Navbar',
+  components: {
+    'Avatar': vue_avatar__WEBPACK_IMPORTED_MODULE_2___default.a
   },
   data: function data() {
     return {
       routes: _router_routes_js__WEBPACK_IMPORTED_MODULE_3__["default"]
     };
   },
+  computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+    user: 'auth.user'
+  })), Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['isLoggedIn'])),
   methods: {
     logout: function logout() {
-      _store___WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('logout');
+      _store___WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('logout');
     }
-  },
-  components: {
-    Avatar: vue_avatar__WEBPACK_IMPORTED_MODULE_2___default.a
   }
 });
 
@@ -36012,23 +36050,227 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "px-4 py-4 w-full relative" },
+    { staticClass: "w-full relative" },
     [
-      _c("nav", { staticClass: "navigation--primary" }, [
-        _c(
-          "ul",
-          { staticClass: "flex" },
-          [
-            _vm._l(_vm.routes, function(routeListing, index) {
-              return [
-                routeListing.path.indexOf(":") === -1 &&
-                routeListing.name !== "login" &&
-                routeListing.name !== "logout"
-                  ? _c(
-                      "li",
-                      { key: "route-listing-" + index, staticClass: "mr-3" },
-                      [
-                        _c("router-link", {
+      _c("Navbar"),
+      _vm._v(" "),
+      _c("main", { staticClass: "mx-auto max-w-6xl" }, [_c("router-view")], 1)
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/components/Navbar.vue?vue&type=template&id=64c6edda&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/components/Navbar.vue?vue&type=template&id=64c6edda& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("nav", { staticClass: "bg-blue-100 navigation--primary" }, [
+    _c(
+      "ul",
+      { staticClass: "px-4 py-4 flex relative mx-auto max-w-6xl" },
+      [
+        _vm._l(_vm.routes, function(routeListing, index) {
+          return [
+            routeListing.path.indexOf(":") === -1 &&
+            routeListing.name !== "login" &&
+            routeListing.name !== "logout"
+              ? _c(
+                  "li",
+                  { key: "route-listing-" + index, staticClass: "mr-3" },
+                  [
+                    _c("router-link", {
+                      key: routeListing.path,
+                      attrs: { to: { name: routeListing.name } },
+                      scopedSlots: _vm._u(
+                        [
+                          {
+                            key: "default",
+                            fn: function(ref) {
+                              var href = ref.href
+                              var route = ref.route
+                              var navigate = ref.navigate
+                              var isActive = ref.isActive
+                              var isExactActive = ref.isExactActive
+                              return [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "navbar-link",
+                                    class: isExactActive
+                                      ? "no-underline text-blue-700 bg-gray-200"
+                                      : isActive && route.name !== "home"
+                                      ? "no-underline text-blue-400 bg-gray-200"
+                                      : "",
+                                    attrs: {
+                                      href: href,
+                                      isActive: isActive,
+                                      isExactActive: isExactActive
+                                    },
+                                    on: { click: navigate }
+                                  },
+                                  [_vm._v(_vm._s(route.name))]
+                                )
+                              ]
+                            }
+                          }
+                        ],
+                        null,
+                        true
+                      )
+                    })
+                  ],
+                  1
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            routeListing.name === "login"
+              ? _c(
+                  "li",
+                  {
+                    key: "route-listing-" + index,
+                    staticClass: "absolute top-2 right-2"
+                  },
+                  [
+                    _vm.isLoggedIn
+                      ? _c("t-dropdown", {
+                          attrs: { text: "Menu" },
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "trigger",
+                                fn: function(ref) {
+                                  var mousedownHandler = ref.mousedownHandler
+                                  var focusHandler = ref.focusHandler
+                                  var blurHandler = ref.blurHandler
+                                  var keydownHandler = ref.keydownHandler
+                                  return _c("div", {}, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          "aria-label": "User menu",
+                                          "aria-haspopup": "true"
+                                        },
+                                        on: {
+                                          mousedown: mousedownHandler,
+                                          focus: focusHandler,
+                                          blur: blurHandler,
+                                          keydown: keydownHandler
+                                        }
+                                      },
+                                      [
+                                        _c("Avatar", {
+                                          attrs: {
+                                            username:
+                                              _vm.$store.state.auth.user.user
+                                                .name,
+                                            size: 42
+                                          }
+                                        })
+                                      ],
+                                      1
+                                    )
+                                  ])
+                                }
+                              },
+                              {
+                                key: "default",
+                                fn: function(ref) {
+                                  var hide = ref.hide
+                                  return _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "py-1 flex flex-col rounded-md shadow-xs",
+                                      on: { click: hide }
+                                    },
+                                    [
+                                      _c("router-link", {
+                                        attrs: {
+                                          to: {
+                                            name: "user",
+                                            params: {
+                                              id:
+                                                _vm.$store.state.auth.user.user
+                                                  .id
+                                            }
+                                          }
+                                        },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "default",
+                                              fn: function(ref) {
+                                                var href = ref.href
+                                                var navigate = ref.navigate
+                                                var isActive = ref.isActive
+                                                return [
+                                                  _c(
+                                                    "a",
+                                                    {
+                                                      staticClass:
+                                                        "text-center navbar-link",
+                                                      attrs: {
+                                                        active: isActive,
+                                                        href: href
+                                                      },
+                                                      on: { click: navigate }
+                                                    },
+                                                    [_vm._v("Profile")]
+                                                  )
+                                                ]
+                                              }
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "mt-3 navbar-link",
+                                          attrs: { type: "button" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.logout()
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Logout")]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                }
+                              }
+                            ],
+                            null,
+                            true
+                          )
+                        })
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.isLoggedIn
+                      ? _c("router-link", {
                           key: routeListing.path,
                           attrs: { to: { name: routeListing.name } },
                           scopedSlots: _vm._u(
@@ -36050,7 +36292,7 @@ var render = function() {
                                           ? "no-underline text-blue-700 bg-gray-200"
                                           : isActive && route.name !== "home"
                                           ? "no-underline text-blue-400 bg-gray-200"
-                                          : "",
+                                          : "hover:bg-gray-200 text-blue-400 bg-gray-50",
                                         attrs: {
                                           href: href,
                                           isActive: isActive,
@@ -36068,200 +36310,17 @@ var render = function() {
                             true
                           )
                         })
-                      ],
-                      1
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                routeListing.name === "login"
-                  ? _c(
-                      "li",
-                      {
-                        key: "route-listing-" + index,
-                        staticClass: "absolute right-2"
-                      },
-                      [
-                        _vm.isLoggedIn
-                          ? _c("t-dropdown", {
-                              attrs: { text: "Menu" },
-                              scopedSlots: _vm._u(
-                                [
-                                  {
-                                    key: "trigger",
-                                    fn: function(ref) {
-                                      var mousedownHandler =
-                                        ref.mousedownHandler
-                                      var focusHandler = ref.focusHandler
-                                      var blurHandler = ref.blurHandler
-                                      var keydownHandler = ref.keydownHandler
-                                      return _c("div", {}, [
-                                        _c(
-                                          "a",
-                                          {
-                                            attrs: {
-                                              "aria-label": "User menu",
-                                              "aria-haspopup": "true"
-                                            },
-                                            on: {
-                                              mousedown: mousedownHandler,
-                                              focus: focusHandler,
-                                              blur: blurHandler,
-                                              keydown: keydownHandler
-                                            }
-                                          },
-                                          [
-                                            _c("Avatar", {
-                                              attrs: {
-                                                username:
-                                                  _vm.$store.state.auth.user
-                                                    .user.name
-                                              }
-                                            })
-                                          ],
-                                          1
-                                        )
-                                      ])
-                                    }
-                                  },
-                                  {
-                                    key: "default",
-                                    fn: function(ref) {
-                                      var hide = ref.hide
-                                      return _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "py-1 flex flex-col rounded-md shadow-xs",
-                                          on: { click: hide }
-                                        },
-                                        [
-                                          _c("router-link", {
-                                            attrs: {
-                                              to: {
-                                                name: "user",
-                                                params: {
-                                                  id:
-                                                    _vm.$store.state.auth.user
-                                                      .user.id
-                                                }
-                                              }
-                                            },
-                                            scopedSlots: _vm._u(
-                                              [
-                                                {
-                                                  key: "default",
-                                                  fn: function(ref) {
-                                                    var href = ref.href
-                                                    var navigate = ref.navigate
-                                                    var isActive = ref.isActive
-                                                    return [
-                                                      _c(
-                                                        "a",
-                                                        {
-                                                          staticClass:
-                                                            "text-center navbar-link",
-                                                          attrs: {
-                                                            active: isActive,
-                                                            href: href
-                                                          },
-                                                          on: {
-                                                            click: navigate
-                                                          }
-                                                        },
-                                                        [_vm._v("Profile")]
-                                                      )
-                                                    ]
-                                                  }
-                                                }
-                                              ],
-                                              null,
-                                              true
-                                            )
-                                          }),
-                                          _vm._v(" "),
-                                          _c(
-                                            "button",
-                                            {
-                                              staticClass: "mt-3 navbar-link",
-                                              attrs: { type: "button" },
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.logout()
-                                                }
-                                              }
-                                            },
-                                            [_vm._v("Logout")]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    }
-                                  }
-                                ],
-                                null,
-                                true
-                              )
-                            })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.isLoggedIn
-                          ? _c("router-link", {
-                              key: routeListing.path,
-                              attrs: { to: { name: routeListing.name } },
-                              scopedSlots: _vm._u(
-                                [
-                                  {
-                                    key: "default",
-                                    fn: function(ref) {
-                                      var href = ref.href
-                                      var route = ref.route
-                                      var navigate = ref.navigate
-                                      var isActive = ref.isActive
-                                      var isExactActive = ref.isExactActive
-                                      return [
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass: "navbar-link",
-                                            class: isExactActive
-                                              ? "no-underline text-blue-700 bg-gray-200"
-                                              : isActive &&
-                                                route.name !== "home"
-                                              ? "no-underline text-blue-400 bg-gray-200"
-                                              : "hover:bg-gray-200 text-blue-400 bg-gray-50",
-                                            attrs: {
-                                              href: href,
-                                              isActive: isActive,
-                                              isExactActive: isExactActive
-                                            },
-                                            on: { click: navigate }
-                                          },
-                                          [_vm._v(_vm._s(route.name))]
-                                        )
-                                      ]
-                                    }
-                                  }
-                                ],
-                                null,
-                                true
-                              )
-                            })
-                          : _vm._e()
-                      ],
-                      1
-                    )
-                  : _vm._e()
-              ]
-            })
-          ],
-          2
-        )
-      ]),
-      _vm._v(" "),
-      _c("router-view")
-    ],
-    1
-  )
+                      : _vm._e()
+                  ],
+                  1
+                )
+              : _vm._e()
+          ]
+        })
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -78741,6 +78800,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_app_vue_vue_type_template_id_53f13272___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_app_vue_vue_type_template_id_53f13272___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/views/components/Navbar.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/views/components/Navbar.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Navbar_vue_vue_type_template_id_64c6edda___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Navbar.vue?vue&type=template&id=64c6edda& */ "./resources/js/views/components/Navbar.vue?vue&type=template&id=64c6edda&");
+/* harmony import */ var _Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Navbar.vue?vue&type=script&lang=js& */ "./resources/js/views/components/Navbar.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Navbar_vue_vue_type_template_id_64c6edda___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Navbar_vue_vue_type_template_id_64c6edda___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/views/components/Navbar.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/views/components/Navbar.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/views/components/Navbar.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Navbar.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/components/Navbar.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/views/components/Navbar.vue?vue&type=template&id=64c6edda&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/views/components/Navbar.vue?vue&type=template&id=64c6edda& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_template_id_64c6edda___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Navbar.vue?vue&type=template&id=64c6edda& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/components/Navbar.vue?vue&type=template&id=64c6edda&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_template_id_64c6edda___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Navbar_vue_vue_type_template_id_64c6edda___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

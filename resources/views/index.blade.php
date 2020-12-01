@@ -18,31 +18,22 @@
         </style>
     </head>
     <body class="antialiased">
-        <div class="relative pt-4 min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center">
-            @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 underline">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="min-w-full mx-auto sm:px-6 lg:px-8">
+        <div class="relative min-h-screen dark:bg-gray-900 sm:items-center">
+            <div class="min-w-full mx-auto mb-2xl">
                 <div id="app">
                     <app :users-prop="{{ $users }}" :actions-prop="{{ $actions }}" :rewards-prop="{{ $rewards }}" :user-actions-prop="{{ $userActions }}" :user-rewards-prop="{{ $userRewards }}"></app>
                 </div>
 
-                <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
-                    <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                <footer class="bg-blue-100 absolute bottom-0 w-full py-6">
+                    <div class="mx-auto max-w-6xl flex justify-center mt-4 sm:items-center sm:justify-between">
+                        <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
+                            &copy; {{ \Carbon\Carbon::now()->year }} The Yay! Corporation
+                        </div>
+                        <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
+                            Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                        </div>
                     </div>
-                </div>
+                </footer>
             </div>
         </div>
         <script src="{{ mix('js/app.js') }}"></script>
