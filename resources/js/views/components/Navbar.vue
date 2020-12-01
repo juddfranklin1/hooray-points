@@ -1,6 +1,6 @@
 <template>
     <nav class="bg-blue-100 navigation--primary">
-        <ul class="px-4 py-4 flex relative mx-auto max-w-6xl">
+        <ul class="px-4 xl:px-0 py-4 flex relative mx-auto max-w-6xl">
             <!-- Need a better way to handle top-level links without relying upon "children array" and presence of a colon to indicate argument-free paths -->
             <template v-for="(routeListing, index) in routes">
                 <li

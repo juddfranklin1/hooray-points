@@ -36054,7 +36054,12 @@ var render = function() {
     [
       _c("Navbar"),
       _vm._v(" "),
-      _c("main", { staticClass: "mx-auto max-w-6xl" }, [_c("router-view")], 1)
+      _c(
+        "main",
+        { staticClass: "mx-auto px-4 xl:px-0 max-w-6xl" },
+        [_c("router-view")],
+        1
+      )
     ],
     1
   )
@@ -36084,7 +36089,7 @@ var render = function() {
   return _c("nav", { staticClass: "bg-blue-100 navigation--primary" }, [
     _c(
       "ul",
-      { staticClass: "px-4 py-4 flex relative mx-auto max-w-6xl" },
+      { staticClass: "px-4 xl:px-0 py-4 flex relative mx-auto max-w-6xl" },
       [
         _vm._l(_vm.routes, function(routeListing, index) {
           return [

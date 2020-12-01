@@ -1,7 +1,7 @@
 <template>
     <div class="w-full relative">
         <Navbar></Navbar>
-        <main class="mx-auto max-w-6xl">
+        <main class="mx-auto px-4 xl:px-0 max-w-6xl">
             <router-view></router-view>
         </main>
     </div>
