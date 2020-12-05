@@ -2,7 +2,12 @@
     <form action="post" @submit.prevent="pickReward($event)" class="border-2 my-3 py-3 px-6 flex flex-col">
         <h3 class="text-2xl pb-4">Redeem a Reward</h3>
         <label for="pick_an_action" class="mt-3 text-lg">What reward does {{ currentUser.name }} choose?</label>
-        <select class="px-4 mb-2 py-2 border-2" name="pick_a_reward" id="pick_a_reward">
+        <select
+            @change="chooseReward"
+            class="px-4 mb-2 py-2 border-2"
+            name="pick_a_reward"
+            id="pick_a_reward">
+            <option value="" disabled selected>Select a reward</option>
             <option
                 v-for="rewardOpt in rewards"
                 v-bind:key="'reward-option-' + rewardOpt.id"
@@ -12,16 +17,18 @@
                 {{ rewardOpt.title }}: {{ rewardOpt.cost }}pts
             </option>
         </select>
-        <label for="action_count" class="mt-3 text-lg">How many does {{ currentUser.name }} want?</label>
-        <input
-            class="mb-2 border-2 py-2 px-4"
-            type="number"
-            name="multiplier"
-            id="reward_count"
-            min="1"
-            v-bind:max="chosenReward ? currentUser.point_total / chosenReward.cost : 1"
-            value="1">
-        <button class="trigger-button" type="submit">Add</button>
+        <template v-if="chosenReward">
+            <label for="action_count" class="mt-3 text-lg">How many does {{ currentUser.name }} want?</label>
+            <input
+                class="mb-2 border-2 py-2 px-4"
+                type="number"
+                name="multiplier"
+                id="reward_count"
+                min="1"
+                :max="maxRewardCount"
+                value="1">
+            <button class="trigger-button" type="submit">Add</button>
+        </template>
     </form>
 </template>
 <script>
@@ -55,6 +62,8 @@ export default {
         },
         chooseReward($e) {
             this.chosenReward = $e.target.value;
+            const reward = this.rewards.find(rew => rew.id == this.chosenReward);
+            this.maxRewardCount = this.currentUser.point_total / reward.cost;
         }
     },
     computed: {
@@ -68,6 +77,7 @@ export default {
         return {
             chosenReward: null,
             currentUser: this.user,
+            maxRewardCount: 1
         }
     }
 }

@@ -48,8 +48,9 @@
             <div id="tooltip" class="tooltip__container">
                 <template v-if="tooltipVisible">
                     <Tooltip
-                        :tooltipEvent="activeEvent"
+                        :tooltip-entry="tooltipData"
                     >
+                        <template v-slot:label>{{ tooltipData.label }}</template>
                         <template v-slot:title>{{ tooltipData.title }}</template>
                         <template v-slot:text>{{ tooltipData.text }}</template>
                     </Tooltip>
@@ -101,6 +102,9 @@ export default {
                 date: userAct.created_at,
                 color: userAct.action.value < 0 ? 'red' : 'green',
                 classNames: ['hooray-event', 'action'],
+                extendedProps: {
+                    eventType: userAct.action.value < 0 ? 'Penalty: ' + userAct.action.value : 'Score: ' + userAct.action.value
+                }
             }
         });
         const userRewards = this.$store.state.userReward.userRewards.map(userRew => {
@@ -109,6 +113,9 @@ export default {
                 date: userRew.created_at,
                 color: 'gold',
                 classNames: ['hooray-event', 'reward'],
+                extendedProps: {
+                    eventType: 'Reward'
+                }
             }
         });
         const userGoals = this.$store.state.userGoal.userGoals.map(userGl => {
@@ -116,7 +123,10 @@ export default {
                 title: userGl.user.name + ' aims to achieve ' + userGl.goal.name,
                 date: userGl.created_at,
                 color: 'blue',
-                classNames: ['hooray-event', 'goal']
+                classNames: ['hooray-event', 'goal'],
+                extendedProps: {
+                    eventType: 'Goal'
+                }
             }
         });
         return {
@@ -130,7 +140,9 @@ export default {
             tooltipVisible: false,
             tooltipData: {
                 title:'',
-                text: ''
+                text: '',
+                label: '',
+                backgroundColor: 'gray'
             },
             activeEvent: {},
         }
@@ -151,12 +163,14 @@ export default {
             this.tooltipVisible = true;
             this.activeEvent = arg.event.toPlainObject();
             this.tooltipData.text = this.activeEvent.title;
+            this.tooltipData.backgroundColor = this.activeEvent.backgroundColor;
             const eventDate = formatDate(this.activeEvent.start, {
                 month: 'long',
                 year: 'numeric',
                 day: 'numeric',
             });
-            this.tooltipData.title = eventDate;
+            this.tooltipData.label = eventDate;
+            this.tooltipData.title = this.activeEvent.extendedProps.eventType;
             const tooltip = document.querySelector('#tooltip');
             createPopper(arg.el, tooltip, {
                 placement: "right",

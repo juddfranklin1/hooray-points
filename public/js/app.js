@@ -17193,6 +17193,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -17240,7 +17241,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         title: userAct.user.name + ' did ' + userAct.action.name + ' ' + userAct.multiplier + ' ' + timeWord + '.',
         date: userAct.created_at,
         color: userAct.action.value < 0 ? 'red' : 'green',
-        classNames: ['hooray-event', 'action']
+        classNames: ['hooray-event', 'action'],
+        extendedProps: {
+          eventType: userAct.action.value < 0 ? 'Penalty: ' + userAct.action.value : 'Score: ' + userAct.action.value
+        }
       };
     });
     var userRewards = this.$store.state.userReward.userRewards.map(function (userRew) {
@@ -17248,7 +17252,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         title: userRew.user.name + ' claimed ' + userRew.multiplier + ' of ' + userRew.reward.title,
         date: userRew.created_at,
         color: 'gold',
-        classNames: ['hooray-event', 'reward']
+        classNames: ['hooray-event', 'reward'],
+        extendedProps: {
+          eventType: 'Reward'
+        }
       };
     });
     var userGoals = this.$store.state.userGoal.userGoals.map(function (userGl) {
@@ -17256,7 +17263,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         title: userGl.user.name + ' aims to achieve ' + userGl.goal.name,
         date: userGl.created_at,
         color: 'blue',
-        classNames: ['hooray-event', 'goal']
+        classNames: ['hooray-event', 'goal'],
+        extendedProps: {
+          eventType: 'Goal'
+        }
       };
     });
     return {
@@ -17270,7 +17280,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       tooltipVisible: false,
       tooltipData: {
         title: '',
-        text: ''
+        text: '',
+        label: '',
+        backgroundColor: 'gray'
       },
       activeEvent: {}
     };
@@ -17290,12 +17302,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.tooltipVisible = true;
       this.activeEvent = arg.event.toPlainObject();
       this.tooltipData.text = this.activeEvent.title;
+      this.tooltipData.backgroundColor = this.activeEvent.backgroundColor;
       var eventDate = Object(_fullcalendar_vue__WEBPACK_IMPORTED_MODULE_3__["formatDate"])(this.activeEvent.start, {
         month: 'long',
         year: 'numeric',
         day: 'numeric'
       });
-      this.tooltipData.title = eventDate;
+      this.tooltipData.label = eventDate;
+      this.tooltipData.title = this.activeEvent.extendedProps.eventType;
       var tooltip = document.querySelector('#tooltip');
       Object(_popperjs_core__WEBPACK_IMPORTED_MODULE_5__["createPopper"])(arg.el, tooltip, {
         placement: "right",
@@ -17702,6 +17716,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -17729,7 +17750,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     chooseReward: function chooseReward($e) {
+      var _this2 = this;
+
       this.chosenReward = $e.target.value;
+      var reward = this.rewards.find(function (rew) {
+        return rew.id == _this2.chosenReward;
+      });
+      this.maxRewardCount = this.currentUser.point_total / reward.cost;
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
@@ -17746,7 +17773,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       chosenReward: null,
-      currentUser: this.user
+      currentUser: this.user,
+      maxRewardCount: 1
     };
   }
 });
@@ -18378,6 +18406,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /**
  * A Tooltip currently used on the Homepage calendar and relying upon popper for placement
@@ -18389,15 +18420,19 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       "default": function _default() {
         return {
-          backgroundColor: 'blue'
+          backgroundColor: 'blue',
+          label: false
         };
       },
-      validator: function validator(task) {
+      validator: function validator(tooltip) {
         return ['backgroundColor'].every(function (key) {
-          return key in task;
+          return key in tooltip;
         });
       }
     }
+  },
+  mounted: function mounted() {
+    console.log(this.tooltipEntry);
   }
 });
 
@@ -37992,9 +38027,16 @@ var render = function() {
               _vm.tooltipVisible
                 ? [
                     _c("Tooltip", {
-                      attrs: { tooltipEvent: _vm.activeEvent },
+                      attrs: { "tooltip-entry": _vm.tooltipData },
                       scopedSlots: _vm._u(
                         [
+                          {
+                            key: "label",
+                            fn: function() {
+                              return [_vm._v(_vm._s(_vm.tooltipData.label))]
+                            },
+                            proxy: true
+                          },
                           {
                             key: "title",
                             fn: function() {
@@ -38012,7 +38054,7 @@ var render = function() {
                         ],
                         null,
                         false,
-                        3295725673
+                        4134079227
                       )
                     })
                   ]
@@ -38561,56 +38603,70 @@ var render = function() {
         "select",
         {
           staticClass: "px-4 mb-2 py-2 border-2",
-          attrs: { name: "pick_a_reward", id: "pick_a_reward" }
+          attrs: { name: "pick_a_reward", id: "pick_a_reward" },
+          on: { change: _vm.chooseReward }
         },
-        _vm._l(_vm.rewards, function(rewardOpt) {
-          return _c(
-            "option",
-            {
-              key: "reward-option-" + rewardOpt.id,
-              attrs: { disabled: _vm.user.point_total < rewardOpt.cost },
-              domProps: { value: rewardOpt.id }
-            },
-            [
-              _vm._v(
-                "\n            " +
-                  _vm._s(rewardOpt.title) +
-                  ": " +
-                  _vm._s(rewardOpt.cost) +
-                  "pts\n        "
-              )
-            ]
-          )
-        }),
-        0
+        [
+          _c("option", { attrs: { value: "", disabled: "", selected: "" } }, [
+            _vm._v("Select a reward")
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.rewards, function(rewardOpt) {
+            return _c(
+              "option",
+              {
+                key: "reward-option-" + rewardOpt.id,
+                attrs: { disabled: _vm.user.point_total < rewardOpt.cost },
+                domProps: { value: rewardOpt.id }
+              },
+              [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(rewardOpt.title) +
+                    ": " +
+                    _vm._s(rewardOpt.cost) +
+                    "pts\n        "
+                )
+              ]
+            )
+          })
+        ],
+        2
       ),
       _vm._v(" "),
-      _c(
-        "label",
-        { staticClass: "mt-3 text-lg", attrs: { for: "action_count" } },
-        [_vm._v("How many does " + _vm._s(_vm.currentUser.name) + " want?")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "mb-2 border-2 py-2 px-4",
-        attrs: {
-          type: "number",
-          name: "multiplier",
-          id: "reward_count",
-          min: "1",
-          max: _vm.chosenReward
-            ? _vm.currentUser.point_total / _vm.chosenReward.cost
-            : 1,
-          value: "1"
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "trigger-button", attrs: { type: "submit" } },
-        [_vm._v("Add")]
-      )
-    ]
+      _vm.chosenReward
+        ? [
+            _c(
+              "label",
+              { staticClass: "mt-3 text-lg", attrs: { for: "action_count" } },
+              [
+                _vm._v(
+                  "How many does " + _vm._s(_vm.currentUser.name) + " want?"
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "mb-2 border-2 py-2 px-4",
+              attrs: {
+                type: "number",
+                name: "multiplier",
+                id: "reward_count",
+                min: "1",
+                max: _vm.maxRewardCount,
+                value: "1"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "trigger-button", attrs: { type: "submit" } },
+              [_vm._v("Add")]
+            )
+          ]
+        : _vm._e()
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -39604,16 +39660,27 @@ var render = function() {
           {
             ref: "tooltipRef",
             staticClass:
-              "bg-gray-600 block border-0 mb-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg",
+              "relative bg-gray-600 block border-0 mb-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg",
             class: "bg-" + _vm.tooltipEntry.backgroundColor + "-600"
           },
           [
             _c("div", [
+              _vm.tooltipEntry.label
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "absolute top-1 right-1 text-xs text-white"
+                    },
+                    [_vm._t("label")],
+                    2
+                  )
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "div",
                 {
                   staticClass:
-                    "text-white opacity-75 font-semibold p-3 mb-0 border-b border-solid border-gray-200 uppercase rounded-t-lg",
+                    "text-white font-semibold p-3 pt-5 mb-0 border-b border-solid border-gray-200 uppercase rounded-t-lg",
                   class: "bg-" + _vm.tooltipEntry.backgroundColor + "-600"
                 },
                 [_vm._t("title")],
