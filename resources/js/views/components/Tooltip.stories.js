@@ -12,6 +12,7 @@ export default {
     components: { Tooltip },
     props: Object.keys(argTypes),
     template: `<Tooltip v-bind="$props">
+        <template v-slot:label>A label</template>
         <template v-slot:title>A TITLE</template>
         <template v-slot:text>Lorem ipsum dolor sit amet.</template>
     </Tooltip>`,
@@ -21,13 +22,15 @@ export default {
   Default.args = {
     tooltipEntry: {
       backgroundColor: 'gray',
+      label: 'A label'
     },
   };
 
-  export const Action = Template.bind({});
-  Action.args = {
+  export const ActionScore = Template.bind({});
+  ActionScore.args = {
       tooltipEntry: {
           backgroundColor: 'green',
+          label: 'A label'
       }
   }
 
@@ -35,6 +38,7 @@ export default {
   ActionPenalty.args = {
       tooltipEntry: {
           backgroundColor: 'red',
+          label: 'A label'
       }
   }
 
@@ -42,6 +46,7 @@ export default {
   Reward.args = {
       tooltipEntry: {
           backgroundColor: 'gold',
+          label: 'A label'
       }
   }
 
@@ -49,5 +54,6 @@ export default {
   Goal.args = {
       tooltipEntry: {
           backgroundColor: 'blue',
+          label: 'A label'
       }
   }
