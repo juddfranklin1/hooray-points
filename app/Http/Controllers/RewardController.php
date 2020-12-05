@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Reward;
+use PDF;
+use App\Models\{ User, Reward, RewardUser };
 use Illuminate\Http\Request;
 
 class RewardController extends Controller
@@ -85,5 +86,20 @@ class RewardController extends Controller
         $rewardItem = Reward::find($reward);
         $rewardItem->delete();
         return $reward;
+    }
+
+    /**
+     * Generate Voucher PDF for a given Reward
+     */
+    public function generateVoucher($userId, $rewardId, $multiplier = 1) {
+        $reward = Reward::find($rewardId);
+        $user = User::find($userId);
+
+        // share data to view
+        $pdf = PDF::loadView('voucher', compact('reward', 'user', 'multiplier'));
+
+        // download PDF file with download method
+        return $pdf->setPaper('letter', 'landscape')->download('pdf_file.pdf');
+
     }
 }

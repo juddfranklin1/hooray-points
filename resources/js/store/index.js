@@ -8,6 +8,7 @@ import user from './user';
 import action from './action';
 import reward from './reward';
 import userAction from './userAction';
+import userGoal from './userGoal';
 import userReward from './userReward';
 
 export default new Vuex.Store({
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         action,
         reward,
         userAction,
+        userGoal,
         userReward,
     }
 });

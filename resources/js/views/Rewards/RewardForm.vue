@@ -5,7 +5,7 @@
         @update-user="$refs.modal.hide()"
     >
         <template v-slot:header>
-            {{ currentReward ? 'Edit ' + currentReward.title : 'New Reward' }}
+            <h2 class="text-xl">{{ currentReward ? 'Edit ' + currentReward.title : 'New Reward' }}</h2>
         </template>
         <form reward="new-reward" class="my-4" @submit.prevent="onSubmit($event)" method="post">
             <div class="flex flex-col">
@@ -76,7 +76,7 @@ export default {
             data.cost = $e.target.cost.value;
             data.assignee_id = $e.target.assignee_id.value;
             if(!this.currentReward) {
-                Axios.post('/api/reward', data)
+                Axios.post('/api/rewards', data)
                     .then(result => {
                         this.$store.commit('addReward', result.data);
                         $e.target.reset();

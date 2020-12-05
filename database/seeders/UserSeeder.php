@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\{ Goal, User };
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -14,21 +14,21 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $judd = User::factory()->make([
+        $judd = User::factory()->has(Goal::factory()->count(2))->create([
             'name'  => 'Judd',
             'email' => 'juddfranklin@gmail.com',
-        ])->save();
-        $tybe = User::factory()->make([
+        ]);
+        $tybe = User::factory()->has(Goal::factory()->count(2))->create([
             'name'  => 'Tybe',
             'email' => 'tybefranklin@gmail.com',
-        ])->save();
-        $adena = User::factory()->make([
+        ]);
+        $adena = User::factory()->has(Goal::factory()->count(2))->create([
             'name'  => 'Adena',
             'email' => 'juddfranklin+adena@gmail.com',
-        ])->save();
-        $mac = User::factory()->make([
+        ]);
+        $mac = User::factory()->has(Goal::factory()->count(2))->create([
             'name'  => 'Maccabee',
             'email' => 'juddfranklin+mac@gmail.com',
-        ])->save();
+        ]);
     }
 }

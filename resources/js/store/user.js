@@ -24,11 +24,11 @@ export default {
         setUsers(state, users) {
             state.users = users;
         },
-        addActionToUser ({ state, commit }, action) {
+        attachActionToUser ({ state, commit }, action) {
             // get the user, add the action
         },
 
-        addRewardToUser ({ state, commit }, reward) {
+        attachRewardToUser ({ state, commit }, reward) {
             // get the user, add the reward
 
         },

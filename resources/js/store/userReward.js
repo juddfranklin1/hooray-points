@@ -31,10 +31,10 @@ export default {
             state.userRewards = userRewards;
         },
         unlinkUserAndReward({ state, commit }, Reward) {
-
+            // get the User, detach the Reward
         },
-        addRewardToUser ({ state, commit }, Reward) {
-            // get the user, add the Reward
+        attachRewardToUser ({ state, commit }, Reward) {
+            // get the User, attach the Reward
         },
     }
 };

@@ -21,7 +21,7 @@
             min="1"
             v-bind:max="chosenReward ? currentUser.point_total / chosenReward.cost : 1"
             value="1">
-        <button class="px-4 py-2 border-2 hover:bg-gray-200 hover:text-green-400 border-gray-200" type="submit">Add</button>
+        <button class="trigger-button" type="submit">Add</button>
     </form>
 </template>
 <script>
@@ -43,7 +43,7 @@ export default {
             const rewardSelect = $e.target.querySelector('#pick_a_reward');
             const multiplier = $e.target.querySelector('#reward_count');
             const userId = this.currentUser.id;
-            Axios.put('/api/user/' + userId + '/addReward/' + rewardSelect.value, {
+            Axios.put('/api/users/' + userId + '/attachReward/' + rewardSelect.value, {
                 multiplier: multiplier.value
             })
                 .then(

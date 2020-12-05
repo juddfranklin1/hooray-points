@@ -33,7 +33,7 @@ export default {
         unlinkUserAndAction({ state, commit }, action) {
 
         },
-        addActionToUser ({ state, commit }, action) {
+        attachActionToUser ({ state, commit }, action) {
             // get the user, add the action
         },
     }

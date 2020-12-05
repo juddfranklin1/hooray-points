@@ -19,6 +19,7 @@ export default {
         'actionsProp': Array,
         'rewardsProp': Array,
         'userActionsProp': Array,
+        'userGoalsProp': Array,
         'userRewardsProp': Array,
     },
     computed: {
@@ -28,6 +29,7 @@ export default {
             rewards: 'reward.rewards',
             actions: 'action.actions',
             userActions: 'userAction.userActions',
+            userGoals: 'userGoal.userGoals',
             userRewards: 'userReward.userRewards',
         }),
         ...mapGetters([
@@ -38,6 +40,7 @@ export default {
         store.dispatch('fetchUsers', { users: this.usersProp });
         store.dispatch('fetchActions', { actions: this.actionsProp });
         store.dispatch('fetchRewards', { rewards: this.rewardsProp });
+        store.dispatch('fetchUserGoals', { userGoals: this.userGoalsProp });
         store.dispatch('fetchUserActions', { userActions: this.userActionsProp });
         store.dispatch('fetchUserRewards', { userRewards: this.userRewardsProp });
     },

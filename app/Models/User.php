@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\{ Action, ActionUser, RewardUser, Team };
+use App\Models\{ Action, ActionUser, GoalUser, RewardUser, Team };
 
 class User extends Authenticatable
 {
@@ -44,7 +44,9 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'point_total'
+        'point_total',
+        'penalties_total',
+        'scores_total',
     ];
 
     /**
@@ -77,6 +79,16 @@ class User extends Authenticatable
             ->orderBy('reward_user.created_at');
     }
 
+    /**
+     * Rewards this user has claimed.
+     */
+    public function goals() {
+        return $this->belongsToMany(Goal::class, 'goal_user')
+            ->withTimestamps()
+            ->using(GoalUser::class)
+            ->orderBy('goal_user.created_at');
+    }
+
     public function teams() {
         return $this->belongsToMany(Team::class);
     }
@@ -91,5 +103,25 @@ class User extends Authenticatable
             $rewardsTotal += $reward->cost * $reward->pivot->multiplier;
         }
         return $actionsTotal - $rewardsTotal;
+    }
+
+    public function getPenaltiesTotalAttribute() {
+        $penaltiesTotal = 0;
+        forEach($this->actions as $action) {
+            if($action->value < 0) {
+                $penaltiesTotal += $action->value * $action->pivot->multiplier;
+            }
+        }
+        return $penaltiesTotal;
+    }
+
+    public function getScoresTotalAttribute() {
+        $scoresTotal = 0;
+        forEach($this->actions as $action) {
+            if($action->value > 0) {
+                $scoresTotal += $action->value * $action->pivot->multiplier;
+            }
+        }
+        return $scoresTotal;
     }
 }

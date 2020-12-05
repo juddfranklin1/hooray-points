@@ -6,7 +6,7 @@
     >
         {{ action }}
         <template v-slot:header>
-            <h2 class="text-3xl">{{ currentAction ? currentAction.name : 'New Action' }}</h2>
+            <h2 class="text-xl">{{ currentAction ? currentAction.name : 'New Action' }}</h2>
         </template>
         <form action="new-action" class="my-4" @submit.prevent="onSubmit($event)" method="post">
             <div class="flex flex-col">
@@ -76,7 +76,7 @@ export default {
             data.value = $e.target.value.value;
             data.assignee_id = $e.target.assignee_id.value;
             if(!this.currentAction) {
-                Axios.post('/api/action', data)
+                Axios.post('/api/actions', data)
                     .then(result => {
                         this.$store.commit('addAction', result.data);
                         $e.target.reset();

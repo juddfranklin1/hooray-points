@@ -20,11 +20,18 @@
     <body class="antialiased">
         <div class="relative min-h-screen dark:bg-gray-900 sm:items-center">
             <div class="min-w-full mx-auto mb-2xl">
-                <div id="app">
-                    <app :users-prop="{{ $users }}" :actions-prop="{{ $actions }}" :rewards-prop="{{ $rewards }}" :user-actions-prop="{{ $userActions }}" :user-rewards-prop="{{ $userRewards }}"></app>
+                <div id="app" class="pb-32">
+                    <app
+                        :users-prop="{{ $users }}"
+                        :actions-prop="{{ $actions }}"
+                        :rewards-prop="{{ $rewards }}"
+                        :user-actions-prop="{{ $userActions }}"
+                        :user-goals-prop="{{ $userGoals }}"
+                        :user-rewards-prop="{{ $userRewards }}"
+                    ></app>
                 </div>
 
-                <footer class="bg-blue-100 absolute bottom-0 w-full py-6">
+                <footer class="bg-blue-100 absolute bottom-0 w-full py-6 h-32 flex flex-col align-middle justify-items-center">
                     <div class="mx-auto max-w-6xl flex justify-center mt-4 sm:items-center sm:justify-between">
                         <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
                             &copy; {{ \Carbon\Carbon::now()->year }} The Yay! Corporation

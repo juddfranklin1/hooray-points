@@ -6,7 +6,7 @@
         </select>
         <label for="action_count" class="mt-3 text-lg">How Many Times did {{ currentUser.name }} do it?</label>
         <input class="mb-2 border-2 py-2 px-4" type="number" name="multiplier" id="action_count" min="1" value="1">
-        <t-button classes="px-4 py-2" type="submit">Add</t-button>
+        <t-button classes="trigger-button" type="submit">Add</t-button>
     </form>
 </template>
 <script>
@@ -28,7 +28,7 @@ export default {
             const actionSelect = $e.target.querySelector('#pick_an_action');
             const multiplier = $e.target.querySelector('#action_count');
             const userId = this.currentUser.id;
-            Axios.put('/api/user/' + userId + '/addAction/' + actionSelect.value, { multiplier: multiplier.value})
+            Axios.put('/api/users/' + userId + '/attachAction/' + actionSelect.value, { multiplier: multiplier.value})
                 .then(
                     response => {
                         this.currentUser = response.data;

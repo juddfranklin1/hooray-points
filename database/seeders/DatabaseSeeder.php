@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\{ UserSeeder, ActionSeeder, RewardSeeder };
+use Database\Seeders\{ UserSeeder, ActionSeeder, RewardSeeder, TeamSeeder, PermissionSeeder, RoleSeeder };
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,10 +15,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            RoleSeeder::class,
+            PermissionSeeder::class,
             UserSeeder::class,
             ActionSeeder::class,
-            RewardSeeder::class
+            RewardSeeder::class,
+            TeamSeeder::class,
         ]);
-        // \App\Models\User::factory(10)->create();
     }
 }
