@@ -24,13 +24,18 @@ export default {
         setUsers(state, users) {
             state.users = users;
         },
-        attachActionToUser ({ state, commit }, action) {
-            // get the user, add the action
+        addUser(state, resultUser) {
+            state.users.push(resultUser);
         },
-
-        attachRewardToUser ({ state, commit }, reward) {
-            // get the user, add the reward
-
+        updateUser(state, resultUser) {
+            state.users = [
+                ...state.users.map(user => user.id !== resultUser.id ? user : {
+                    ...user, ...resultUser
+                })]
+        },
+        deleteUser(state, user) {
+            const deletedUser = state.users.findIndex(item => item.id === user);
+            state.actions.splice(deletedUser, 1);
         },
     }
 };

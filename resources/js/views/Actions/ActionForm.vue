@@ -85,8 +85,8 @@ export default {
                     }, error => console.log(error));
             } else {
                 Axios.post('/api/actions/' + this.currentAction.id, data)
-                    .then(result => {
-                        this.$store.commit('updateAction', result.data);
+                    .then(response => {
+                        this.$store.commit('updateAction', response.data);
                         this.$emit('action-submit');
                         this.$refs.modal.hide();
                     }, error => console.log(error));

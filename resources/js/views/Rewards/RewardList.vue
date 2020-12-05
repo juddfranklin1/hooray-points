@@ -18,7 +18,7 @@
 <script>
 import RewardListItem from './RewardListItem.vue';
 import RewardForm from './RewardForm.vue';
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
     name: 'RewardList',

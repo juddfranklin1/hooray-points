@@ -27,7 +27,7 @@
 </template>
 <script>
 import ActionListItem from './ActionListItem.vue';
-import { mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
     name: 'ActionList',

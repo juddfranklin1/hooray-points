@@ -32,9 +32,10 @@ export default {
                 .then(
                     response => {
                         this.currentUser = response.data;
+                        this.$store.commit('updateUser', this.currentUser);
                         this.$emit('update-user', this.currentUser);
                     },
-                    error => console.log(error));
+                    err => console.error(err));
         }
     },
     computed: {
@@ -42,7 +43,7 @@ export default {
             users: state => state.user.users,
             actions: state => state.action.actions,
             rewards: state => state.reward.rewards,
-        }),
+        })
     },
     data() {
         return {
