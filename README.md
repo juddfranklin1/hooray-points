@@ -41,17 +41,8 @@ If you want to install it yourself, you can go ahead and run the good old Larave
 
 - Composer
 - Node and npm (or yarn)
-- A local server environment (I use Laravel Valet, but you can use homestead, vagrant, *AMP, good old php artisan serve, etc.)
-- PHP 7.3
-    - BCMath PHP Extension
-    - Ctype PHP Extension
-    - Fileinfo PHP Extension
-    - JSON PHP Extension
-    - Mbstring PHP Extension
-    - OpenSSL PHP Extension
-    - PDO PHP Extension
-    - Tokenizer PHP Extension
-    - XML PHP Extension
+- A local PHP server environment (I use Laravel Valet, but you can use homestead, vagrant, docker, *AMP, good old php artisan serve, etc.)
+    - For details on different server options and requirements for hosting a Laravel app [check here](https://laravel.com/docs/8.x/installation)
 - Relational Db server (I use PostgreSQL locally)
 
 Steps:
@@ -65,7 +56,12 @@ Then
 Back in a terminal, run
 6. `php artisan migrate` or if you want faker data (and currently some from my family), please run `php artisan migrate --seed`
 
+### To Run Locally
+`yarn watch` or `npm run watch` to spin up Laravel Mix and tinker with the app locally 
+`yarn storybook` or `npm run storybook` to run storybookjs and see the stories for the app (currently just using the Tooltip component as an example)
+
 ### To Do:
+- Create bigger component library and leverage storybookjs more fully.
 - Set up goals
     - Progress-based (saving up points)
     - Reward-based (Trigger a reward based upon point total achieved)
