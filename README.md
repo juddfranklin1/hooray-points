@@ -15,9 +15,12 @@ Let's all say it together: Hooray!
 With Hooray, you can:
 - Define actions that you want to do (or avoid);
 - Define rewards (incentives) that you can earn by doing what you need to do and avoiding what you need to avoid
+- Download PDF "Vouchers" related to rewards claimed (fun for special activities)
 - Set goals *
 - Track progress *
 - Be part of a team doing the same thing *
+
+\* indicates that a feature is incompletely implemented.
 
 ## details
 
@@ -25,16 +28,16 @@ With Hooray, you can:
 * VueJS 2
 * Vuex 3
 * Vue Router
-* TailwindCSS
-* VueTailwind (component library)
-* FullCalendar (vue component)
+* [TailwindCSS](https://github.com/tailwindlabs/tailwindcss)
+* [VueTailwind](https://github.com/alfonsobries/vue-tailwind) (component library)
+* [FullCalendar.io](https://github.com/fullcalendar/fullcalendar-vue) (Calendar vue component)
+* [Storybook.js](https://storybook.js.org/docs/vue/get-started/introduction) (component Styleguide Builder)
+* [laravel-dompdf package](https://github.com/barryvdh/laravel-dompdf)
 
-Now featuring: [VueTailwind](https://github.com/alfonsobries/vue-tailwind)! Using this component library has quickly taken the UX of the app to the next level.
-
-At the moment, this is a simple Laravel project. The Models are currently only Users, Actions (good or bad things a person can do), and Rewards (things a person can get for their points), with Pivot Models to give some rich relationships between Users and Actions and Rewards.
+This is currently a small-scale Laravel project, but it is growing more sophisticated with each commit. The Models are currently only Users, Actions (good or bad things a person can do), Goals, and Rewards (things a person can get for their points), with Pivot Models to give some rich relationships between Users and Actions and Rewards.
 
 ### requirements:
-If you want to install it yourself, you can go ahead and run the normal boring old Laravel setup process:
+If you want to install it yourself, you can go ahead and run the good old Laravel setup process:
 
 - Composer
 - Node and npm (or yarn)

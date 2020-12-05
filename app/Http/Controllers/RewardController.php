@@ -91,15 +91,22 @@ class RewardController extends Controller
     /**
      * Generate Voucher PDF for a given Reward
      */
-    public function generateVoucher($userId, $rewardId, $multiplier = 1) {
-        $reward = Reward::find($rewardId);
-        $user = User::find($userId);
+    public function generateVoucher($id) {
+        $rewardUser = RewardUser::find($id);
+        if($rewardUser->voucher_printed === FALSE){
+            // share data to view
+            $user = $rewardUser->user;
+            $reward = $rewardUser->reward;
 
-        // share data to view
-        $pdf = PDF::loadView('voucher', compact('reward', 'user', 'multiplier'));
+            $pdf = PDF::loadView('voucher', compact('reward', 'user', 'rewardUser'));
 
-        // download PDF file with download method
-        return $pdf->setPaper('letter', 'landscape')->download('pdf_file.pdf');
+            $rewardUser->voucher_printed = TRUE;
+            $rewardUser->save();
+            // download PDF file with download method
+            return $pdf->setPaper('letter', 'landscape')->download('pdf_file.pdf');
+        } else {
+            return redirect()->back()->with('error', 'The voucher for this reward has already been printed.');
+        }
 
     }
 }

@@ -47,12 +47,12 @@ class ActionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Action  $action
+     * @param Request $request
+     * @param  String $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Action $action)
-    {
-        return Action::firstOrFail($action);
+    public function show (Request $request, $id) {
+        return Action::where('id',$id)->first();
     }
 
     /**

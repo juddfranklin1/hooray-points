@@ -64,7 +64,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Action::class, 'action_user')
             ->withTimestamps()
             ->using(ActionUser::class)
-            ->withPivot('created_at', 'multiplier')
+            ->withPivot('created_at', 'multiplier', 'id')
             ->orderBy('action_user.created_at');
     }
 
@@ -75,7 +75,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Reward::class, 'reward_user')
             ->withTimestamps()
             ->using(RewardUser::class)
-            ->withPivot('created_at', 'multiplier')
+            ->withPivot('created_at', 'multiplier', 'id')
             ->orderBy('reward_user.created_at');
     }
 

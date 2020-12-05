@@ -45,7 +45,7 @@
         </t-table>
         <div class="my-4">
             <FullCalendar :options="calendarOptions" />
-            <div id="tooltip">
+            <div id="tooltip" class="tooltip__container">
                 <template v-if="tooltipVisible">
                     <Tooltip
                         :tooltipEvent="activeEvent"

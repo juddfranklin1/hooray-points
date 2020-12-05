@@ -39,7 +39,7 @@ Route::post('/rewards/{id}', [RewardController::class, 'update' ]);
 Route::get('/users', [UserController::class, 'index' ]);
 Route::post('/users', [UserController::class, 'store' ]);
 Route::get('/users/{id}', [UserController::class, 'show' ]);
-Route::get('/users/{userid}/reward/{rewardid}/voucher/{multiplier?}', [RewardController::class, 'generateVoucher'])->name('getVoucher');
+Route::get('/user-rewards/{id}/voucher', [RewardController::class, 'generateVoucher'])->name('getVoucher');
 
 // Relations
 Route::put('/users/{user_id}/attachAction/{action_id}', [UserController::class, 'attachAction' ]);

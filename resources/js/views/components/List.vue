@@ -2,7 +2,9 @@
     <div class="list">
         <h2>{{ ListTitle }}</h2>
         <ul>
-            Conditionally load the proper ListItem Component, or pass data to a generic ListItem component
+            <ListItem v-for="(listItem, index) in ListEntries" v-bind:key="index">
+                <slot name="content">{{ listItem.content }}</slot>
+            </ListItem>
         </ul>
     </div>
 </template>

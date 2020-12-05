@@ -3,7 +3,7 @@ import ActionList from '../views/Actions/ActionList.vue';
 import ActionForm from '../views/Actions/ActionForm.vue';
 import UserList from '../views/Users/UserList.vue';
 import UserSingle from '../views/Users/UserSingle.vue';
-import SingleAction from '../views/Actions/SingleAction.vue';
+import ActionSingle from '../views/Actions/ActionSingle.vue';
 import RewardList from '../views/Rewards/RewardList.vue';
 import RewardForm from '../views/Rewards/RewardForm.vue';
 import Login from '../views/Auth/Login.vue';
@@ -53,7 +53,7 @@ export default [
             {
                 path: '/action/:id',
                 name: 'action',
-                component: SingleAction,
+                component: ActionSingle,
                 props: true
             },
             {

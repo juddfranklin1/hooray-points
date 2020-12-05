@@ -83,7 +83,7 @@
 
                 <ul class="mt-4" v-if="currentUser.rewards.length > 0">
                     <li v-for="(reward, index) in currentUser.rewards" v-bind:key="'user-'+ currentUser.id + '-reward-' + reward.id + '-' + index">
-                        <b>{{ reward.pivot.human_date }}</b>: {{ reward.title }} ({{ reward.cost }} points) x {{ reward.pivot.multiplier }} - <a class="underline hover:no-underline font-bold text-blue-600" :href="'/api/users/' + currentUser.id + '/reward/' + reward.id + '/voucher/' + reward.pivot.multiplier">get voucher</a>
+                        <b>{{ reward.pivot.human_date }}</b>: {{ reward.title }} ({{ reward.cost }} points) x {{ reward.pivot.multiplier }} - <a class="underline hover:no-underline font-bold text-blue-600" :href="'/api/user-rewards/' + reward.pivot.id + '/voucher'">get voucher</a>
                     </li>
                 </ul>
                 <p v-else>No rewards claimed yet.</p>

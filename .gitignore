@@ -10,3 +10,5 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+# Ignoring the stories created by default by storybook.js
+stories
