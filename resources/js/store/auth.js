@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios from 'axios'
 
 export default {
     state: {
@@ -19,10 +19,14 @@ export default {
 
     actions: {
       login ({ commit }, credentials) {
-        return Axios
-          .post('api/login', credentials)
-          .then(({ data }) => {
-            commit('setUser', data)
+          return new Promise((resolve, reject) => {
+              Axios
+                .post('api/login', credentials)
+                .then(({ data }) => {
+                  commit('setUser', data)
+                  resolve(data)
+                })
+                .catch(err => reject(err.response.data))
           })
       },
 

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use PDF;
-use App\Models\{ User, Reward, RewardUser };
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\{ User, Reward, RewardUser };
 
 class RewardController extends Controller
 {
@@ -93,17 +94,23 @@ class RewardController extends Controller
      */
     public function generateVoucher($id) {
         $rewardUser = RewardUser::find($id);
-        if($rewardUser->voucher_printed === FALSE){
-            // share data to view
-            $user = $rewardUser->user;
-            $reward = $rewardUser->reward;
+        // share data to view
+        $user = $rewardUser->user;
+        $reward = $rewardUser->reward;
 
+        // test view in browser
+        // return view('voucher', compact('reward', 'user', 'rewardUser'));
+
+        if($rewardUser->voucher_printed === FALSE){
             $pdf = PDF::loadView('voucher', compact('reward', 'user', 'rewardUser'));
 
             $rewardUser->voucher_printed = TRUE;
             $rewardUser->save();
             // download PDF file with download method
-            return $pdf->setPaper('letter', 'landscape')->download('pdf_file.pdf');
+            $time = \Carbon\Carbon::now()->toDayDateTimeString();
+            $time = str_replace(',,', ',', $time);
+            $filename = Str::snake($user->name . ' ' . $time . ' voucher.pdf');
+            return $pdf->setPaper('a4', 'landscape')->download($filename);
         } else {
             return redirect()->back()->with('error', 'The voucher for this reward has already been printed.');
         }

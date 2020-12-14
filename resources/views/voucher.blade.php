@@ -7,8 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Voucher for {{ $reward->name }}</title>
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
         @font-face {
-            font-family: 'PinyonScript', cursive;
+            font-family: 'PinyonScript';
             src: url({{ asset('PinyonScript-Regular.ttf') }})
         }
         h2 {
@@ -16,7 +23,7 @@
         }
     </style>
 </head>
-<body style="background-image:url('{{ asset('img/voucher-bg.jpg') }}'); background-repeat: no-repeat; background-size: contain; padding: 100px 200px;">
+<body style="background-image:url('{{ asset('img/voucher-bg.jpg') }}'); background-repeat: no-repeat; background-size: 100%; padding: 100px 200px;">
     <p style="font-size: .9rem; font-family: PinyonScript;">On the Date of {{ \Carbon\Carbon::now() }}</p>
     <h2 style="font-family: PinyonScript;  text-align: center;">
         {{ $user->name }} is entitled to {{ $rewardUser->multiplier }}

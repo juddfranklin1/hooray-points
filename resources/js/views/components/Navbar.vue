@@ -19,11 +19,15 @@
                             :isActive="isActive"
                             :isExactActive="isExactActive"
                             class="navbar-link"
-                            v-bind:class="isExactActive ? 'no-underline text-blue-700 bg-gray-200' : isActive && route.name !== 'home' ? 'no-underline text-blue-400 bg-gray-200' : ''">{{ route.name }}</a>
+                            v-bind:class="isExactActive ? 'no-underline text-blue-700 bg-white' : isActive && route.name !== 'home' ? 'no-underline text-blue-400 bg-gray-100' : ''">{{ route.name }}</a>
                     </router-link>
                 </li>
                 <li v-bind:key="'route-listing-' + index" v-if="routeListing.name === 'login'" class="absolute top-2 right-2">
-                    <t-dropdown text="Menu" v-if="isLoggedIn">
+                    <t-dropdown
+                        text="Menu"
+                        v-if="isLoggedIn"
+                        toggle-on-hover
+                        toggle-on-focus>
                         <div
                             slot="trigger"
                             slot-scope="{
@@ -68,7 +72,7 @@
                             @click="navigate"
                             :isActive="isActive"
                             :isExactActive="isExactActive"
-                            class="navbar-link"
+                            class="navbar-link--text"
                             v-bind:class="isExactActive ? 'no-underline text-blue-700 bg-gray-200' : isActive && route.name !== 'home' ? 'no-underline text-blue-400 bg-gray-200' : 'hover:bg-gray-200 text-blue-400 bg-gray-50'">{{ route.name }}</a>
                     </router-link>
                 </li>

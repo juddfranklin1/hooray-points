@@ -8,7 +8,7 @@ I am creating a points system for helping me and my family get and stay motivate
 
 ## background
 
-Staying motivated is a non-trivial task. I have 2 kids. They don't want to do anything that isn't thrilling. They don't want to eat anything that isn't sugary or salty. As a human, I am at the mercy of these desires. Life is full of seemingly arbitrary complexities that interfere with cause and effect. 30 years ago, a "personal shopper" was a role afforded only to the wealthiest and most elite people. Now, in the age of COVID-19 and Instacart, the personal shopper is an essential worker. Last year, my kids could go to school and learn from a teacher in a classroom the way they always had. Now, my kids "raise their hands" via zoom, and have to mute themselves, and have to navigate to breakout rooms. In short, contemporary life is a giant cascade of choices and acts that complicate everyday actions that we took for granted even 12 months ago. How do we keep ourselves goal-oriented in this hyper-intellectualized world?
+Staying motivated is a non-trivial task. I have 2 kids. They don't want to do anything that isn't thrilling. They don't want to eat anything that isn't sugary or salty. As a human, I too am at the mercy of these desires. Life is full of seemingly arbitrary complexities that interfere with cause and effect. 30 years ago, a "personal shopper" was a role afforded only to the wealthiest and most elite people. Now, in the age of COVID-19 and Instacart, the personal shopper is an essential worker. Last year, my kids could go to school and learn from a teacher in a classroom the way they always had. Now, my kids "raise their hands" via zoom, and have to mute themselves, and have to navigate to breakout rooms. In short, contemporary life is a giant cascade of choices and acts that complicate everyday actions that we took for granted even 12 months ago. How do we keep ourselves goal-oriented in this hyper-intellectualized world?
 
 Let's all say it together: Hooray!
 
@@ -46,11 +46,9 @@ If you want to install it yourself, you can go ahead and run the good old Larave
 - Relational Db server (I use PostgreSQL locally)
 
 Steps:
-1. clone
-In a terminal window run
-2. `composer install`
-3. `npm install` (or `yarn install`)
-Then
+1. clone this repo
+2. In a terminal window run `composer install`
+3. Run `yarn install` (or `npm install`)
 4. create local database
 5. create an `.env` file and update it with your desired db credentials
 Back in a terminal, run
@@ -58,6 +56,8 @@ Back in a terminal, run
 
 ### To Run Locally
 `yarn watch` or `npm run watch` to spin up Laravel Mix and tinker with the app locally 
+
+In a separate repo
 `yarn storybook` or `npm run storybook` to run storybookjs and see the stories for the app (currently just using the Tooltip component as an example)
 
 ### To Do:

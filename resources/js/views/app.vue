@@ -55,6 +55,9 @@ export default {
     text-decoration: none;
 }
 .navbar-link {
-    @apply capitalize font-bold p-3 hover:bg-gray-200 text-blue-400 bg-gray-50;
+    @apply capitalize font-bold px-3 py-2 border border-blue-600;
+    &--text {
+        @apply text-blue-600 underline hover:no-underline bg-transparent;
+    }
 }
 </style>

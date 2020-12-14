@@ -1,10 +1,13 @@
 <template>
   <div class="px-4 py-4 flex flex-col">
-    <h1 class="primary-headline">{{ user && currentUser && user.user.id === currentUser.id ?
+    <Heading :level="1" class-list="heading--primary">
+        {{ user && currentUser && user.user.id === currentUser.id ?
             "My Profile" :
             currentUser ?
                 currentUser.name + ' Overview' :
-                '' }}</h1>
+                '' }}
+    </Heading>
+
     <div class="flex lg:flex-row flex-col flex-wrap">
         <div v-if="loading" class="w-full font-extrabold text-blue-600 loading">
         Loading...
@@ -105,12 +108,13 @@
 </template>
 <script>
 
-import { mapState } from 'vuex';
-import store from '../../store/';
-import UserListItem from './UserListItem.vue';
-import UserAddActionForm from './UserAddActionForm.vue';
-import UserAddRewardForm from './UserAddRewardForm.vue';
-import Axios from 'axios';
+import { mapState } from 'vuex'
+import store from '../../store/'
+import Heading from '../components/Heading'
+import UserListItem from './UserListItem'
+import UserAddActionForm from './UserAddActionForm'
+import UserAddRewardForm from './UserAddRewardForm'
+import Axios from 'axios'
 
 export default {
     data () {
@@ -174,6 +178,7 @@ export default {
         UserListItem,
         UserAddActionForm,
         UserAddRewardForm,
+        Heading,
     }
 };
 </script>

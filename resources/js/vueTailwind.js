@@ -146,8 +146,9 @@ export default {
     TInput: {
         classes: 'bg-white focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full leading-normal',
         variants: {
-          error: 'text-red-600 bg-red-100 focus:outline-none focus:shadow-outline border border-red-300 py-2 px-4 block w-full leading-normal placeholder-red-300',
-          success: 'text-green-600 bg-green-100 focus:outline-none focus:shadow-outline border border-green-300 py-2 px-4 block w-full leading-normal placeholder-green-300',
+          normal: 'text-black-600 focus:outline-none focus:shadow-outline border border-gray-300 py-2 px-4 block w-full leading-normal placeholder-gray-300',
+          error: 'text-red-600 focus:outline-none focus:shadow-outline border border-red-300 py-2 px-4 block w-full leading-normal placeholder-red-300',
+          success: 'text-green-600 focus:outline-none focus:shadow-outline border border-green-300 py-2 px-4 block w-full leading-normal placeholder-green-300',
         }
     },
     /**
@@ -162,6 +163,32 @@ export default {
           success: 'text-green-600 bg-green-100 focus:outline-none focus:shadow-outline border border-green-300 py-2 px-4 block w-full leading-normal placeholder-green-300',
         }
     },
+    TInputGroup: {
+        fixedClasses: {
+          wrapper: 'mb-4',
+          label: 'block uppercase tracking-wide text-xs font-bold mb-1',
+          body: '',
+          feedback: 'text-sm',
+          description: 'text-sm'
+        },
+        classes: {
+          wrapper: '',
+          label: '',
+          body: '',
+          feedback: 'text-gray-500',
+          description: 'text-gray-500'
+        },
+        variants: {
+          danger: {
+            label: 'text-red-500',
+            feedback: 'text-red-500'
+          },
+          success: {
+            label: 'text-green-500',
+            feedback: 'text-green-500'
+          }
+        }
+      },
     /**
      * Select Input Component
      * Used In:

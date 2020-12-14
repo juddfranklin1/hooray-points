@@ -22,7 +22,8 @@ export default {
   Default.args = {
     tooltipEntry: {
       backgroundColor: 'gray',
-      label: 'A label'
+      label: 'A label',
+      textColor: 'white',
     },
   };
 
@@ -30,7 +31,8 @@ export default {
   ActionScore.args = {
       tooltipEntry: {
           backgroundColor: 'green',
-          label: 'A label'
+          label: 'A label',
+          textColor: 'gray-900',
       }
   }
 
@@ -38,7 +40,8 @@ export default {
   ActionPenalty.args = {
       tooltipEntry: {
           backgroundColor: 'red',
-          label: 'A label'
+          label: 'A label',
+          textColor: 'white',
       }
   }
 
@@ -46,7 +49,8 @@ export default {
   Reward.args = {
       tooltipEntry: {
           backgroundColor: 'gold',
-          label: 'A label'
+          label: 'A label',
+          textColor: 'gray-900',
       }
   }
 
@@ -54,6 +58,7 @@ export default {
   Goal.args = {
       tooltipEntry: {
           backgroundColor: 'blue',
-          label: 'A label'
+          label: 'A label',
+          textColor: 'white',
       }
   }

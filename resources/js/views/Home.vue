@@ -1,14 +1,16 @@
 
 <template>
     <div class="my-4 py-3 relative flex flex-col">
-        <h1 class="primary-headline">Welcome to Hooray!</h1>
-        <h2 class="my-4 text-xl">This is the place to keep track of what you've done and what you get for it.</h2>
+        <Heading :level="1" class-list="heading--primary">Welcome to Hooray!</Heading>
+        <Heading :level="2" class-list="heading--primary">This is the place to keep track of what you've done and what you get for it.</Heading>
+
         <t-table
             :headers="[
                 'Name',
                 'Email',
                 'Penalties Total',
                 'Scores Total',
+                'Rewards Cost Total',
                 'Point Total',
                 ''
             ]"
@@ -33,18 +35,22 @@
                     <td :class="props.tdClass" class="text-green-600 font-bold">
                         {{ props.row.scores_total }}
                     </td>
+                    <td :class="props.tdClass" class="text-green-600 font-bold">
+                        {{ props.row.rewards_cost_total }}
+                    </td>
                     <td :class="props.tdClass" class="text-gold-600 font-bold">
                         {{ props.row.point_total }}
                     </td>
                     <td :class="props.tdClass">
                         <t-button variant="secondary" class="trigger-button" @click="alert('functionality not implemented yet');" type="button">Edit</t-button>
-                        <t-button variant="secondary" class="trigger-button" @click="alert('functionality not implemented yet');" type="button">See on Calendar</t-button>
+                        <t-button variant="secondary" class="trigger-button" @click="filterEventsByUserId(props.row.id)" type="button">See on Calendar</t-button>
                     </td>
                 </tr>
             </template>
         </t-table>
         <div class="my-4">
-            <FullCalendar :options="calendarOptions" />
+            <a href="#reset" @click="getEvents()">See All Events</a>
+            <FullCalendar ref="fullCalendar" :options="calendarOptions" />
             <div id="tooltip" class="tooltip__container">
                 <template v-if="tooltipVisible">
                     <Tooltip
@@ -63,6 +69,7 @@
 <script>
 import { mapState } from 'vuex';
 import store from '../store/';
+import Heading from './components/Heading';
 import Tooltip from './components/Tooltip';
 import FullCalendar, { formatDate } from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -73,13 +80,13 @@ export default {
     computed: {
         ...mapState({
             users: state => state.user.users.map((user) => {
-                console.log(user);
                 return {
                     id: user.id,
                     name: user.name,
                     email: user.email,
                     point_total: user.point_total,
                     penalties_total: user.penalties_total,
+                    rewards_cost_total: user.rewards_cost_total,
                     scores_total: user.scores_total,
                 }
 
@@ -92,59 +99,28 @@ export default {
     },
     components: {
         FullCalendar,
-        Tooltip
+        Tooltip,
+        Heading
     },
     data() {
-        const userActs = this.$store.state.userAction.userActions.map(userAct => {
-            const timeWord = userAct.multiplier === 1 ? 'time' : 'times';
-            return {
-                title: userAct.user.name + ' did ' + userAct.action.name + ' ' + userAct.multiplier + ' ' + timeWord + '.',
-                date: userAct.created_at,
-                color: userAct.action.value < 0 ? 'red' : 'green',
-                classNames: ['hooray-event', 'action'],
-                extendedProps: {
-                    eventType: userAct.action.value < 0 ? 'Penalty: ' + userAct.action.value : 'Score: ' + userAct.action.value
-                }
-            }
-        });
-        const userRewards = this.$store.state.userReward.userRewards.map(userRew => {
-            return {
-                title: userRew.user.name + ' claimed ' + userRew.multiplier + ' of ' + userRew.reward.title,
-                date: userRew.created_at,
-                color: 'gold',
-                classNames: ['hooray-event', 'reward'],
-                extendedProps: {
-                    eventType: 'Reward'
-                }
-            }
-        });
-        const userGoals = this.$store.state.userGoal.userGoals.map(userGl => {
-            return {
-                title: userGl.user.name + ' aims to achieve ' + userGl.goal.name,
-                date: userGl.created_at,
-                color: 'blue',
-                classNames: ['hooray-event', 'goal'],
-                extendedProps: {
-                    eventType: 'Goal'
-                }
-            }
-        });
         return {
             calendarOptions: {
                 eventMouseEnter: this.handleEventMouseEnter,
                 eventMouseLeave: this.handleEventMouseLeave,
                 plugins: [dayGridPlugin],
                 initialView: 'dayGridMonth',
-                events: [...userActs, ...userRewards, ...userGoals]
+                events: this.constructEvents(),
             },
             tooltipVisible: false,
             tooltipData: {
                 title:'',
                 text: '',
+                textColor: '',
                 label: '',
                 backgroundColor: 'gray'
             },
             activeEvent: {},
+            currentEvents: this.constructEvents()
         }
     },
     methods: {
@@ -164,14 +140,15 @@ export default {
             this.activeEvent = arg.event.toPlainObject();
             this.tooltipData.text = this.activeEvent.title;
             this.tooltipData.backgroundColor = this.activeEvent.backgroundColor;
+            this.tooltipData.textColor = this.activeEvent.extendedProps.textColor;
             const eventDate = formatDate(this.activeEvent.start, {
                 month: 'long',
                 year: 'numeric',
                 day: 'numeric',
             });
-            this.tooltipData.label = eventDate;
-            this.tooltipData.title = this.activeEvent.extendedProps.eventType;
-            const tooltip = document.querySelector('#tooltip');
+            this.tooltipData.label = eventDate
+            this.tooltipData.title = this.activeEvent.extendedProps.eventType
+            const tooltip = document.querySelector('#tooltip')
             createPopper(arg.el, tooltip, {
                 placement: "right",
                 modifiers: [
@@ -185,7 +162,66 @@ export default {
             });
         },
         'handleEventMouseLeave': function(arg) {
-            this.tooltipVisible = false;
+            this.tooltipVisible = false
+        },
+        'filterEventsByUserId': function(ids) {
+            let events = this.constructEvents().filter(ev => {
+                if(Array.isArray(ids)) {
+                    return ids.includes(ev.extendedProps.userId)
+                } else {
+                    return ids === ev.extendedProps.userId
+                }
+            });
+            this.calendarOptions.events = events
+        },
+        'resetEvents': function() {
+            this.getEvents()
+        },
+        'getEvents': function(events) {
+            this.currentEvents = this.calendarOptions.events = events ?? this.constructEvents()
+        },
+        'constructEvents': function() {
+            const userActEvents = this.$store.state.userAction.userActions.map(userAct => {
+                const timeWord = userAct.multiplier === 1 ? 'time' : 'times';
+                return {
+                    title: userAct.user.name + ' did ' + userAct.action.name + ' ' + userAct.multiplier + ' ' + timeWord + '.',
+                    date: userAct.created_at,
+                    color: userAct.action.value < 0 ? 'red' : 'green',
+                    classNames: ['hooray-event', 'action'],
+                    extendedProps: {
+                        eventType: userAct.action.value < 0 ? 'Penalty: ' + userAct.action.value : 'Score: ' + userAct.action.value,
+                        textColor: userAct.action.value < 0 ? 'white' : 'gray-900',
+                        userId: userAct.user.id
+                    }
+                }
+            });
+            const userRewardEvents = this.$store.state.userReward.userRewards.map(userRew => {
+                return {
+                    title: userRew.user.name + ' claimed ' + userRew.multiplier + ' of ' + userRew.reward.title,
+                    date: userRew.created_at,
+                    color: 'gold',
+                    classNames: ['hooray-event', 'reward'],
+                    extendedProps: {
+                        eventType: 'Reward',
+                        textColor: 'gray-900',
+                        userId: userRew.user.id
+                    }
+                }
+            });
+            const userGoalEvents = this.$store.state.userGoal.userGoals.map(userGl => {
+                return {
+                    title: userGl.user.name + ' aims to achieve ' + userGl.goal.name,
+                    date: userGl.created_at,
+                    color: 'blue',
+                    classNames: ['hooray-event', 'goal'],
+                    extendedProps: {
+                        eventType: 'Goal',
+                        textColor: 'white',
+                        userId: userGl.user.id
+                    }
+                }
+            })
+            return [...userActEvents, ...userRewardEvents, ...userGoalEvents]
         }
     }
 
@@ -195,8 +231,5 @@ export default {
     #tooltip {
         width: 200px;
         z-index: 1000;
-    }
-    .primary-headline {
-        @apply my-4 text-3xl;
     }
 </style>

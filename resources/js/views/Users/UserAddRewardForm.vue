@@ -56,6 +56,7 @@ export default {
                 .then(
                     response => {
                         this.currentUser = response.data;
+                        this.$store.commit('updateUser', this.currentUser);
                         this.$emit('update-user', this.currentUser);
                     },
                     error => console.log(error));

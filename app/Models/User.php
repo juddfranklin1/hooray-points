@@ -47,6 +47,7 @@ class User extends Authenticatable
         'point_total',
         'penalties_total',
         'scores_total',
+        'rewards_cost_total'
     ];
 
     /**
@@ -93,17 +94,22 @@ class User extends Authenticatable
         return $this->belongsToMany(Team::class);
     }
 
-    public function getPointTotalAttribute() {
-        $actionsTotal = 0;
+    public function getRewardsCostTotalAttribute() {
         $rewardsTotal = 0;
-        forEach($this->actions as $action) {
-            $actionsTotal += $action->value * $action->pivot->multiplier;
-        }
         forEach($this->rewards as $reward) {
             $rewardsTotal += $reward->cost * $reward->pivot->multiplier;
         }
-        return $actionsTotal - $rewardsTotal;
+        return $rewardsTotal;
     }
+
+    public function getPointTotalAttribute() {
+        $actionsTotal = 0;
+        forEach($this->actions as $action) {
+            $actionsTotal += $action->value * $action->pivot->multiplier;
+        }
+        return $actionsTotal - $this->getRewardsCostTotalAttribute();
+    }
+
 
     public function getPenaltiesTotalAttribute() {
         $penaltiesTotal = 0;
@@ -114,6 +120,7 @@ class User extends Authenticatable
         }
         return $penaltiesTotal;
     }
+
 
     public function getScoresTotalAttribute() {
         $scoresTotal = 0;

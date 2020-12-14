@@ -1,9 +1,12 @@
 import Home from '../views/Home.vue';
+import ActionIndex from '../views/Actions/ActionIndex.vue';
 import ActionList from '../views/Actions/ActionList.vue';
 import ActionForm from '../views/Actions/ActionForm.vue';
+import UserIndex from '../views/Users/UserIndex.vue';
 import UserList from '../views/Users/UserList.vue';
 import UserSingle from '../views/Users/UserSingle.vue';
 import ActionSingle from '../views/Actions/ActionSingle.vue';
+import RewardIndex from '../views/Rewards/RewardIndex.vue';
 import RewardList from '../views/Rewards/RewardList.vue';
 import RewardForm from '../views/Rewards/RewardForm.vue';
 import Login from '../views/Auth/Login.vue';
@@ -22,36 +25,20 @@ export default [
         // component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue') - for lazy loading
     },
     {
-        path: '/users',
-        name: 'users',
-        meta: {
-            auth: true
-        },
-        component: UserList,
-        props: true,
-        children: [
-        ]
-    },
-    {
-        path: '/user/:id',
-        name: 'user',
-        meta: {
-            auth: true
-        },
-        component: UserSingle,
-        props: true
-    },
-    {
         path: '/actions',
         name: 'actions',
         meta: {
             auth: true
         },
-        component: ActionList,
-        props: true,
+        component: ActionIndex,
         children: [
             {
-                path: '/action/:id',
+                path: '/',
+                name: 'actions',
+                component: ActionList
+            },
+            {
+                path: ':id',
                 name: 'action',
                 component: ActionSingle,
                 props: true
@@ -59,7 +46,10 @@ export default [
             {
                 path: 'new',
                 name: 'new-action',
-                component: ActionForm,
+                components: {
+                    default: ActionList,
+                    modal: ActionForm,
+                },
                 props: true
             },
             {
@@ -76,13 +66,22 @@ export default [
         meta: {
             auth: true
         },
-        component: RewardList,
+        component: RewardIndex,
         props: true,
         children: [
             {
+                path: '/',
+                name: 'rewards',
+                component: RewardList,
+                props: true
+            },
+            {
                 path: 'new',
                 name: 'new-reward',
-                component: RewardForm,
+                components: {
+                    default: RewardList,
+                    modal: RewardForm,
+                },
                 props: true
             },
             {
@@ -92,6 +91,35 @@ export default [
                 props: true
             },
 
+        ]
+    },
+    {
+        path: '/users',
+        name: 'users',
+        meta: {
+            auth: true
+        },
+        component: UserIndex,
+        children: [
+            {
+                path: '',
+                name: 'default',
+                component: UserList
+            },
+            {
+                path: '/',
+                name: 'users',
+                component: UserList
+            },
+            {
+                path: ':id',
+                name: 'user',
+                meta: {
+                    auth: true
+                },
+                component: UserSingle,
+                props: true
+            },
         ]
     },
 ];
