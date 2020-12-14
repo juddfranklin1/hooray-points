@@ -25,16 +25,16 @@ With Hooray, you can:
 ## details
 
 * Laravel 8
-* VueJS 2
-* Vuex 3
-* Vue Router
+* [Vue 2](https://vuejs.org/)
+* [Vuex 3](https://vuex.vuejs.org/)
+* [Vue Router](https://router.vuejs.org/)
 * [TailwindCSS](https://github.com/tailwindlabs/tailwindcss)
 * [VueTailwind](https://github.com/alfonsobries/vue-tailwind) (component library)
 * [FullCalendar.io](https://github.com/fullcalendar/fullcalendar-vue) (Calendar vue component)
 * [Storybook.js](https://storybook.js.org/docs/vue/get-started/introduction) (component Styleguide Builder)
 * [laravel-dompdf package](https://github.com/barryvdh/laravel-dompdf)
 
-This is currently a small-scale Laravel project, but it is growing more sophisticated with each commit. The Models are currently only Users, Actions (good or bad things a person can do), Goals, and Rewards (things a person can get for their points), with Pivot Models to give some rich relationships between Users and Actions and Rewards.
+This is currently a small-scale Laravel project, but it is growing more sophisticated with each commit. The Models are currently only Users, Actions (good or bad things a person can do), Goals, and Rewards (things a person can get for their points), with Pivot Models to give some rich relationships between Users, Actions, and Rewards.
 
 ### requirements:
 If you want to install it yourself, you can go ahead and run the good old Laravel setup process:
@@ -57,18 +57,20 @@ Back in a terminal, run
 ### To Run Locally
 `yarn watch` or `npm run watch` to spin up Laravel Mix and tinker with the app locally 
 
-In a separate repo
+In a separate terminal
 `yarn storybook` or `npm run storybook` to run storybookjs and see the stories for the app (currently just using the Tooltip component as an example)
 
 ### To Do:
 - Create bigger component library and leverage storybookjs more fully.
-- Set up goals
+    - Leverage Atomic Design architecture
+    - Replace 3rd party components with my own
+- Implement more thorough Goals logic
     - Progress-based (saving up points)
     - Reward-based (Trigger a reward based upon point total achieved)
     - Time-based (See if a point total can be reached by a given date)
-- "Plans" model - complex collections of actions with a cumulative point value
+- Implement "Plans" model - complex collections of actions with a cumulative point value
     - View for tracking progress towards completion of plans.
-- "Teams" model - Ability to be part of a group of users with inter-related roles
+- Implement "Teams" model - Ability to be part of a group of users with inter-related roles
 - Improve Factories and Seeders to enable more realistic starter data
 - Improve UX
     - At the moment, it is too plain; needs to be more fun
@@ -82,6 +84,7 @@ In a separate repo
 - Improved history logging - Flesh out the calendar display of actions taken, rewards redeemed, and goals set in time
 - Make this a phone-ready SPA so that I can keep track of and update point totals from anywhere
 - Implement Unit and Feature testing
+- System upgrades - Vue 3, Vuex 4
 
 ### Credits
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
