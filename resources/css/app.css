@@ -1,18 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100;400;600;700;900&display=swap');
 
-@tailwind base;
+@import "tailwindcss/base";
 
-@tailwind components;
+@import "tailwindcss/components";
 
-@tailwind utilities;
-
+@import "tailwindcss/utilities";
 
 @layer base {
     body {
         font-family: 'Heebo', sans-serif;
     }
 }
-
 
 @layer components {
     .heading--standard {
