@@ -45,27 +45,3 @@ export default {
     }
 }
 </script>
-
-<style>
-    .heading--standard {
-        @apply font-bold;
-    }
-    .heading--one {
-        @apply heading--standard my-4 text-3xl;
-    }
-    .heading--two {
-        @apply heading--standard my-3 text-2xl;
-    }
-    .heading--three {
-        @apply heading--standard my-2 text-xl;
-    }
-    .heading--four {
-        @apply heading--standard text-lg;
-    }
-    .heading--five {
-        @apply heading--standard text-base;
-    }
-    .heading--six {
-        @apply heading--standard text-sm;
-    }
-</style>

@@ -37,11 +37,11 @@ Heading4.args = {
 }
 
 export const Heading5 = Template.bind({})
-Heading4.args = {
+Heading5.args = {
     level: 5,
 }
 
 export const Heading6 = Template.bind({})
-Heading4.args = {
+Heading6.args = {
     level: 6,
 }
