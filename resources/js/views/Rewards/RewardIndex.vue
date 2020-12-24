@@ -35,6 +35,6 @@ export default {
 
 <style>
 .trigger-button {
-    @apply py-2 px-4 border-2 border-gray-400 text-blue-400 hover:text-blue-700 hover:border-gray-700;
+    @apply p-3 text-blue-400 hover:text-blue-700 hover:border-gray-700;
 }
 </style>

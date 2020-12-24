@@ -30,20 +30,42 @@
                         <a :href="`mailto: ${props.row.email}`">{{ props.row.email }}</a>
                     </td>
                     <td :class="props.tdClass" class="text-red-600 font-bold">
-                        {{ props.row.penalties_total }}
+                        <div class="flex justify-center align-items-center">
+                            {{ props.row.penalties_total }}
+                        </div>
                     </td>
                     <td :class="props.tdClass" class="text-green-600 font-bold">
-                        {{ props.row.scores_total }}
+                        <div class="flex justify-center align-items-center">
+                            {{ props.row.scores_total }}
+                        </div>
                     </td>
                     <td :class="props.tdClass" class="text-green-600 font-bold">
-                        {{ props.row.rewards_cost_total }}
+                        <div class="flex justify-center align-items-center">
+                            {{ props.row.rewards_cost_total }}
+                        </div>
                     </td>
                     <td :class="props.tdClass" class="text-gold-600 font-bold">
-                        {{ props.row.point_total }}
+                        <div class="flex justify-center align-items-center">
+                            {{ props.row.point_total }}
+                        </div>
                     </td>
-                    <td :class="props.tdClass">
-                        <t-button variant="secondary" class="trigger-button" @click="alert('functionality not implemented yet');" type="button">Edit</t-button>
-                        <t-button variant="secondary" class="trigger-button" @click="filterEventsByUserId(props.row.id)" type="button">See on Calendar</t-button>
+                    <td :class="props.tdClass + ' flex justify-end align-items-center'">
+                        <t-button
+                            variant="secondary"
+                            v-if="isLoggedIn && $store.state.auth.user.user.id === props.row.id"
+                            class="trigger-button"
+                            @click="alert('functionality not implemented yet');"
+                            type="button">
+                            <IconEdit width="18" height="18" />
+                        </t-button>
+                        <t-button
+                            variant="secondary"
+                            class="trigger-button"
+                            @click="filterEventsByUserId(props.row.id)"
+                            type="button"
+                            aria-label="See on Calendar">
+                            <IconCalendar width="18" height="18" />
+                        </t-button>
                     </td>
                 </tr>
             </template>
@@ -67,10 +89,12 @@
     </div>
 </template>
 <script>
-import { mapState } from 'vuex';
 import store from '../store/';
+import { mapState, mapGetters } from 'vuex';
 import Heading from './components/Heading';
 import Tooltip from './components/Tooltip';
+import IconCalendar from './components/icons/Calendar';
+import IconEdit from './components/icons/Edit';
 import FullCalendar, { formatDate } from '@fullcalendar/vue';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { createPopper } from '@popperjs/core';// Popperjs v2
@@ -96,11 +120,16 @@ export default {
             userActions: state => state.userAction.userActions,
             userRewards: state => state.userReward.userRewards,
         }),
+        ...mapGetters([
+            'isLoggedIn'
+        ])
     },
     components: {
         FullCalendar,
         Tooltip,
-        Heading
+        Heading,
+        IconCalendar,
+        IconEdit,
     },
     data() {
         return {
