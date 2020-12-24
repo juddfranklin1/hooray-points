@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-USE App\Models\Permission;
+use App\Models\{ Permission, Role };
 use Illuminate\Database\Seeder;
 
 class PermissionSeeder extends Seeder
@@ -15,22 +15,35 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         $canCreateActions = new Permission([
-            'name' => 'can create actions',
+            'name'          => 'action_create',
+            'description'   => 'can create actions',
         ]);
         $canCreateRewards = new Permission([
-            'name' => 'can create rewards',
+            'name'          => 'reward_create',
+            'description'   => 'can create rewards',
         ]);
         $canAssignActions = new Permission([
-            'name' => 'can assign actions',
+            'name'          => 'action_assign',
+            'description'   => 'can assign actions',
         ]);
         $canAssignRewards = new Permission([
-            'name' => 'can assign rewards',
+            'name'          => 'reward_assign',
+            'description'   => 'can assign rewards',
+        ]);
+        $canViewRewards = new Permission([
+            'name'          => 'reward_view',
+            'description'   => 'can view rewards',
         ]);
 
         $canCreateActions->save();
         $canAssignActions->save();
         $canCreateRewards->save();
         $canAssignRewards->save();
+        $canViewRewards->save();
 
+        $coach = Role::where('name', 'coach')->first();
+        $coach->permissions()->sync([$canCreateActions->id, $canAssignActions->id, $canCreateRewards->id, $canAssignRewards->id]);
+        $player = Role::where('name', 'player')->first();
+        $player->permissions()->sync([$canViewRewards->id]);
     }
 }

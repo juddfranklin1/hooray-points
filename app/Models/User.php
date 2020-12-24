@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\{ Action, ActionUser, GoalUser, RewardUser, Team };
+use App\Models\{ Action, ActionUser, GoalUser, RewardUser, Role, Team };
 
 class User extends Authenticatable
 {
@@ -78,6 +78,14 @@ class User extends Authenticatable
             ->using(RewardUser::class)
             ->withPivot('created_at', 'multiplier', 'id')
             ->orderBy('reward_user.created_at');
+    }
+
+
+    /**
+     * Roles applied to this user
+     */
+    public function roles() {
+        return $this->belongsToMany(Role::class, 'role_user');
     }
 
     /**
