@@ -19,7 +19,7 @@
                             :isActive="isActive"
                             :isExactActive="isExactActive"
                             class="navbar-link"
-                            v-bind:class="isExactActive ? 'no-underline text-blue-700 bg-white' : isActive && route.name !== 'home' ? 'no-underline text-blue-400 bg-gray-100' : ''">{{ route.name }}</a>
+                            v-bind:class="isExactActive ? 'no-underline text-blue-700 border-blue-700' : isActive && route.name !== 'home' ? 'no-underline text-blue-400 bg-gray-100' : ''">{{ route.name }}</a>
                     </router-link>
                 </li>
                 <li v-bind:key="'route-listing-' + index" v-if="routeListing.name === 'login'" class="absolute top-2 right-2">

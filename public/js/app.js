@@ -18832,7 +18832,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".router-link-active {\n  font-weight: bold;\n  text-decoration: none;\n}\n.navbar-link {\n  --tw-border-opacity: 1;\n  border-color: rgba(37, 99, 235, var(--tw-border-opacity));\n  border-width: 1px;\n  font-weight: 700;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  text-transform: capitalize;\n}\n.navbar-link--text {\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: rgba(37, 99, 235, var(--tw-text-opacity));\n  text-decoration: underline;\n}\n.navbar-link--text:hover {\n  text-decoration: none;\n}", ""]);
+exports.push([module.i, ".router-link-active {\n  font-weight: bold;\n  text-decoration: none;\n}\n.navbar-link {\n  --tw-border-opacity: 1;\n  border-color: rgba(219, 234, 254, var(--tw-border-opacity));\n}\n.navbar-link:hover {\n  --tw-border-opacity: 1;\n  border-color: rgba(37, 99, 235, var(--tw-border-opacity));\n}\n.navbar-link {\n  border-bottom-width: 2px;\n  font-weight: 700;\n  padding-top: 0.5rem;\n  padding-bottom: 0.5rem;\n  padding-left: 0.75rem;\n  padding-right: 0.75rem;\n  text-transform: capitalize;\n}\n.navbar-link--text {\n  background-color: transparent;\n  --tw-text-opacity: 1;\n  color: rgba(37, 99, 235, var(--tw-text-opacity));\n  text-decoration: underline;\n}\n.navbar-link--text:hover {\n  text-decoration: none;\n}", ""]);
 
 // exports
 
@@ -40376,7 +40376,7 @@ var render = function() {
                                   {
                                     staticClass: "navbar-link",
                                     class: isExactActive
-                                      ? "no-underline text-blue-700 bg-white"
+                                      ? "no-underline text-blue-700 border-blue-700"
                                       : isActive && route.name !== "home"
                                       ? "no-underline text-blue-400 bg-gray-100"
                                       : "",
