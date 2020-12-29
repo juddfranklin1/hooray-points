@@ -1,50 +1,77 @@
 <template>
-    <t-modal
-        ref="modal"
+    <v-dialog
+        v-model="modal"
         @closed="onClose"
-        @update-user="$refs.modal.hide()"
+        @update-user="modal = false"
     >
-        {{ action }}
-        <template v-slot:header>
-            <h2 class="text-xl">{{ currentAction ? currentAction.name : 'New Action' }}</h2>
+        <template v-slot:activator="{ on, attrs }">
+            <v-btn
+            color="primary"
+            dark
+            v-bind="attrs"
+            v-on="on"
+            >
+            New Action
+            </v-btn>
         </template>
-        <form action="new-action" class="my-4" @submit.prevent="onSubmit($event)" method="post">
-            <div class="flex flex-col">
-                <label class="text-lg pt-4" for="action_name">Name</label>
-                <t-input
-                    required
-                    :value="currentAction ? currentAction.name : ''"
-                    name="name" />
-                <label class="text-lg pt-4" for="action_description">Description</label>
-                <t-textarea
-                    name="description"
-                    :value="currentAction ? currentAction.description : ''"
-                    id="action_description" />
-                <label class="text-lg pt-4" for="action_value">Value</label>
-                <t-input
-                    required
-                    type="number"
-                    name="value"
-                    :value="currentAction ? currentAction.value : 1"
-                    id="action_value" />
-                <label class="text-lg pt-4" for="action_user">Assigned User (if any)</label>
-                <t-select
-                    name="assignee_id"
-                    :value="currentAction ? currentAction.assignee_id : null"
-                    :options="[
-                        {
-                            name: 'unassigned',
-                            id: null
-                        },
-                        ...users
-                    ]"
-                    value-attribute="id"
-                    text-attribute="name"
-                    id="action_user" />
-                <button class="border-2 border-gray-200 py-2 px-4 my-4" type="submit">{{ currentAction ? 'Update' : 'Create' }}</button>
-            </div>
-        </form>
-    </t-modal>
+        <v-card>
+            <v-card-title>
+                {{ $route.name === 'edit-action' ? 'Edit Action' : 'New Action' }}
+            </v-card-title>
+            <v-card-text>
+                <v-container>
+                    <v-row>
+                        <form action="new-action" class="my-4" @submit.prevent="onSubmit($event)" method="post">
+                            <div class="flex flex-col">
+                                <label class="text-lg pt-4" for="action_name">Name</label>
+                                <v-text-field
+                                    outlined
+                                    required
+                                    :value="currentAction ? currentAction.name : ''"
+                                    name="name" />
+                                <label class="text-lg pt-4" for="action_description">Description</label>
+                                <v-textarea
+                                    outlined
+                                    name="description"
+                                    :value="currentAction ? currentAction.description : ''"
+                                    id="action_description" />
+                                <label class="text-lg pt-4" for="action_value">Value</label>
+                                <v-text-field
+                                    outlined
+                                    required
+                                    type="number"
+                                    name="value"
+                                    :value="currentAction ? currentAction.value : 1"
+                                    id="action_value" />
+                                <label class="text-lg pt-4" for="action_user">Assigned User (if any)</label>
+                                <v-select
+                                    outlined
+                                    name="assignee_id"
+                                    :value="currentAction ? currentAction.assignee_id : null"
+                                    :items="[
+                                        {
+                                            text: 'unassigned',
+                                            value: ''
+                                        },
+                                        ...users
+                                    ]"
+                                    value-attribute="id"
+                                    text-attribute="name"
+                                    id="action_user" />
+                                <v-btn
+                                    color="primary"
+                                    dark
+                                    class="border-2 border-gray-200 py-2 px-4 my-4"
+                                    type="submit">
+                                    {{ currentAction ? 'Update' : 'Create' }}
+                                </v-btn>
+                            </div>
+                        </form>
+                    </v-row>
+                </v-container>
+            </v-card-text>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script>
@@ -61,12 +88,22 @@ export default {
     ],
     computed: {
         ...mapState({
-            users: state => state.user.users,
+            users: state => {
+                return state.user.users.map(user => {
+                    return {
+                        text: user.name,
+                        value: user.id
+                    }
+                })
+            },
             actions: state => state.action.actions,
         })
     },
     mounted(){
-        this.$refs.modal.show();
+        console.log(this.$route);
+        if(this.$route.name == 'new-action' | this.$route.name === 'edit-action'){
+            this.modal = true
+        }
     },
     methods: {
         onSubmit: function($e) {
@@ -81,14 +118,14 @@ export default {
                         this.$store.commit('addAction', result.data);
                         $e.target.reset();
                         this.$emit('action-submit');
-                        this.$refs.modal.hide();
+                        this.modal = false;
                     }, error => console.log(error));
             } else {
                 Axios.post('/api/actions/' + this.currentAction.id, data)
                     .then(response => {
                         this.$store.commit('updateAction', response.data);
                         this.$emit('action-submit');
-                        this.$refs.modal.hide();
+                        this.modal = false;
                     }, error => console.log(error));
             }
         },
@@ -105,7 +142,8 @@ export default {
     },
     data() {
         return {
-            currentAction: this.getAction()
+            currentAction: this.getAction(),
+            modal: false
         }
     }
 };

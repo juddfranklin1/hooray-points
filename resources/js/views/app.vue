@@ -1,10 +1,12 @@
 <template>
-    <div class="w-full relative">
-        <Navbar></Navbar>
-        <main class="mx-auto px-4 xl:px-0 max-w-6xl">
-            <router-view></router-view>
-        </main>
-    </div>
+    <v-app>
+        <div class="w-full relative">
+            <Navbar></Navbar>
+            <main class="mx-auto px-4 xl:px-0 max-w-6xl">
+                <router-view></router-view>
+            </main>
+        </div>
+    </v-app>
 </template>
 <script>
 const default_layout = "default";

@@ -64,6 +64,8 @@ In a separate terminal
 - Create bigger component library and leverage storybookjs more fully.
     - Leverage Atomic Design architecture
     - Replace 3rd party components with my own
+    - Refactor components in codebase to have coupled styling that is imported into the core tailwind
+        - Implement Postcss-easy-import?
 - Implement more thorough Goals logic
     - Progress-based (saving up points)
     - Reward-based (Trigger a reward based upon point total achieved)

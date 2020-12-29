@@ -1,50 +1,71 @@
 <template>
-    <t-modal
-        ref="modal"
+    <v-dialog
+        v-model="modal"
         @closed="onClose"
-        @update-user="$refs.modal.hide()"
-    >
-        <template v-slot:header>
-            <h2 class="text-xl">{{ currentReward ? 'Edit ' + currentReward.title : 'New Reward' }}</h2>
+        @update-user="modal = false"
+        >
+        <template v-slot:activator="{ on, attrs }">
+            <v-btn
+                color="primary"
+                dark
+                v-bind="attrs"
+                v-on="on"
+            >
+            New Reward
+            </v-btn>
         </template>
-        <form reward="new-reward" class="my-4" @submit.prevent="onSubmit($event)" method="post">
-            <div class="flex flex-col">
-                <label class="text-lg pt-4" for="reward_title">Title</label>
-                <t-input
-                    required
-                    :value="currentReward ? currentReward.title : ''"
-                    name="title" />
-                <label class="text-lg pt-4" for="reward_description">Description</label>
-                <t-textarea
-                    name="description"
-                    :value="currentReward ? currentReward.description : ''"
-                    id="reward_description" />
-                <label class="text-lg pt-4" for="reward_value">cost</label>
-                <t-input
-                    required
-                    type="number"
-                    name="cost"
-                    :value="currentReward ? currentReward.cost : 1"
-                    id="reward_cost" />
-                <label class="text-lg pt-4" for="reward_user">Assigned User (if any)</label>
-                <t-select
-                    name="assignee_id"
-                    :value="currentReward ? currentReward.assignee_id : null"
-                    :options="[
-                        {
-                            name: 'unassigned',
-                            id: null
-                        },
-                        ...users
-                    ]"
+        <v-card>
+            <v-card-title>
+                <h2 class="text-xl">{{ currentReward ? 'Edit ' + currentReward.title : 'New Reward' }}</h2>
+            </v-card-title>
+            <v-card-text>
+                <v-container>
+                    <v-row>
+                        <form reward="new-reward" class="my-4" @submit.prevent="onSubmit($event)" method="post">
+                            <div class="flex flex-col">
+                                <label class="text-lg pt-4" for="reward_title">Title</label>
+                                <v-text-field
+                                    outlined
+                                    required
+                                    :value="currentReward ? currentReward.title : ''"
+                                    name="title" />
+                                <label class="text-lg pt-4" for="reward_description">Description</label>
+                                <v-textarea
+                                    outlined
+                                    name="description"
+                                    :value="currentReward ? currentReward.description : ''"
+                                    id="reward_description" />
+                                <label class="text-lg pt-4" for="reward_value">cost</label>
+                                <v-text-field
+                                    outlined
+                                    required
+                                    type="number"
+                                    name="cost"
+                                    :value="currentReward ? currentReward.cost : 1"
+                                    id="reward_cost" />
+                                <label class="text-lg pt-4" for="reward_user">Assigned User (if any)</label>
+                                <v-select
+                                    name="assignee_id"
+                                    :value="currentReward ? currentReward.assignee_id : null"
+                                    :options="[
+                                        {
+                                            name: 'unassigned',
+                                            id: null
+                                        },
+                                        ...users
+                                    ]"
 
-                    value-attribute="id"
-                    text-attribute="name"
-                    id="reward_user" />
-                <button class="border-2 border-gray-200 py-2 px-4 my-4" type="submit">{{ currentReward ? 'Update' : 'Create' }}</button>
-            </div>
-        </form>
-    </t-modal>
+                                    value-attribute="id"
+                                    text-attribute="name"
+                                    id="reward_user" />
+                                <button class="border-2 border-gray-200 py-2 px-4 my-4" type="submit">{{ currentReward ? 'Update' : 'Create' }}</button>
+                            </div>
+                        </form>
+                    </v-row>
+                </v-container>
+            </v-card-text>
+        </v-card>
+    </v-dialog>
 </template>
 
 <script>
@@ -61,12 +82,16 @@ export default {
     ],
     computed: {
         ...mapState({
-            users: state => state.user.users,
+            users: state => {
+                return state.user.users.map(user => {
+                    return {
+                        text: user.name,
+                        value: user.id
+                    }
+                })
+            },
             rewards: state => state.reward.rewards,
         })
-    },
-    mounted(){
-        this.$refs.modal.show();
     },
     methods: {
         onSubmit: function($e) {
@@ -81,14 +106,14 @@ export default {
                         this.$store.commit('addReward', result.data);
                         $e.target.reset();
                         this.$emit('reward-submit');
-                        this.$refs.modal.hide();
+                        this.modal = false;
                     }, error => console.log(error));
             } else {
                 Axios.post('/api/rewards/' + this.currentReward.id, data)
                     .then(result => {
                         this.$store.commit('updateReward', result.data);
                         this.$emit('reward-submit');
-                        this.$refs.modal.hide();
+                        this.modal = false;
                     }, error => console.log(error));
             }
         },
@@ -105,6 +130,7 @@ export default {
     },
     data() {
         return {
+            modal: false,
             currentReward: this.getReward()
         }
     }

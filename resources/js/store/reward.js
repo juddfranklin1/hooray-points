@@ -16,11 +16,11 @@ export default {
             if (rewards) {
                 return commit('setRewards', rewards);
             }
-            return Axios.get('api/rewards')
+            return Axios.get('/api/rewards')
                 .then(response => commit('setRewards', response.data))
         },
         deleteReward({ commit }, { reward }) {
-            return Axios.delete('api/rewards/' + reward.id)
+            return Axios.delete('/api/rewards/' + reward.id)
                 .then(response => commit('deleteReward', response.data))
         }
     },

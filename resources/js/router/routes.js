@@ -35,13 +35,10 @@ export default [
             {
                 path: '/',
                 name: 'actions',
-                component: ActionList
-            },
-            {
-                path: ':id',
-                name: 'action',
-                component: ActionSingle,
-                props: true
+                components: {
+                    default: ActionList,
+                    modal: ActionForm,
+                },
             },
             {
                 path: 'new',
@@ -55,7 +52,19 @@ export default [
             {
                 path: ':id/edit',
                 name: 'edit-action',
-                component: ActionForm,
+                components: {
+                    default: ActionSingle,
+                    modal: ActionForm,
+                },
+                props: true
+            },
+            {
+                path: ':id',
+                name: 'action',
+                components: {
+                    default: ActionSingle,
+                    modal: ActionForm,
+                },
                 props: true
             },
         ]
@@ -72,7 +81,10 @@ export default [
             {
                 path: '/',
                 name: 'rewards',
-                component: RewardList,
+                components: {
+                    default: RewardList,
+                    modal: RewardForm,
+                },
                 props: true
             },
             {
@@ -87,7 +99,10 @@ export default [
             {
                 path: ':id/edit',
                 name: 'edit-reward',
-                component: RewardForm,
+                components: {
+                    default: RewardList,
+                    modal: RewardForm,
+                },
                 props: true
             },
 

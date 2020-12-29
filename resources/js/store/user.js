@@ -16,7 +16,7 @@ export default {
             if (users) {
                 return commit('setUsers', users);
             }
-            return Axios.get('api/users')
+            return Axios.get('/api/users')
                 .then(response => commit('setUsers', response.data))
         }
     },

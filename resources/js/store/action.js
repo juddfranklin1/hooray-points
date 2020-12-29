@@ -17,11 +17,11 @@ export default {
             if (actions) {
                 return commit('setActions', actions);
             }
-            return Axios.get('api/actions')
+            return Axios.get('/api/actions')
                 .then(response => commit('setActions', response.data))
         },
         deleteAction({ commit }, { action }) {
-            return Axios.delete('api/actions/' + action.id)
+            return Axios.delete('/api/actions/' + action.id)
                 .then(response => commit('deleteAction', response.data))
         }
     },

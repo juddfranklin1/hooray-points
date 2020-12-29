@@ -25,31 +25,39 @@
                 </li>
             </ul>
 
-            <t-button
-                @click="showActionForm=true"
-                classes="text-white bg-blue-600 hover:bg-blue-500 focus:border-blue-700 active:bg-blue-700 text-sm font-medium border border-transparent px-3 py-2 rounded-md"
+            <v-dialog
+                v-model="modal"
+                @closed="onClose"
+                @update-user="modal = false"
             >
-                {{ currentUser.name }} did something!
-            </t-button>
-            <t-modal
-                ref="modal"
-                v-model="showActionForm"
-                @update-user="$refs.modal.hide()"
-                >
-                <template v-slot:header>
-                    What did {{ currentUser.name }} Do?
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                    color="primary"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    >
+                    New Action
+                    </v-btn>
                 </template>
-                <UserAddActionForm @update-user="updateUser" :user="currentUser"></UserAddActionForm>
-            </t-modal>
+                <v-card>
+                    <v-card-title>
+                        New Action
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-row>
+                                <template v-slot:header>
+                                    What did {{ currentUser.name }} Do?
+                                </template>
+                                <UserAddActionForm @update-user="updateUser" :user="currentUser"></UserAddActionForm>
+                            </v-row>
+                        </v-container>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
         </div>
     </transition>
-    <div class="absolute top-2 right-2 flex align-middle">
-        <template v-if="isExpanded">Shrink</template>
-        <template v-else>Expand</template>
-        <t-toggle
-            v-model="isExpanded"
-        />
-    </div>
 </div>
 </template>
 <script>
@@ -67,8 +75,8 @@ export default {
     data() {
         return {
             currentUser: this.user,
-            expanded: false,
-            showActionForm: false
+            showActionForm: false,
+            modal: false
         }
     },
     computed: {

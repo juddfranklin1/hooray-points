@@ -1,33 +1,37 @@
 <template>
-    <form action="post" @submit.prevent="pickReward($event)" class="border-2 my-3 py-3 px-6 flex flex-col">
+    <form action="post" @submit.prevent="addRewardToUser($event)">
         <h3 class="text-2xl pb-4">Redeem a Reward</h3>
         <label for="pick_an_action" class="mt-3 text-lg">What reward does {{ currentUser.name }} choose?</label>
-        <select
+        <v-select
+            outlined
+            value-attribute="id"
+            text-attribute="name"
+            :items="[
+                {
+                    text: 'pick a reward',
+                    value: ''
+                },
+                ...rewards
+            ]"
             @change="chooseReward"
-            class="px-4 mb-2 py-2 border-2"
             name="pick_a_reward"
-            id="pick_a_reward">
-            <option value="" disabled selected>Select a reward</option>
-            <option
-                v-for="rewardOpt in rewards"
-                v-bind:key="'reward-option-' + rewardOpt.id"
-                :value="rewardOpt.id"
-                v-bind:disabled="user.point_total < rewardOpt.cost"
-            >
-                {{ rewardOpt.title }}: {{ rewardOpt.cost }}pts
-            </option>
-        </select>
+            id="pick_a_reward" />
+
         <template v-if="chosenReward">
             <label for="action_count" class="mt-3 text-lg">How many does {{ currentUser.name }} want?</label>
-            <input
-                class="mb-2 border-2 py-2 px-4"
+            <v-text-field
+                outlined
                 type="number"
                 name="multiplier"
                 id="reward_count"
                 min="1"
                 :max="maxRewardCount"
-                value="1">
-            <button class="trigger-button" type="submit">Add</button>
+                value="1" />
+            <v-btn
+                color="primary"
+                class="trigger-button"
+                type="submit"
+                >Add</v-btn>
         </template>
     </form>
 </template>
@@ -46,11 +50,10 @@ export default {
         'update-user'
     ],
     methods: {
-        pickReward($e) {
-            const rewardSelect = $e.target.querySelector('#pick_a_reward');
+        addRewardToUser($e) {
             const multiplier = $e.target.querySelector('#reward_count');
             const userId = this.currentUser.id;
-            Axios.put('/api/users/' + userId + '/attachReward/' + rewardSelect.value, {
+            Axios.put('/api/users/' + userId + '/attachReward/' + this.chosenReward, {
                 multiplier: multiplier.value
             })
                 .then(
@@ -62,8 +65,8 @@ export default {
                     error => console.log(error));
         },
         chooseReward($e) {
-            this.chosenReward = $e.target.value;
-            const reward = this.rewards.find(rew => rew.id == this.chosenReward);
+            this.chosenReward = $e;
+            const reward = this.rewards.find(rew => rew.value == this.chosenReward);
             this.maxRewardCount = this.currentUser.point_total / reward.cost;
         }
     },
@@ -71,7 +74,21 @@ export default {
         ...mapState({
             users: state => state.user.users,
             actions: state => state.action.actions,
-            rewards: state => state.reward.rewards,
+            rewards: function(state) {
+                const that = this;
+                return state.reward.rewards.map(reward => {
+                    const opt = {
+                        value: reward.id,
+                        text: reward.title + ': ' + reward.cost + ' pts',
+                        cost: reward.cost
+                    }
+
+                    if(that.currentUser.point_total < reward.cost) {
+                        opt.disabled=true
+                    }
+                    return opt;
+                })
+            }
         }),
     },
     data() {

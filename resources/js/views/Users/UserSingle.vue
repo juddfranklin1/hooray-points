@@ -48,12 +48,34 @@
         <div class="md:w-1/3 w-full px-4">
             <h3 class="text-xl pt-6 pb-4">Action History</h3>
             <div v-if="currentUser" class="content">
-                <t-button
-                    @click="showActionForm=true"
-                    classes="trigger-button"
-                >
-                    {{ user && user.user.id === currentUser.id ? 'I' : currentUser.name }} did something!
-                </t-button>
+                <v-dialog
+                    v-model="actionModal"
+                    @update-user="actionModal = false"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            color="primary"
+                            dark
+                            v-bind="attrs"
+                            v-on="on"
+                        >
+                        {{ user && user.user.id === currentUser.id ? 'I' : currentUser.name }} did something!
+                        </v-btn>
+                    </template>
+                    <v-card>
+                        <v-card-title>
+                            <h2 class="text-xl">What did {{ currentUser.name }} do?</h2>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-container>
+                                <v-row>
+                                    <UserAddActionForm @update-user="updateUser" :user="currentUser"></UserAddActionForm>
+                                </v-row>
+                            </v-container>
+                        </v-card-text>
+                    </v-card>
+                </v-dialog>
+
 
                 <ul v-if="currentUser.actions.length > 0">
                     <li v-for="(action, index) in currentUser.actions" v-bind:key="'user-'+ currentUser.id + '-action-' + action.id + '-' + index">
@@ -61,28 +83,38 @@
                     </li>
                 </ul>
                 <p v-else>No actions completed yet.</p>
-
-                <t-modal
-                    ref="modal"
-                    v-model="showActionForm"
-                    @update-user="$refs.modal.hide()"
-                    >
-                    <template v-slot:header>
-                        <h2 class="text-xl">What did {{ currentUser.name }} do?</h2>
-                    </template>
-                    <UserAddActionForm @update-user="updateUser" :user="currentUser"></UserAddActionForm>
-                </t-modal>
             </div>
         </div>
         <div class="md:w-1/3 w-full px-4">
             <h3 class="text-xl pt-6 pb-2">Reward History</h3>
             <div v-if="currentUser" class="content">
-                <t-button
-                    @click="showRewardForm=true"
-                    classes="trigger-button"
-                >
-                    {{ user && user.user.id === currentUser.id ? 'I want to cash in!' : currentUser.name + ' wants to cash in!' }}
-                </t-button>
+                <v-dialog
+                    v-model="rewardModal"
+                    @update-user="rewardModal = false"
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            color="primary"
+                            dark
+                            v-bind="attrs"
+                            v-on="on"
+                        >
+                        {{ user && user.user.id === currentUser.id ? 'I want to cash in!' : currentUser.name + ' wants to cash in!' }}
+                        </v-btn>
+                    </template>
+                    <v-card>
+                        <v-card-title>
+                            <h2 class="text-xl">What does {{ currentUser.name }} want?</h2>
+                        </v-card-title>
+                        <v-card-text>
+                            <v-container>
+                                <v-row>
+                                    <UserAddRewardForm @update-user="updateUser" :user="currentUser"></UserAddRewardForm>
+                                </v-row>
+                            </v-container>
+                        </v-card-text>
+                    </v-card>
+                </v-dialog>
 
                 <ul class="mt-4" v-if="currentUser.rewards.length > 0">
                     <li v-for="(reward, index) in currentUser.rewards" v-bind:key="'user-'+ currentUser.id + '-reward-' + reward.id + '-' + index">
@@ -90,16 +122,6 @@
                     </li>
                 </ul>
                 <p v-else>No rewards claimed yet.</p>
-                <t-modal
-                    ref="modal"
-                    v-model="showRewardForm"
-                    @update-user="$refs.modal.hide()"
-                    >
-                    <template v-slot:header>
-                        <h2 class="text-xl">What does {{ currentUser.name }} want?</h2>
-                    </template>
-                    <UserAddRewardForm @update-user="updateUser" :user="currentUser"></UserAddRewardForm>
-                </t-modal>
             </div>
 
         </div>
@@ -123,7 +145,9 @@ export default {
             currentUser: null,
             showActionForm: false,
             showRewardForm: false,
-            error: null
+            error: null,
+            rewardModal: false,
+            actionModal: false,
         }
     },
     created () {
@@ -151,7 +175,7 @@ export default {
         },
         updateUser: function(newUser) {
             this.currentUser = newUser;
-            this.$refs.modal.hide();
+            this.rewardModal = this.actionModal = false;
         },
         beforeEnter: function(el) {
             el.style.height = '0';

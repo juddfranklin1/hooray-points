@@ -2,11 +2,11 @@ import store from './store/'
 import Axios from 'axios';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import VueTailwind from 'vue-tailwind';// Component Library
-import vueTailwindSettings from './vueTailwind.js';
+import Vuetify from 'vuetify';// The big UI framework
+import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(VueRouter)
-Vue.use(VueTailwind, vueTailwindSettings)
+Vue.use(Vuetify)
 
 
 import App from './views/app.vue';
@@ -36,6 +36,7 @@ router.beforeEach((to, from, next) => {
 });
 
 const app = new Vue({
+    vuetify: new Vuetify(),
     el: '#app',
     components: { App },
     created () {

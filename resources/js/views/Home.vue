@@ -4,72 +4,113 @@
         <Heading :level="1" class-list="heading--primary">Welcome to Hooray!</Heading>
         <Heading :level="2" class-list="heading--primary">This is the place to keep track of what you've done and what you get for it.</Heading>
 
-        <t-table
-            :headers="[
-                'Name',
-                'Email',
-                'Penalties Total',
-                'Scores Total',
-                'Rewards Cost Total',
-                'Point Total',
-                ''
-            ]"
-            :data="users">
-            <template slot="row" slot-scope="props">
-                <tr :class="[props.trClass, props.rowIndex % 2 === 0 ? 'bg-gray-100' : '']">
-                    <td :class="props.tdClass">
-                        <router-link
-                            :to="{name: 'user', params: { id: props.row.id }}"
-                            v-slot="{ href, navigate, isActive, isExactActive }"
-                            >
-                            <a class="text-blue-400" :active="isActive" :href="href" @click="navigate"
-                                >{{ props.row.name }}</a>
-                        </router-link>
-                    </td>
-                    <td :class="props.tdClass">
-                        <a :href="`mailto: ${props.row.email}`">{{ props.row.email }}</a>
-                    </td>
-                    <td :class="props.tdClass" class="text-red-600 font-bold">
-                        <div class="flex justify-center align-items-center">
-                            {{ props.row.penalties_total }}
-                        </div>
-                    </td>
-                    <td :class="props.tdClass" class="text-green-600 font-bold">
-                        <div class="flex justify-center align-items-center">
-                            {{ props.row.scores_total }}
-                        </div>
-                    </td>
-                    <td :class="props.tdClass" class="text-green-600 font-bold">
-                        <div class="flex justify-center align-items-center">
-                            {{ props.row.rewards_cost_total }}
-                        </div>
-                    </td>
-                    <td :class="props.tdClass" class="text-gold-600 font-bold">
-                        <div class="flex justify-center align-items-center">
-                            {{ props.row.point_total }}
-                        </div>
-                    </td>
-                    <td :class="props.tdClass + ' flex justify-end align-items-center'">
-                        <t-button
-                            variant="secondary"
-                            v-if="isLoggedIn && $store.state.auth.user.user.id === props.row.id"
-                            class="trigger-button"
-                            @click="alert('functionality not implemented yet');"
-                            type="button">
-                            <IconEdit width="18" height="18" />
-                        </t-button>
-                        <t-button
-                            variant="secondary"
-                            class="trigger-button"
-                            @click="filterEventsByUserId(props.row.id)"
-                            type="button"
-                            aria-label="See on Calendar">
-                            <IconCalendar width="18" height="18" />
-                        </t-button>
-                    </td>
-                </tr>
+        <v-simple-table>
+            <template v-slot:default>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Penalties Total</th>
+                        <th>Scores Total</th>
+                        <th>Rewards Cost Total</th>
+                        <th>Point Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr :key="'user-' + user.id" v-for="user in users">
+                        <td>
+                            <router-link
+                                :to="{name: 'user', params: { id: user.id }}"
+                                v-slot="{ href, navigate, isActive, isExactActive }"
+                                >
+                                <a class="text-blue-400" :active="isActive" :href="href" @click="navigate"
+                                    >{{ user.name }}</a>
+                            </router-link>
+                        </td>
+                        <td>
+                            <a :href="`mailto: ${user.email}`">{{ user.email }}</a>
+                        </td>
+                        <td class="text-red-600 font-bold">
+                            <div class="flex justify-center align-items-center">
+                                {{ user.penalties_total }}
+                            </div>
+                        </td>
+                        <td class="text-green-600 font-bold">
+                            <div class="flex justify-center align-items-center">
+                                {{ user.scores_total }}
+                            </div>
+                        </td>
+                        <td class="text-green-600 font-bold">
+                            <div class="flex justify-center align-items-center">
+                                {{ user.rewards_cost_total }}
+                            </div>
+                        </td>
+                        <td class="text-gold-600 font-bold">
+                            <div class="flex justify-center align-items-center">
+                                {{ user.point_total }}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex justify-end align-items-center">
+                                <v-dialog
+                                    v-model="modal"
+                                    v-if="isLoggedIn && $store.state.auth.user.user.id === user.id"
+                                    width="500"
+                                    >
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn
+                                            class="mr-3"
+                                            v-bind="attrs"
+                                            v-on="on"
+                                            type="button">
+                                            <IconEdit width="18" height="18" />
+                                        </v-btn>
+                                    </template>
+                                    <v-card>
+                                        <v-card-title class="headline grey lighten-2">
+                                        Sorry
+                                        </v-card-title>
+
+                                        <v-card-text>
+                                        <Heading class="my-3" level="3">
+                                            Functionality not created yet.
+                                        </Heading>
+                                        </v-card-text>
+
+                                        <v-divider></v-divider>
+
+                                        <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn
+                                            color="error"
+                                            @click="modal = false"
+                                        >
+                                            Hurry Up!
+                                        </v-btn>
+                                        <v-btn
+                                            color="primary"
+                                            @click="modal = false"
+                                        >
+                                            No worries!
+                                        </v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
+                                <v-btn
+                                    variant="secondary"
+                                    class="trigger-button"
+                                    @click="filterEventsByUserId(user.id)"
+                                    type="button"
+                                    aria-label="See on Calendar">
+                                    <IconCalendar width="18" height="18" />
+                                </v-btn>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
             </template>
-        </t-table>
+        </v-simple-table>
         <div class="my-4">
             <a href="#reset" @click="getEvents()">See All Events</a>
             <FullCalendar ref="fullCalendar" :options="calendarOptions" />
@@ -84,7 +125,6 @@
                     </Tooltip>
                 </template>
             </div>
-
         </div>
     </div>
 </template>
@@ -149,21 +189,11 @@ export default {
                 backgroundColor: 'gray'
             },
             activeEvent: {},
-            currentEvents: this.constructEvents()
+            currentEvents: this.constructEvents(),
+            modal: false,
         }
     },
     methods: {
-        'alert': function(message){
-            this.$dialog.alert({
-                title: 'Sorry',
-                text: message,
-                icon: 'warning',
-                // variant: 'my-alert',
-                // ...More props
-            }).then((result) => {
-                //
-            })
-        },
         'handleEventMouseEnter': function(arg) {
             this.tooltipVisible = true;
             this.activeEvent = arg.event.toPlainObject();
